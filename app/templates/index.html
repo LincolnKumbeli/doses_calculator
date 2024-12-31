@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Medical Calculator</h1>
+    <form method="post" action="{{ url_for('index') }}">
+        <h3>Calculation Type:</h3>
+        <input type="radio" id="commonly_used" name="calc_type" value="commonly_used" {% if request.form.get('calc_type') == 'commonly_used' %}checked{% endif %}>
+        <label for="commonly_used">Commonly Used</label><br>
+        <input type="radio" id="emergency" name="calc_type" value="emergency" {% if request.form.get('calc_type') == 'emergency' %}checked{% endif %}>
+        <label for="emergency">Emergency</label><br>
+        <input type="radio" id="disease_condition" name="calc_type" value="disease_condition" {% if request.form.get('calc_type') == 'disease_condition' %}checked{% endif %}>
+        <label for="disease_condition">Disease Condition</label><br><br>
+        
+        <div id="weight_input" style="{% if request.form.get('calc_type') == 'disease_condition' %}display:none;{% endif %}">
+            <label for="weight">Weight (kg):</label>
+            <input type="text" id="weight" name="weight" placeholder="Enter weight in kg" value="{{ request.form.get('weight') }}">
+        </div>
+        
+        <div id="disease_dropdown" style="{% if request.form.get('calc_type') != 'disease_condition' %}display:none;{% endif %}">
+            <label for="disease">Select Disease:</label>
+            <select id="disease" name="disease">
+                <option value="pneumonia" {% if request.form.get('disease') == 'pneumonia' %}selected{% endif %}>Pneumonia</option>
+                <!-- Add more diseases here -->
+            </select>
+        </div>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    
+    {% if results %}
+        <h2>Results for weight: {{ weight }} kg</h2>
+        {{ results | safe }}
+    {% endif %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calcTypeInputs = document.querySelectorAll('input[name="calc_type"]');
+            const weightInput = document.getElementById('weight_input');
+            const diseaseDropdown = document.getElementById('disease_dropdown');
+            
+            calcTypeInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    if (input.value === 'disease_condition') {
+                        weightInput.style.display = 'none';
+                        diseaseDropdown.style.display = 'block';
+                    } else {
+                        weightInput.style.display = 'block';
+                        diseaseDropdown.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

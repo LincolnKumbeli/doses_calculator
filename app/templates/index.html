@@ -15,6 +15,8 @@
             <label for="common">Common Calculations</label><br>
             <input type="radio" id="emergency" name="calc_type" value="emergency">
             <label for="emergency">Emergency Calculations</label><br>
+            <input type="radio" id="disease" name="calc_type" value="disease">
+            <label for="disease">Go to Disease Conditions</label><br>
             <br>
             Enter the child's weight in kg: <input type="text" name="weight">
             <input type="submit" value="Calculate">
@@ -70,11 +72,15 @@
                 </ul>
                 <p>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
                 <p>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+            {% elif calc_type == "disease" %}
+                <script>
+                    window.location.href = "{{ url_for('disease') }}";
+                </script>
             {% endif %}
+            <p><strong><a href="/">Go back</a></strong></p>
         {% endif %}
 
         <p>Use ⅔ MR for patients having severe malnutrition, heart failure, meningitis or head injury</p>
-        <p><strong><a href="/">Go back</a></strong></p>
     </div>
     <footer>
         <p>&copy; 2024 Lincoln Kumbeli - still under development so use at your own risk</p>

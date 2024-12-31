@@ -1,6 +1,5 @@
-from flask import Flask, request, render_template, url_for, redirect
-
-app = Flask(__name__, static_folder='static', template_folder='templates')
+from flask import request, render_template, url_for, redirect
+from app import app
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -107,6 +106,5 @@ def calculate_fluids(weight):
     two_thirds_maintenance_rate = round(maintenance_rate * 2 / 3, 1)
 
     return bolus_fluids, maintenance_rate, two_thirds_maintenance_rate
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)

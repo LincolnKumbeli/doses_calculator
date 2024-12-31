@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Specific Calculations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Disease Specific Calculations</h1>
+        <form method="post">
+            <p>Select Disease:</p>
+            <input type="radio" id="disease1" name="disease" value="Disease 1">
+            <label for="disease1">Disease 1</label><br>
+            <input type="radio" id="disease2" name="disease" value="Disease 2">
+            <label for="disease2">Disease 2</label><br>
+            Enter the child's weight in kg: <input type="text" name="weight">
+            <input type="submit" value="Calculate">
+        </form>
+        {% if doses %}
+        <h2>Child's Weight: {{ weight }} kg</h2>
+        <ul>
+            {% for drug, dose in doses.items() %}
+            <li>{{ drug }}: {{ dose }} mg</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <p><strong><a href="/">Go back</a></strong></p>
+    </div>
+    <footer>
+        <p>&copy; 2024 Lincoln Kumbeli - still under development so use at your own risk</p>
+    </footer>
+</body>
+</html>

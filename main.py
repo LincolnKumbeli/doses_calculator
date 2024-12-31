@@ -43,6 +43,8 @@ def index():
                     }
                 }
                 bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "disease":
+                return redirect(url_for('disease'))
             else:
                 return "Invalid calculation type."
 

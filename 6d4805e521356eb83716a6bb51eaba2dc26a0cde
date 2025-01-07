@@ -1,0 +1,262 @@
+from flask import Flask, request, render_template_string, url_for, redirect
+
+app = Flask(__name__)
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        weight_str = request.form["weight"]
+        calc_type = request.form.get("calc_type")
+
+        # Input validation (check for weight as a number)
+        if not calc_type:
+            error_message = "Please select a calculation type."
+        else:
+            try:
+                weight = float(weight_str)
+            except ValueError:
+                return "Invalid input. Please enter a valid number for weight."
+
+            # Perform calculations based on selection
+            if calc_type == "common":
+                doses = calculate_doses(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "emergency":
+                # Weight-based emergency drug calculations
+                doses = {
+                    "Drugs": {
+                        "Suxamethonium (1-2mg/kg)": f"{round(1 * weight, 2)} to {round(2 * weight, 2)}",
+                        "Emergency Drug A (0.1mg/kg)": round(0.1 * weight, 2),
+                        "Emergency Drug B (0.2mg/kg)": round(0.2 * weight, 2),
+                        # Add more weight-based emergency drugs as needed
+                    },
+                    "RSI and ETT": {
+                        "Drugs": {
+                            "RSI Drug A (0.3mg/kg)": round(0.3 * weight, 2),
+                            "RSI Drug B (0.4mg/kg)": round(0.4 * weight, 2),
+                            # Add more RSI drugs as needed
+                        },
+                        "ETT Size and Length": {
+                            "ETT Size": round(weight / 10, 1),  # Example calculation
+                            "ETT Length": round(weight / 5, 1),  # Example calculation
+                        }
+                    }
+                }
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            else:
+                return "Invalid calculation type."
+
+            return render_template_string("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG Common Drug Doses and Fluid Rate Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>PNG Common Drug Doses and Fluid Rate Calculator</h1>
+    <h2>Child's Weight: {{ weight }} kg</h2>
+    <form method="post">
+        <p>Calculation Type:</p>
+        <input type="radio" id="common" name="calc_type" value="common" {{ 'checked' if calc_type == 'common' else '' }}>
+        <label for="common">Common Calculations</label><br>
+        <input type="radio" id="emergency" name="calc_type" value="emergency" {{ 'checked' if calc_type == 'emergency' else '' }}>
+        <label for="emergency">Emergency Calculations</label><br>
+        <br>
+        <input type="text" name="weight" value="{{ weight }}"> kg
+        <input type="submit" value="Calculate">
+    </form>
+
+    {% if calc_type == "common" %}
+    <h1>Drug Doses (mg)</h1>
+    <ul>
+        {% for drug, dose in doses.items() %}
+        <li>{{ drug }}: {{ dose }} mg</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Fluid Requirements</h1>
+    <ul>
+        {% for bolus, volume in bolus_fluids.items() %}
+        <li>{{ bolus }}: {{ volume }} mL</li>
+        {% endfor %}
+    </ul>
+    <p>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
+    <p>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+    {% elif calc_type == "emergency" %}
+    <h1>Emergency Calculations</h1>
+    
+    <h2>Drugs</h2>
+    <ul>
+        {% for drug, dose in doses["Drugs"].items() %}
+        <li>{{ drug }}: {{ dose }} mg</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>RSI and ETT</h2>
+    <h3>Drugs</h3>
+    <ul>
+        {% for drug, dose in doses["RSI and ETT"]["Drugs"].items() %}
+        <li>{{ drug }}: {{ dose }} mg</li>
+        {% endfor %}
+    </ul>
+    <h3>ETT Size and Length</h3>
+    <ul>
+        {% for item, value in doses["RSI and ETT"]["ETT Size and Length"].items() %}
+        <li>{{ item }}: {{ value }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Fluid Requirements</h2>
+    <ul>
+        {% for bolus, volume in bolus_fluids.items() %}
+        <li>{{ bolus }}: {{ volume }} mL</li>
+        {% endfor %}
+    </ul>
+    <p>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
+    <p>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+    {% endif %}
+
+    <p>Use ⅔ MR for patients having severe malnutrition, heart failure, meningitis or head injury</p>
+    <p><strong><a href="/">Go back</a></strong></p>
+    <footer>
+        <p>&copy; 2024 Lincoln Kumbeli - still under development so use at your own risk</p>
+    </footer>
+</body>
+</html>
+""", doses=doses, bolus_fluids=bolus_fluids, maintenance_rate=maintenance_rate, two_thirds_maintenance_rate=two_thirds_maintenance_rate, weight=weight, calc_type=calc_type)
+    else:
+        return render_template_string("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG Common Drug Doses and Fluid Rate Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>PNG Common Drug Doses and Fluid Rate Calculator</h1>
+    <form method="post">
+        <p>Calculation Type:</p>
+        <input type="radio" id="common" name="calc_type" value="common" checked>
+        <label for="common">Common Calculations</label><br>
+        <input type="radio" id="emergency" name="calc_type" value="emergency">
+        <label for="emergency">Emergency Calculations</label><br>
+        <br>
+        Enter the child's weight in kg: <input type="text" name="weight">
+        <input type="submit" value="Calculate">
+    </form>
+    <a href="{{ url_for('disease') }}">Go to Disease Calculations</a>
+    <footer>
+        <p>&copy; 2024 Lincoln Kumbeli - still under development so use at your own risk</p>
+    </footer>
+</body>
+</html>
+""")
+
+@app.route("/disease", methods=["GET", "POST"])
+def disease():
+    if request.method == "POST":
+        weight_str = request.form["weight"]
+        disease = request.form.get("disease")
+
+        try:
+            weight = float(weight_str)
+        except ValueError:
+            return "Invalid input. Please enter a valid number for weight."
+
+        if disease == "Disease 1":
+            doses = {"Disease 1 Drug A": weight * 2, "Disease 1 Drug B": weight * 1.5}
+        elif disease == "Disease 2":
+            doses = {"Disease 2 Drug A": weight * 3, "Disease 2 Drug B": weight * 2}
+        else:
+            return "Invalid disease selection."
+
+        return render_template_string("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Specific Calculations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Disease Specific Calculations</h1>
+    <h2>Child's Weight: {{ weight }} kg</h2>
+    <ul>
+        {% for drug, dose in doses.items() %}
+        <li>{{ drug }}: {{ dose }} mg</li>
+        {% endfor %}
+    </ul>
+    <p><strong><a href="/">Go back</a></strong></p>
+</body>
+</html>
+""", doses=doses, weight=weight)
+    else:
+        return render_template_string("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Specific Calculations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Disease Specific Calculations</h1>
+    <form method="post">
+        <p>Select Disease:</p>
+        <input type="radio" id="disease1" name="disease" value="Disease 1">
+        <label for="disease1">Disease 1</label><br>
+        <input type="radio" id="disease2" name="disease" value="Disease 2">
+        <label for="disease2">Disease 2</label><br>
+        Enter the child's weight in kg: <input type="text" name="weight">
+        <input type="submit" value="Calculate">
+    </form>
+    <p><strong><a href="/">Go back</a></strong></p>
+</body>
+</html>
+""")
+
+def calculate_doses(weight):
+    doses = {
+        "Adrenaline infusion  (0.15mg/kg in 50mL at 1-10 mL/hr)": round(0.15 * weight, 2),
+        "Amoxicillin, Flucloxacillin, Chloramphenicol (25mg/kg)": round(25 * weight, 2),
+        "Buscopan (0.5mg/kg)": round(0.5 * weight, 2),
+        "Ceftriaxone (50mg/kg)": round(50 * weight, 2),
+        "Crystapen (30mg/kg)": round(30 * weight, 2),
+        "Flagyl (7.5mg/kg)": round(7.5 * weight, 2),
+        "Gentamicin (5-7mg/kg)": f"{round(5 * weight, 2)} to {round(7 * weight, 2)}",
+        "Hydrocortisone (4mg/kg)": round(4 * weight, 2),
+        "Lasix (0.5mg/kg)": round(0.5 * weight, 2),
+        "Lasix (1mg/kg)": round(1 * weight, 2),
+        "Maxolone (0.1 - 0.3/kg)": f"{round(0.1 * weight, 2)} to {round(0.3 * weight, 2)}",
+        "Paracetamol 'o' (15mg/kg)": round(15 * weight, 2),
+        "Paracetamol 'PR' (25mg/kg)": round(25 * weight, 2),
+    }
+    return doses
+
+def calculate_fluids(weight):
+    bolus_fluids = {
+        "Bolus (10mL/kg)": 10 * weight,
+        "Bolus (15mL/kg)": 15 * weight,
+        "Bolus (20mL/kg)": 20 * weight,
+    }
+
+    if weight <= 10:
+        maintenance_rate = 4 * weight
+    elif weight <= 30:
+        maintenance_rate = (4 * 10) + (2 * (weight - 10))
+    else:
+        maintenance_rate = (4 * 10) + (2 * 20) + (1 * (weight - 30))
+
+    two_thirds_maintenance_rate = round(maintenance_rate * 2 / 3, 1)
+
+    return bolus_fluids, maintenance_rate, two_thirds_maintenance_rate
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080, debug=True)

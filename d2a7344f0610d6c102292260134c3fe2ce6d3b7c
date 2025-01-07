@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Welcome to the PNG Common Drug Doses and Fluid Rate Calculator</h2>
+    <form method="post">
+        Enter the child's weight in kg: <input type="text" name="weight">
+        <input type="submit" value="Calculate">
+    </form>
+    {% if doses %}
+        <h2>Child's Weight: {{ weight }} kg</h2>
+        <h1>Drug Doses (mg)</h1>
+        <ul>
+        {% for drug, dose in doses.items() %}
+            <li>{{ drug }}: {{ dose }} mg</li>
+        {% endfor %}
+        </ul>
+        <h1>Fluid Requirements</h1>
+        <ul>
+        {% for bolus, volume in bolus_fluids.items() %}
+            <li>{{ bolus }}: {{ volume }} mL</li>
+        {% endfor %}
+        </ul>
+        <p>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
+        <p>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+        <p>Use ⅔ MR for patients having severe malnutrition, heart failure, meningitis or head injury</p>
+        <h1>Anti Convulsants</h1>
+        <ul>
+        {% for drug, dose in anti_convulsants.items() %}
+            <li>{{ drug }}: {{ dose }} mg</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</section>
+{% endblock %}

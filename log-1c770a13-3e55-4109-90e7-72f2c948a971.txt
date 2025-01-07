@@ -1,0 +1,245 @@
+starting build "1c770a13-3e55-4109-90e7-72f2c948a971"
+
+FETCHSOURCE
+BUILD
+Starting Step #0 - "fetch"
+Step #0 - "fetch": Pulling image: asia.gcr.io/serverless-runtimes/utilities/gcs-fetcher:base_20241027_18_04_RC02
+Step #0 - "fetch": base_20241027_18_04_RC02: Pulling from serverless-runtimes/utilities/gcs-fetcher
+Step #0 - "fetch": 2d26672820ee: Pulling fs layer
+Step #0 - "fetch": 2d26672820ee: Verifying Checksum
+Step #0 - "fetch": 2d26672820ee: Download complete
+Step #0 - "fetch": 2d26672820ee: Pull complete
+Step #0 - "fetch": Digest: sha256:38b6cfade1277ee215d52ba957743e0d31306c4162bf25ef45b0f3922478b7a4
+Step #0 - "fetch": Status: Downloaded newer image for asia.gcr.io/serverless-runtimes/utilities/gcs-fetcher:base_20241027_18_04_RC02
+Step #0 - "fetch": asia.gcr.io/serverless-runtimes/utilities/gcs-fetcher:base_20241027_18_04_RC02
+Step #0 - "fetch": Fetching manifest gs://staging.drugs-app-446203.appspot.com/ae/fa4cfa82-02f5-4c0d-9458-bfdc546d3163/manifest.json.
+Step #0 - "fetch": Processing 1032 files.
+Step #0 - "fetch": ******************************************************
+Step #0 - "fetch": Status:                      SUCCESS
+Step #0 - "fetch": Started:                     2025-01-03T07:03:14Z
+Step #0 - "fetch": Completed:                   2025-01-03T07:03:15Z
+Step #0 - "fetch": Requested workers:    200
+Step #0 - "fetch": Actual workers:       200
+Step #0 - "fetch": Total files:         1032
+Step #0 - "fetch": Total retries:          0
+Step #0 - "fetch": GCS timeouts:           0
+Step #0 - "fetch": MiB downloaded:        14.04 MiB
+Step #0 - "fetch": MiB/s throughput:      18.83 MiB/s
+Step #0 - "fetch": Time for manifest:     74.63 ms
+Step #0 - "fetch": Total time:             0.83 s
+Step #0 - "fetch": ******************************************************
+Finished Step #0 - "fetch"
+Starting Step #1 - "pre-buildpack"
+Step #1 - "pre-buildpack": Pulling image: asia.gcr.io/serverless-runtimes/google-22-full/builder/python:python_20241216_RC00
+Step #1 - "pre-buildpack": python_20241216_RC00: Pulling from serverless-runtimes/google-22-full/builder/python
+Step #1 - "pre-buildpack": 7478e0ac0f23: Already exists
+Step #1 - "pre-buildpack": dc74fc30a5bd: Already exists
+Step #1 - "pre-buildpack": 155a2d778b20: Already exists
+Step #1 - "pre-buildpack": 0253946b43b9: Pulling fs layer
+Step #1 - "pre-buildpack": f9b4169983f3: Pulling fs layer
+Step #1 - "pre-buildpack": a31bed5bf19c: Pulling fs layer
+Step #1 - "pre-buildpack": 25c89c424a87: Pulling fs layer
+Step #1 - "pre-buildpack": 558481409f73: Pulling fs layer
+Step #1 - "pre-buildpack": a0395fd1a4df: Pulling fs layer
+Step #1 - "pre-buildpack": 06f428a8446f: Pulling fs layer
+Step #1 - "pre-buildpack": 8416fcb4dc1e: Pulling fs layer
+Step #1 - "pre-buildpack": 98690d68a998: Pulling fs layer
+Step #1 - "pre-buildpack": 7746407d660c: Pulling fs layer
+Step #1 - "pre-buildpack": a1d6bdbb192c: Pulling fs layer
+Step #1 - "pre-buildpack": 6ccba743d9f8: Pulling fs layer
+Step #1 - "pre-buildpack": 1b6df944c365: Pulling fs layer
+Step #1 - "pre-buildpack": 1092255011fd: Pulling fs layer
+Step #1 - "pre-buildpack": 38b7ac6b2c16: Pulling fs layer
+Step #1 - "pre-buildpack": 9511dfba1d94: Pulling fs layer
+Step #1 - "pre-buildpack": ea4fa1a3dc77: Pulling fs layer
+Step #1 - "pre-buildpack": 8379389dee70: Pulling fs layer
+Step #1 - "pre-buildpack": cb6bfe28d8bc: Pulling fs layer
+Step #1 - "pre-buildpack": 195106601026: Pulling fs layer
+Step #1 - "pre-buildpack": 9da0c55b4d56: Pulling fs layer
+Step #1 - "pre-buildpack": 34ce8ba30961: Pulling fs layer
+Step #1 - "pre-buildpack": 4f4fb700ef54: Pulling fs layer
+Step #1 - "pre-buildpack": 558481409f73: Waiting
+Step #1 - "pre-buildpack": a0395fd1a4df: Waiting
+Step #1 - "pre-buildpack": 06f428a8446f: Waiting
+Step #1 - "pre-buildpack": 8416fcb4dc1e: Waiting
+Step #1 - "pre-buildpack": 98690d68a998: Waiting
+Step #1 - "pre-buildpack": 7746407d660c: Waiting
+Step #1 - "pre-buildpack": a1d6bdbb192c: Waiting
+Step #1 - "pre-buildpack": 6ccba743d9f8: Waiting
+Step #1 - "pre-buildpack": 1b6df944c365: Waiting
+Step #1 - "pre-buildpack": 1092255011fd: Waiting
+Step #1 - "pre-buildpack": 38b7ac6b2c16: Waiting
+Step #1 - "pre-buildpack": 9511dfba1d94: Waiting
+Step #1 - "pre-buildpack": ea4fa1a3dc77: Waiting
+Step #1 - "pre-buildpack": 8379389dee70: Waiting
+Step #1 - "pre-buildpack": cb6bfe28d8bc: Waiting
+Step #1 - "pre-buildpack": 195106601026: Waiting
+Step #1 - "pre-buildpack": 9da0c55b4d56: Waiting
+Step #1 - "pre-buildpack": 34ce8ba30961: Waiting
+Step #1 - "pre-buildpack": 4f4fb700ef54: Waiting
+Step #1 - "pre-buildpack": 25c89c424a87: Waiting
+Step #1 - "pre-buildpack": f9b4169983f3: Download complete
+Step #1 - "pre-buildpack": 0253946b43b9: Verifying Checksum
+Step #1 - "pre-buildpack": 0253946b43b9: Download complete
+Step #1 - "pre-buildpack": a31bed5bf19c: Download complete
+Step #1 - "pre-buildpack": 25c89c424a87: Verifying Checksum
+Step #1 - "pre-buildpack": 25c89c424a87: Download complete
+Step #1 - "pre-buildpack": 0253946b43b9: Pull complete
+Step #1 - "pre-buildpack": f9b4169983f3: Pull complete
+Step #1 - "pre-buildpack": 06f428a8446f: Verifying Checksum
+Step #1 - "pre-buildpack": 06f428a8446f: Download complete
+Step #1 - "pre-buildpack": a31bed5bf19c: Pull complete
+Step #1 - "pre-buildpack": a0395fd1a4df: Download complete
+Step #1 - "pre-buildpack": 25c89c424a87: Pull complete
+Step #1 - "pre-buildpack": 558481409f73: Verifying Checksum
+Step #1 - "pre-buildpack": 558481409f73: Download complete
+Step #1 - "pre-buildpack": 558481409f73: Pull complete
+Step #1 - "pre-buildpack": 98690d68a998: Verifying Checksum
+Step #1 - "pre-buildpack": 98690d68a998: Download complete
+Step #1 - "pre-buildpack": 8416fcb4dc1e: Verifying Checksum
+Step #1 - "pre-buildpack": 8416fcb4dc1e: Download complete
+Step #1 - "pre-buildpack": 7746407d660c: Verifying Checksum
+Step #1 - "pre-buildpack": 7746407d660c: Download complete
+Step #1 - "pre-buildpack": a1d6bdbb192c: Verifying Checksum
+Step #1 - "pre-buildpack": a1d6bdbb192c: Download complete
+Step #1 - "pre-buildpack": 6ccba743d9f8: Verifying Checksum
+Step #1 - "pre-buildpack": 6ccba743d9f8: Download complete
+Step #1 - "pre-buildpack": a0395fd1a4df: Pull complete
+Step #1 - "pre-buildpack": 1b6df944c365: Verifying Checksum
+Step #1 - "pre-buildpack": 1b6df944c365: Download complete
+Step #1 - "pre-buildpack": 06f428a8446f: Pull complete
+Step #1 - "pre-buildpack": 1092255011fd: Download complete
+Step #1 - "pre-buildpack": 38b7ac6b2c16: Verifying Checksum
+Step #1 - "pre-buildpack": 38b7ac6b2c16: Download complete
+Step #1 - "pre-buildpack": 9511dfba1d94: Verifying Checksum
+Step #1 - "pre-buildpack": 9511dfba1d94: Download complete
+Step #1 - "pre-buildpack": ea4fa1a3dc77: Verifying Checksum
+Step #1 - "pre-buildpack": ea4fa1a3dc77: Download complete
+Step #1 - "pre-buildpack": 8379389dee70: Verifying Checksum
+Step #1 - "pre-buildpack": 8379389dee70: Download complete
+Step #1 - "pre-buildpack": 8416fcb4dc1e: Pull complete
+Step #1 - "pre-buildpack": 9da0c55b4d56: Verifying Checksum
+Step #1 - "pre-buildpack": 9da0c55b4d56: Download complete
+Step #1 - "pre-buildpack": cb6bfe28d8bc: Download complete
+Step #1 - "pre-buildpack": 98690d68a998: Pull complete
+Step #1 - "pre-buildpack": 195106601026: Verifying Checksum
+Step #1 - "pre-buildpack": 195106601026: Download complete
+Step #1 - "pre-buildpack": 34ce8ba30961: Verifying Checksum
+Step #1 - "pre-buildpack": 34ce8ba30961: Download complete
+Step #1 - "pre-buildpack": 4f4fb700ef54: Verifying Checksum
+Step #1 - "pre-buildpack": 4f4fb700ef54: Download complete
+Step #1 - "pre-buildpack": 7746407d660c: Pull complete
+Step #1 - "pre-buildpack": a1d6bdbb192c: Pull complete
+Step #1 - "pre-buildpack": 6ccba743d9f8: Pull complete
+Step #1 - "pre-buildpack": 1b6df944c365: Pull complete
+Step #1 - "pre-buildpack": 1092255011fd: Pull complete
+Step #1 - "pre-buildpack": 38b7ac6b2c16: Pull complete
+Step #1 - "pre-buildpack": 9511dfba1d94: Pull complete
+Step #1 - "pre-buildpack": ea4fa1a3dc77: Pull complete
+Step #1 - "pre-buildpack": 8379389dee70: Pull complete
+Step #1 - "pre-buildpack": cb6bfe28d8bc: Pull complete
+Step #1 - "pre-buildpack": 195106601026: Pull complete
+Step #1 - "pre-buildpack": 9da0c55b4d56: Pull complete
+Step #1 - "pre-buildpack": 34ce8ba30961: Pull complete
+Step #1 - "pre-buildpack": 4f4fb700ef54: Pull complete
+Step #1 - "pre-buildpack": Digest: sha256:0a1cb67ce6c15ac166157c81c3482527f0cfd2358f8e61fcd9ae4a090dd1f9fc
+Step #1 - "pre-buildpack": Status: Downloaded newer image for asia.gcr.io/serverless-runtimes/google-22-full/builder/python:python_20241216_RC00
+Step #1 - "pre-buildpack": asia.gcr.io/serverless-runtimes/google-22-full/builder/python:python_20241216_RC00
+Step #1 - "pre-buildpack": Preparing directory /layers
+Step #1 - "pre-buildpack": Preparing directory /workspace
+Step #1 - "pre-buildpack": Preparing directory /builder/home
+Step #1 - "pre-buildpack": Preparing directory /builder/outputs
+Step #1 - "pre-buildpack": Preparing directory /platform/env
+Step #1 - "pre-buildpack": Passing build environment variable BUILDER_OUTPUT to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_RUNTIME to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_LABEL_BUILDER_VERSION to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_LABEL_BUILDER_IMAGE to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_LABEL_RUN_IMAGE to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_LABEL_SOURCE to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_RUNTIME_IMAGE_REGION to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_RUNTIME_VERSION to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable X_GOOGLE_SKIP_RUNTIME_LAUNCH to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GAE_APP_ENGINE_APIS to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable GOOGLE_ENTRYPOINT to buildpacks
+Step #1 - "pre-buildpack": Passing build environment variable X_GOOGLE_TARGET_PLATFORM to buildpacks
+Step #1 - "pre-buildpack": Checking if image asia.gcr.io/drugs-app-446203/app-engine-tmp/build-cache/default/ttl-7d:latest exists
+Step #1 - "pre-buildpack": Image asia.gcr.io/drugs-app-446203/app-engine-tmp/build-cache/default/ttl-7d:latest exists
+Step #1 - "pre-buildpack": Checking if image asia.gcr.io/drugs-app-446203/app-engine-tmp/build-cache/default/ttl-7d:latest is valid
+Step #1 - "pre-buildpack": Image asia.gcr.io/drugs-app-446203/app-engine-tmp/build-cache/default/ttl-7d:latest is valid
+Finished Step #1 - "pre-buildpack"
+Starting Step #2 - "build"
+Step #2 - "build": Already have image (with digest): asia.gcr.io/serverless-runtimes/google-22-full/builder/python:python_20241216_RC00
+Step #2 - "build": ===> ANALYZING
+Step #2 - "build": Timer: Analyzer started at 2025-01-03T07:03:29Z
+Step #2 - "build": Restoring data for SBOM from previous image
+Step #2 - "build": Timer: Analyzer ran for 7.952403587s and ended at 2025-01-03T07:03:37Z
+Step #2 - "build": ===> DETECTING
+Step #2 - "build": Timer: Detector started at 2025-01-03T07:03:37Z
+Step #2 - "build": 5 of 6 buildpacks participating
+Step #2 - "build": google.python.runtime      0.9.1
+Step #2 - "build": google.python.pip          0.9.2
+Step #2 - "build": google.python.appengine    0.9.0
+Step #2 - "build": google.utils.label-image   0.0.2
+Step #2 - "build": google.python.link-runtime 0.0.1
+Step #2 - "build": Timer: Detector ran for 80.08794ms and ended at 2025-01-03T07:03:37Z
+Step #2 - "build": ===> RESTORING
+Step #2 - "build": Timer: Restorer started at 2025-01-03T07:03:37Z
+Step #2 - "build": Restoring metadata for "google.python.pip:pip" from app image
+Step #2 - "build": Restoring metadata for "google.python.appengine:config" from app image
+Step #2 - "build": Restoring data for "google.python.pip:pip" from cache
+Step #2 - "build": Timer: Restorer ran for 2.513339151s and ended at 2025-01-03T07:03:40Z
+Step #2 - "build": ===> BUILDING
+Step #2 - "build": Timer: Builder started at 2025-01-03T07:03:40Z
+Step #2 - "build": === Python - Runtime (google.python.runtime@0.9.1) ===
+Step #2 - "build": layers path: /layers/google.python.runtime/python
+Step #2 - "build": Using Python version from GOOGLE_RUNTIME_VERSION: 3.11.10
+Step #2 - "build": Installing Python v3.11.10.
+Step #2 - "build": Runtime successfully downloaded from asia-east2-docker.pkg.dev/gae-runtimes/runtimes-ubuntu2204/python:3.11.10
+Step #2 - "build": === Python - Pip (google.python.pip@0.9.2) ===
+Step #2 - "build": ***** CACHE HIT: "pip"
+Step #2 - "build": Checking for incompatible dependencies.
+Step #2 - "build": --------------------------------------------------------------------------------
+Step #2 - "build": Running "python3 -m pip check"
+Step #2 - "build": No broken requirements found.
+Step #2 - "build": Done "python3 -m pip check" (1.160655934s)
+Step #2 - "build": === Python - Appengine (google.python.appengine@0.9.0) ===
+Step #2 - "build": Using GOOGLE_RUNTIME: python311
+Step #2 - "build": Using config appstart.Config{Runtime:"python311", Entrypoint:appstart.Entrypoint{Type:"User", Command:"gunicorn -b :$PORT main:app", WorkDir:""}, MainExecutable:""}
+Step #2 - "build": === Utils - Label Image (google.utils.label-image@0.0.2) ===
+Step #2 - "build": Adding image label google.run-image: asia.gcr.io/serverless-runtimes/google-22-full/runtimes/python311:python311_20241215_3_11_11_RC00
+Step #2 - "build": Adding image label google.builder-version: python_20241216_RC00
+Step #2 - "build": Adding image label google.source: gs://staging.drugs-app-446203.appspot.com/ae/fa4cfa82-02f5-4c0d-9458-bfdc546d3163/manifest.json
+Step #2 - "build": Adding image label google.builder-image: asia.gcr.io/serverless-runtimes/google-22-full/builder/python:python_20241216_RC00
+Step #2 - "build": === Python - Link Runtime (google.python.link-runtime@0.0.1) ===
+Step #2 - "build": Timer: Builder ran for 7.212847875s and ended at 2025-01-03T07:03:47Z
+Step #2 - "build": ===> EXPORTING
+Step #2 - "build": Reusing layers from image 'asia.gcr.io/drugs-app-446203/app-engine-tmp/app/default/ttl-18h@sha256:1aa28a18ae25bbeee99cfd25baca254fccd6452f16d082342f3e7d9817d51236'
+Step #2 - "build": Timer: Exporter started at 2025-01-03T07:03:48Z
+Step #2 - "build": Reusing layer 'google.python.runtime:python'
+Step #2 - "build": Adding layer 'google.python.pip:pip'
+Step #2 - "build": Reusing layer 'google.python.appengine:config'
+Step #2 - "build": Reusing layer 'buildpacksio/lifecycle:launch.sbom'
+Step #2 - "build": Adding 1/1 app layer(s)
+Step #2 - "build": Reusing layer 'buildpacksio/lifecycle:launcher'
+Step #2 - "build": Adding layer 'buildpacksio/lifecycle:config'
+Step #2 - "build": Reusing layer 'buildpacksio/lifecycle:process-types'
+Step #2 - "build": Adding label 'io.buildpacks.lifecycle.metadata'
+Step #2 - "build": Adding label 'io.buildpacks.build.metadata'
+Step #2 - "build": Adding label 'io.buildpacks.project.metadata'
+Step #2 - "build": Adding label 'google.run-image'
+Step #2 - "build": Adding label 'google.builder-version'
+Step #2 - "build": Adding label 'google.source'
+Step #2 - "build": Adding label 'google.builder-image'
+Step #2 - "build": Setting default process type 'web'
+Step #2 - "build": Timer: Saving asia.gcr.io/drugs-app-446203/app-engine-tmp/app/default/ttl-18h:fa4cfa82-02f5-4c0d-9458-bfdc546d3163... started at 2025-01-03T07:03:49Z
+Step #2 - "build": *** Images (sha256:9ff3b6cd0f5d288167a7997216a1bd328dca9b6c097be9851f6ce4a0ae47591d):
+Step #2 - "build":       asia.gcr.io/drugs-app-446203/app-engine-tmp/app/default/ttl-18h:fa4cfa82-02f5-4c0d-9458-bfdc546d3163
+Step #2 - "build":       asia.gcr.io/drugs-app-446203/app-engine-tmp/app/default/ttl-18h:latest
+Step #2 - "build": Timer: Saving asia.gcr.io/drugs-app-446203/app-engine-tmp/app/default/ttl-18h:fa4cfa82-02f5-4c0d-9458-bfdc546d3163... ran for 5.24011806s and ended at 2025-01-03T07:03:54Z
+Step #2 - "build": Timer: Exporter ran for 6.318372411s and ended at 2025-01-03T07:03:54Z
+Step #2 - "build": Timer: Cache started at 2025-01-03T07:03:54Z
+Step #2 - "build": Adding cache layer 'google.python.pip:pip'
+Step #2 - "build": Timer: Cache ran for 4.896091575s and ended at 2025-01-03T07:03:59Z
+Finished Step #2 - "build"
+PUSH
+DONE

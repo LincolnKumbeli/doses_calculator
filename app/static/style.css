@@ -1,0 +1,184 @@
+:root {
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --border-color: #dddddd;
+    --hover-color: #f8f9fa;
+    --primary-color: #4CAF50;
+    --primary-hover: #45a049;
+    --shadow-color: rgba(0,0,0,0.1);
+    --card-background: #ffffff;
+    --button-text: #ffffff;
+    --button-bg: #4CAF50;
+    --button-hover: #45a049;
+    --button-shadow: rgba(0,0,0,0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --border-color: #404040;
+        --hover-color: #2d2d2d;
+        --primary-color: #5bc15e;
+        --primary-hover: #4CAF50;
+        --shadow-color: rgba(0,0,0,0.3);
+        --card-background: #2d2d2d;
+        --button-text: #ffffff;
+        --button-bg: #5bc15e;
+        --button-hover: #4CAF50;
+        --button-shadow: rgba(0,0,0,0.4);
+    }
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.all-drugs {
+    margin: 20px 0;
+}
+
+.drug-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.drug-item:nth-child(odd) {
+    background-color: var(--hover-color);
+}
+
+.drugs-list {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: var(--card-background);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.drug-name {
+    font-weight: 500;
+    color: var(--text-color);
+    flex: 2;
+}
+
+.drug-dose {
+    flex: 1;
+    text-align: right;
+    color: var(--text-color);
+}
+
+.radio-group {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+}
+
+.radio-option {
+    margin: 8px 0;
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 8px;
+}
+
+.radio-option label {
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.input-group {
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 300px;
+    text-align: center;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.input-group input {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+}
+
+.button-group {
+    margin: 20px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.calculate-btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px var(--button-shadow);
+    min-width: 200px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.calculate-btn:hover {
+    background-color: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--button-shadow);
+}
+
+.calculate-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px var(--button-shadow);
+}
+
+ul {
+    color: var(--text-color);
+}
+
+li {
+    color: var(--text-color);
+}
+
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--primary-hover);
+}
+
+h1, h2, h3, h4 {
+    color: var(--text-color);
+}
+
+footer {
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+    margin-top: 2rem;
+    padding-top: 1rem;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Specific Calculations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Disease Specific Calculations</h1>
+        <form method="post">
+            <p>Select Disease:</p>
+            <input type="radio" id="reactive_airways" name="disease" value="Reactive Airways Disease">
+            <label for="reactive_airways">Reactive Airways Disease</label><br>
+            <input type="radio" id="meningitis" name="disease" value="Meningitis">
+            <label for="meningitis">Meningitis</label><br>
+            <input type="radio" id="malaria" name="disease" value="Malaria">
+            <label for="malaria">Malaria</label><br>
+            <input type="radio" id="disease4" name="disease" value="Disease 4">
+            <label for="disease4">Disease 4</label><br>
+            <input type="radio" id="disease5" name="disease" value="Disease 5">
+            <label for="disease5">Disease 5</label><br>
+            <br>
+            Enter the child's weight in kg: <input type="text" name="weight">
+            <input type="submit" value="Calculate">
+        </form>
+        {% if doses %}
+        <h2>Child's Weight: {{ weight }} kg</h2>
+        <h3>Drugs for: {{ disease }}</h3>
+        <ul>
+            {% for drug, dose in doses.items() %}
+            <li>{{ drug }}: {{ dose }} mg</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <p><strong><a href="/">Go back</a></strong></p>
+    </div>
+    <footer>
+        <p>&copy; 2024 Lincoln Kumbeli - still under development so use at your own risk</p>
+    </footer>
+</body>
+</html>

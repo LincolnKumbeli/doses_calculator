@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG Paediatric Drug Doses Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .theme-switch-wrapper {
+            position: fixed;  /* Change from absolute to fixed */
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 999;    /* Ensure it stays on top */
+        }
+        .theme-switch-wrapper .moon-icon {
+            content: "🌙";
+            font-size: 20px;
+            margin-right: 10px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            color: #888;
+        }
+        [data-theme="dark"] .theme-switch-wrapper .moon-icon {
+            opacity: 1;
+            color: #e0e0e0;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            width: 60px;
+            position: relative;
+        }
+        .theme-switch input {
+            display: none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #66bb6a;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        [data-theme="dark"] {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        [data-theme="dark"] .container {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+        
+        [data-theme="dark"] a {
+            color: #7cb342;
+        }
+        
+        [data-theme="dark"] input[type="text"],
+        [data-theme="dark"] input[type="submit"] {
+            background-color: #404040;
+            color: #e0e0e0;
+            border: 1px solid #555;
+        }
+        
+        [data-theme="dark"] .rate-box {
+            background-color: #404040;
+            border: 1px solid #555;
+            color: #e0e0e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        [data-theme="dark"] ul {
+            background-color: #404040;
+            padding: 15px 40px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        [data-theme="dark"] ul li {
+            color: #e0e0e0;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #555;
+        }
+
+        [data-theme="dark"] ul li:last-child {
+            border-bottom: none;
+        }
+
+        [data-theme="dark"] h2,
+        [data-theme="dark"] h3,
+        [data-theme="dark"] h4 {
+            color: #7cb342;
+            margin-top: 20px;
+        }
+
+        [data-theme="dark"] small {
+            color: #aaa;
+        }
+
+        [data-theme="dark"] .container > p {
+            color: #e0e0e0;
+            background-color: #404040;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        [data-theme="dark"] ul li {
+            color: #e0e0e0;
+        }
+        
+        [data-theme="dark"] .radio-option {
+            color: #e0e0e0;
+        }
+        
+        [data-theme="dark"] input[type="radio"] + label {
+            color: #e0e0e0;
+        }
+        
+        [data-theme="dark"] h1, 
+        [data-theme="dark"] h2, 
+        [data-theme="dark"] h3, 
+        [data-theme="dark"] h4 {
+            color: #e0e0e0;
+        }
+        
+        [data-theme="dark"] footer {
+            background-color: #2d2d2d;
+            color: #888;
+        }
+
+        /* Update drug dose display styles for dark mode */
+        [data-theme="dark"] .container ul,
+        [data-theme="dark"] .container > div,
+        [data-theme="dark"] .rate-box {
+            background-color: #404040;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #555;
+        }
+
+        [data-theme="dark"] .container ul li {
+            color: #e0e0e0;
+            border-bottom: 1px solid #555;
+            padding: 8px 0;
+        }
+
+        [data-theme="dark"] .container ul li:last-child {
+            border-bottom: none;
+        }
+
+        [data-theme="dark"] h2,
+        [data-theme="dark"] h3,
+        [data-theme="dark"] h4 {
+            color: #7cb342;
+            border-bottom: 1px solid #555;
+            padding-bottom: 5px;
+        }
+
+        [data-theme="dark"] .container > p {
+            background-color: #404040;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        [data-theme="dark"] .rate-box p {
+            margin: 5px 0;
+            color: #e0e0e0;
+        }
+
+        /* Update button styles for light mode */
+        input[type="submit"] {
+            background-color: #2196F3; /* Light blue */
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1976D2; /* Darker blue on hover */
+        }
+
+        /* Keep dark mode button styles the same */
+        [data-theme="dark"] input[type="submit"] {
+            background-color: #7cb342;
+            color: #fff;
+            border: none;
+        }
+
+        [data-theme="dark"] input[type="submit"]:hover {
+            background-color: #689f38;
+        }
+
+        /* Update drug dose and text display styles */
+        [data-theme="dark"] .rate-box,
+        [data-theme="dark"] .container p:not(:first-child),
+        [data-theme="dark"] ul li {
+            background-color: #404040;
+            color: #e0e0e0;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+
+        [data-theme="dark"] ul {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        [data-theme="dark"] .container > p {
+            margin: 10px 0;
+        }
+
+        [data-theme="dark"] li {
+            list-style-position: inside;
+            padding: 10px 15px !important;
+            margin: 5px 0 !important;
+        }
+
+        [data-theme="dark"] .rate-box p {
+            margin: 5px 0;
+            padding: 5px 0;
+        }
+
+        /* Add some margin to the container to prevent overlap */
+        .container {
+            margin-top: 60px;  /* Add space for the toggle */
+        }
+
+        /* Add light mode styles to match dark mode borders */
+        .container p,
+        .container ul,
+        .rate-box,
+        .drug-doses,
+        .disease-info,
+        .disease-calculations,
+        .treatment-info {
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .container ul li {
+            background-color: #fff;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            list-style-type: none;
+        }
+
+        .container > p:first-child,
+        .container > p:nth-child(2) {
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        /* Keep existing dark mode styles */
+        [data-theme="dark"] {
+            /* ...existing dark mode styles... */
+        }
+
+        /* Add consistent text input styling */
+        input[type="text"] {
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin: 5px 0;
+            width: 150px;
+        }
+
+        /* Dark mode text input styling */
+        [data-theme="dark"] input[type="text"] {
+            background-color: #404040;  /* Match the color from disease.html */
+            color: #e0e0e0;
+            border: 1px solid #555;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin: 5px 0;
+            width: 150px;
+        }
+
+        /* Style the form container */
+        form {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        [data-theme="dark"] form {
+            background-color: #404040;
+            border: 1px solid #555;
+            color: #e0e0e0;
+        }
+
+        /* Style form labels and text */
+        form label,
+        form p {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        [data-theme="dark"] form label,
+        [data-theme="dark"] form p {
+            color: #e0e0e0;
+        }
+
+        /* Update the disclaimer box styling */
+        [data-theme="dark"] .container > p:first-child,
+        [data-theme="dark"] .container > p:nth-child(2) {
+            background-color: #404040;
+            color: #e0e0e0;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #555;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Remove any conflicting styles */
+        [data-theme="dark"] .container > p {
+            color: #e0e0e0 !important;
+        }
+
+        /* Update form text styling to match other boxes */
+        [data-theme="dark"] form > p {
+            background-color: #404040;
+            color: #e0e0e0;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #555;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Update radio group container styling */
+        [data-theme="dark"] .radio-group {
+            background-color: #404040;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #555;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Update all calculation result boxes in dark mode */
+        [data-theme="dark"] .drug-doses,
+        [data-theme="dark"] .fluid-requirements,
+        [data-theme="dark"] .emergency-calculations,
+        [data-theme="dark"] .ett-info,
+        [data-theme="dark"] .all-drugs {
+            background-color: #404040;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #555;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Style individual items within sections */
+        [data-theme="dark"] .drug-doses li,
+        [data-theme="dark"] .fluid-requirements li,
+        [data-theme="dark"] .emergency-calculations li,
+        [data-theme="dark"] .ett-info p,
+        [data-theme="dark"] .all-drugs li {
+            background-color: #4a4a4a;
+            color: #e0e0e0;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #555;
+            list-style-type: none;
+        }
+
+        /* Style section headings */
+        [data-theme="dark"] .drug-doses h3,
+        [data-theme="dark"] .fluid-requirements h3,
+        [data-theme="dark"] .emergency-calculations h3,
+        [data-theme="dark"] .ett-info h4,
+        [data-theme="dark"] .all-drugs h2 {
+            color: #7cb342;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Update Parkland formula and RSI/ETT styles */
+        [data-theme="dark"] .parkland-formula,
+        [data-theme="dark"] .ett-calculations,
+        [data-theme="dark"] .drug-section {
+            background-color: #404040;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #555;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        [data-theme="dark"] .parkland-formula p,
+        [data-theme="dark"] .ett-calculations p,
+        [data-theme="dark"] .drug-section p {
+            background-color: #4a4a4a;
+            color: #e0e0e0;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+
+        /* Update RSI and ETT section styles */
+        [data-theme="dark"] .rsi-section,
+        [data-theme="dark"] .drug-category {
+            background-color: #404040;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #555;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        [data-theme="dark"] .drug-category h4 {
+            color: #7cb342;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+            margin: 0 0 15px 0;
+        }
+
+        [data-theme="dark"] .drug-category ul {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        [data-theme="dark"] .drug-category li {
+            background-color: #4a4a4a;
+            color: #e0e0e0;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #555;
+            list-style-type: none;
+        }
+
+        /* Align form labels and input boxes */
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap; /* Allow wrapping */
+        }
+
+        .form-group label {
+            flex: 0 0 300px; /* Adjust the width as needed */
+            margin-right: 10px;
+            word-wrap: break-word; /* Ensure long text wraps */
+        }
+
+        .form-group input[type="text"] {
+            flex: 1;
+            max-width: 100%; /* Ensure input does not exceed container width */
+        }
+
+        /* Dark mode text input styling for emergency calculations */
+        [data-theme="dark"] .emergency-input input[type="text"] {
+            background-color: #404040;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin: 5px 0;
+            width: 100%; /* Ensure input does not exceed container width */
+        }
+
+        /* Add these new styles */
+        .container {
+            max-width: 800px;
+            margin: 60px auto 20px auto;
+            padding: 20px;
+            min-height: calc(100vh - 100px); /* Account for footer height */
+        }
+
+        .results-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .results-section h2 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .calculation-box {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            background-color: #255f4b;
+            color: white;
+            text-align: center;
+            z-index: 100;
+        }
+
+        /* Dark mode adjustments */
+        [data-theme="dark"] .results-section {
+            background-color: #2d2d2d;
+        }
+
+        [data-theme="dark"] .calculation-box {
+            background-color: #404040;
+            border-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <span class="moon-icon">🌙</span>
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider"></div>
+        </label>
+    </div>
+    <div class="container">
+        <p>This application is intended for use by healthcare professionals.</p>
+        <p><strong><a href="/">Home</a></strong></p>
+        <h1>PNG Paediatric Drug Doses Calculator</h1>
+        <form method="post">
+            <div class="form-group">
+                <p>Calculation Type:</p>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="common" name="calc_type" value="common" checked>
+                        <label for="common">Common Calculations</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="emergency" name="calc_type" value="emergency">
+                        <label for="emergency">Emergency Calculations</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="RSI" name="calc_type" value="RSI and ETT">
+                        <label for="RSI">RSI and ETT</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="all_drugs" name="calc_type" value="all_drugs">
+                        <label for="all_drugs">All Drugs (Alphabetical Order)</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="display: flex; align-items: center; margin: 15px 0;">
+                <label for="weight" style="flex: 0 0 200px;">Enter the child's weight in kg:</label>
+                <input type="text" id="weight" name="weight" required style="flex: 0 0 150px; display: inline-block;">
+            </div>
+
+            <div id="burn_area_input" class="form-group" style="display: none; margin: 15px 0;">
+                <label for="tbsa" style="flex: 0 0 200px;">Enter the percentage of TBSA burned:</label>
+                <input type="text" id="tbsa" name="tbsa" style="flex: 0 0 150px; display: inline-block;">
+            </div>
+            
+            <input type="submit" value="Calculate">
+        </form>
+
+        {% if weight %}
+            <div class="results-section">
+                <h2>Results for {{ weight }}kg child</h2>
+                {% if calc_type == "common" %}
+                    <div class="drug-doses">
+                        <h3>Drug Doses</h3>
+                        <ul>
+                            {% for drug, dose in doses.items() %}
+                                <li>{{ drug }}: {{ dose }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% elif calc_type == "emergency" %}
+                    <div class="emergency-calculations">
+                        <h3>Emergency Drug Doses</h3>
+                        {% if doses %}
+                            {% if doses.Drugs %}
+                                <ul>
+                                    {% for drug, dose in doses.Drugs.items() %}
+                                        <li>{{ drug }}: {{ dose }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% elif calc_type == "RSI and ETT" %}
+                    <div class="rsi-section">
+                        <h3>RSI and ETT Calculations</h3>
+                        {% for category, drugs in doses.items() %}
+                            <div class="calculation-box">
+                                <h4>{{ category }}</h4>
+                                <ul>
+                                    {% for drug, dose in drugs.items() %}
+                                        <li>{{ drug }}: {{ dose }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% elif calc_type == "all_drugs" %}
+                    <div class="all-drugs">
+                        <h3>All Drug Doses</h3>
+                        <ul>
+                            {% for drug, dose in doses.items() %}
+                                <li>{{ drug }}: {{ dose }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% if maintenance_rate %}
+                    <div class="fluid-requirements">
+                        <h3>Fluid Requirements</h3>
+                        {% if bolus_fluids %}
+                            <ul>
+                                {% for bolus, volume in bolus_fluids.items() %}
+                                    <li>{{ bolus }}: {{ volume }} mL</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <div class="rate-box">
+                            <p>Maintenance Rate: {{ maintenance_rate }} mL/hour</p>
+                            <p>Two Thirds Maintenance Rate: {{ two_thirds_maintenance_rate }} mL/hour</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if tbsa and parkland_total_volume %}
+                    <div class="parkland-formula">
+                        <h3>Parkland Formula Results</h3>
+                        <p>Total fluid volume: {{ parkland_total_volume }} mL</p>
+                        <p>First 8 hours: {{ parkland_first_8_hours }} mL ({{ parkland_first_8_hours_rate }} mL/hour)</p>
+                        <p>Next 16 hours: {{ parkland_next_16_hours }} mL ({{ parkland_next_16_hours_rate }} mL/hour)</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    <footer>
+        <p>&copy; 2024 Lincoln Kumbeli - developmental phase, use with caution</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calcTypeInputs = document.querySelectorAll('input[name="calc_type"]');
+            const burnAreaInput = document.getElementById('burn_area_input');
+
+            calcTypeInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    burnAreaInput.style.display = this.value === 'emergency' ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

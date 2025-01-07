@@ -1,0 +1,155 @@
+/* Global font size settings */
+body {
+    font-size: 16px; /* Default font size for the body */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 32px; /* Font size for the main title */
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px; /* Font size for secondary headings */
+}
+
+h3 {
+    font-size: 20px; /* Font size for tertiary headings */
+}
+
+h4 {
+    font-size: 18px; /* Font size for quaternary headings */
+}
+
+p, label, input, a {
+    font-size: 16px; /* Font size for paragraphs, labels, inputs, and links */
+}
+
+.button {
+    font-size: 16px; /* Font size for buttons */
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    flex: 1;
+    /* Remove bottom margin to reduce empty space */
+    margin-bottom: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+li.success {
+    color: green;
+}
+
+li.danger {
+    color: red;
+}
+
+li.info {
+    color: blue;
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #255f4b;
+    color: white;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    /* Ensure footer is always at the bottom */
+    margin-top: auto;
+}
+
+.rate-box {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.bottom-section p {
+    margin: 0;
+    flex: 1;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 10px;
+}

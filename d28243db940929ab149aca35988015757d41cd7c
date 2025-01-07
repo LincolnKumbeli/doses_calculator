@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Specific Calculations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <p><strong>This application is intended for use by healthcare professionals.</strong></p>
+        <h1>Disease Specific Calculations</h1>
+        <form method="post">
+            <p>Select Disease:</p>
+            {% for disease in diseases %}
+            <input type="radio" id="{{ disease }}" name="disease" value="{{ disease }}">
+            <label for="{{ disease }}">{{ disease }}</label><br>
+            {% endfor %}
+            <br>
+            Enter the child's weight in kg: <input type="text" name="weight">
+            <input type="submit" value="Calculate">
+        </form>
+        {% if doses %}
+        <h2>Child's Weight: {{ weight }} kg</h2>
+        <h3>Drugs for: {{ disease }}</h3>
+        <ul>
+            {% for drug, dose in doses.items() %}
+            <li>{{ drug }}: {{ dose }} mg</li>
+            {% endfor %}
+        </ul>
+        {% if disease == "Asthma" %}
+        <h3>IV Fluids</h3>
+        <ul>
+            <li>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</li>
+            <li>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</li>
+        </ul>
+        {% endif %}
+        {% if footnotes %}
+        <h4>Notes:</h4>
+        <ul>
+            {% for note in footnotes %}
+            <li>{{ note }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endif %}
+        <p><strong><a href="/">Go back</a></strong></p>
+    </div>
+    <footer>
+        <p>&copy; 2024 Lincoln Kumbeli - developmental phase, use with caution</p>
+    </footer>
+</body>
+</html>

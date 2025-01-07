@@ -1,0 +1,133 @@
+/* Global font size settings */
+body {
+    font-size: 16px; /* Default font size for the body */
+}
+
+h1 {
+    font-size: 32px; /* Font size for the main title */
+}
+
+h2 {
+    font-size: 24px; /* Font size for secondary headings */
+}
+
+h3 {
+    font-size: 20px; /* Font size for tertiary headings */
+}
+
+h4 {
+    font-size: 18px; /* Font size for quaternary headings */
+}
+
+p, label, input, a {
+    font-size: 16px; /* Font size for paragraphs, labels, inputs, and links */
+}
+
+.button {
+    font-size: 16px; /* Font size for buttons */
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #394e65;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    color: #007bff;
+    text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+form p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+form input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #394e65;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

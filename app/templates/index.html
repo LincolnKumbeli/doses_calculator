@@ -11,79 +11,109 @@
         <h1>PNG Common Drug Doses and Fluid Rate Calculator</h1>
         <form method="post">
             <p>Calculation Type:</p>
-            <input type="radio" id="common" name="calc_type" value="common" checked>
-            <label for="common">Common Calculations</label><br>
-            <input type="radio" id="emergency" name="calc_type" value="emergency">
-            <label for="emergency">Emergency Calculations</label><br>
-            <input type="radio" id="disease" name="calc_type" value="disease">
-            <label for="disease">Go to Disease Conditions</label><br>
-            <br>
-            Enter the child's weight in kg: <input type="text" name="weight">
-            <input type="submit" value="Calculate">
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="common" name="calc_type" value="common" checked>
+                    <label for="common">Common Calculations</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="emergency" name="calc_type" value="emergency">
+                    <label for="emergency">Emergency Calculations</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="disease" name="calc_type" value="disease">
+                    <label for="disease">Go to Disease Conditions</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="rsi" name="calc_type" value="RSI and ETT">
+                    <label for="rsi">RSI and ETT</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="all_drugs" name="calc_type" value="all_drugs">
+                    <label for="all_drugs">All Drugs (Alphabetical Order)</label>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="weight">Enter the child's weight in kg:</label>
+                <input type="text" id="weight" name="weight" required>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="calculate-btn">Calculate Doses</button>
+            </div>
         </form>
-
-        {% if calc_type %}
+        {% if doses %}
             <h2>Child's Weight: {{ weight }} kg</h2>
-            {% if calc_type == "common" %}
-                <h1>Drug Doses (mg)</h1>
-                <ul>
-                    {% for drug, dose in doses.items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
+            
+            {% if calc_type == "all_drugs" %}
+                <h3>All Drug Calculations (Alphabetical Order)</h3>
+                <div class="drugs-list">
+                    {% for drug, dose in doses.items()|sort %}
+                        <div class="drug-item">
+                            <span class="drug-name">{{ drug }}</span>
+                            <span class="drug-dose">{{ dose }}</span>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
 
-                <h1>Fluid Requirements</h1>
-                <ul>
-                    {% for bolus, volume in bolus_fluids.items() %}
-                    <li>{{ bolus }}: {{ volume }} mL</li>
-                    {% endfor %}
-                </ul>
-                <p>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
+            {% elif calc_type == "common" %}
+                <!-- Show common calculations -->
+                {% for drug, dose in doses.items() %}
+                    <div class="drug-item">
+                        <span class="drug-name">{{ drug }}</span>
+                        <span class="drug-dose">{{ dose }}</span>
+                    </div>
+                {% endfor %}
+                
                 <p>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+
             {% elif calc_type == "emergency" %}
-                <h1>Emergency Calculations</h1>
-                
-                <h2>Drugs</h2>
-                <ul>
-                    {% for drug, dose in doses["Drugs"].items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
+                <!-- Show emergency calculations -->
+                {% for drug, dose in doses.items() %}
+                    <div class="drug-item">
+                        <span class="drug-name">{{ drug }}</span>
+                        <span class="drug-dose">{{ dose }}</span>
+                    </div>
+                {% endfor %}
+
+                {% if parkland_data %}
+                    <h2>Parkland Formula Calculations (Burns)</h2>
+                    <ul>
+                        <li>Total Volume (24 hours): {{ parkland_data['total_volume'] }} mL</li>
+                        <li>First 8 Hours Volume: {{ parkland_data['first_8_hours'] }} mL</li>
+                        <li>First 8 Hours Rate: {{ parkland_data['first_8_hours_rate'] }} mL/hour</li>
+                        <li>Next 16 Hours Volume: {{ parkland_data['next_16_hours'] }} mL</li>
+                        <li>Next 16 Hours Rate: {{ parkland_data['next_16_hours_rate'] }} mL/hour</li>
+                    </ul>
+                {% endif %}
+
+            {% elif calc_type == "RSI and ETT" %}
+                <h3>RSI Medications</h3>
+                {% for category, drugs in doses["RSI and ETT Medications"].items() %}
+                    <h4>{{ category }}</h4>
+                    <ul>
+                    {% for drug, dose in drugs.items() %}
+                        <li>{{ drug }}: {{ dose }}</li>
                     {% endfor %}
-                </ul>
-                
-                <h2>RSI and ETT</h2>
-                <h3>Drugs</h3>
+                    </ul>
+                {% endfor %}
+
+                <h3>Endotracheal Tube Information</h3>
                 <ul>
-                    {% for drug, dose in doses["RSI and ETT"]["Drugs"].items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
-                    {% endfor %}
+                    <li>ETT Size: {{ ett_info['Internal Diameter (mm)'] }} mm ID / {{ ett_info['External Diameter (mm)'] }} mm OD</li>
+                    <li>ETT Length: {{ ett_info['At Lip (cm)'] }} cm at lip / {{ ett_info['At Nose (cm)'] }} cm at nose</li>
                 </ul>
-                <h3>ETT Size and Length</h3>
-                <ul>
-                    {% for item, value in doses["RSI and ETT"]["ETT Size and Length"].items() %}
-                    <li>{{ item }}: {{ value }}</li>
-                    {% endfor %}
-                </ul>
-                
-                <h2>Fluid Requirements</h2>
-                <ul>
-                    {% for bolus, volume in bolus_fluids.items() %}
-                    <li>{{ bolus }}: {{ volume }} mL</li>
-                    {% endfor %}
-                </ul>
-                <p>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
-                <p>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+            
             {% elif calc_type == "disease" %}
                 <script>
                     window.location.href = "{{ url_for('disease') }}";
                 </script>
             {% endif %}
+            
             <p><strong><a href="/">Go back</a></strong></p>
         {% endif %}
-
-        <p>Use ⅔ MR for patients having severe malnutrition, heart failure, meningitis or head injury</p>
     </div>
     <footer>
-        <p>&copy; 2024 Lincoln Kumbeli - still under development so use at your own risk</p>
+        <p>&copy; 2024 Lincoln Kumbeli - development phase, use with caution</p>
     </footer>
 </body>
 </html>

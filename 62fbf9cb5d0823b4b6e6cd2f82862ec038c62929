@@ -1,0 +1,233 @@
+from flask import Flask, request, render_template, url_for, redirect
+
+app = Flask(__name__, static_folder='static', template_folder='templates')
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        weight_str = request.form["weight"]
+        calc_type = request.form.get("calc_type")
+
+        print(f"Received calc_type: {calc_type}")  # Debug statement
+        print(f"Received weight: {weight_str}")  # Debug statement
+
+        # Input validation (check for weight as a number)
+        if not calc_type:
+            error_message = "Please select a calculation type."
+            print(error_message)  # Debug statement
+        else:
+            try:
+                weight = float(weight_str)
+            except ValueError:
+                return "Invalid input. Please enter a valid number for weight."
+
+            # Perform calculations based on selection
+            doses = {}
+            bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = {}, None, None
+            if calc_type == "common":
+                doses = calculate_common_doses(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "emergency":
+                doses = calculate_emergency_doses(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "RSI and ETT":
+                doses = calculate_rsi_ett_doses(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "all_drugs":
+                doses = calculate_all_drugs(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "disease":
+                return redirect(url_for('disease'))
+            else:
+                return "Invalid calculation type."
+
+            print(f"Calculated doses: {doses}")  # Debug statement
+
+            return render_template("index.html", doses=doses, bolus_fluids=bolus_fluids, maintenance_rate=maintenance_rate, two_thirds_maintenance_rate=two_thirds_maintenance_rate, weight=weight, calc_type=calc_type)
+    else:
+        return render_template("index.html")
+
+@app.route("/disease", methods=["GET", "POST"])
+def disease():
+    if request.method == "POST":
+        weight_str = request.form["weight"]
+        disease = request.form.get("disease")
+
+        try:
+            weight = float(weight_str)
+        except ValueError:
+            return "Invalid input. Please enter a valid number for weight."
+
+        # Perform calculations based on the selected disease
+        doses = calculate_disease_doses(weight, disease)
+        return render_template("disease.html", doses=doses, weight=weight, disease=disease)
+    else:
+        return render_template("disease.html")
+
+def get_master_doses():
+    return {
+        "Adrenaline infusion (0.15mg/kg in 50mL n/saline at 1-10 mL/hr)": lambda weight: round(0.15 * weight, 2),
+        "Amoxicillin, Flucloxacillin, Chloramphenicol (25mg/kg)": lambda weight: round(25 * weight, 2),
+        "Atropine (0.02mg/kg)": lambda weight: round(0.02 * weight, 2),
+        "Buscopan (0.5mg/kg)": lambda weight: round(0.5 * weight, 2),
+        "Ceftriaxone (50mg/kg)": lambda weight: round(50 * weight, 2),
+        "Crystapen (30mg/kg)": lambda weight: round(30 * weight, 2),
+        "Diazepam (0.2-0.5mg/kg)": lambda weight: f"{round(0.2 * weight, 2)} to {round(0.5 * weight, 2)}",
+        "Etomidate (0.2-0.4mg/kg)": lambda weight: f"{round(0.2 * weight, 2)} to {round(0.4 * weight, 2)}",
+        "Fentanyl (2-4mcg/kg)": lambda weight: f"{round(2 * weight, 2)} to {round(4 * weight, 2)}",
+        "Flagyl (7.5mg/kg)": lambda weight: round(7.5 * weight, 2),
+        "Gentamicin (5-7mg/kg)": lambda weight: f"{round(5 * weight, 2)} to {round(7 * weight, 2)}",
+        "Hydrocortisone (4mg/kg)": lambda weight: round(4 * weight, 2),
+        "Ketamine (1.5-2mg/kg)": lambda weight: f"{round(1.5 * weight, 2)} to {round(2 * weight, 2)}",
+        "Lasix (0.5mg/kg)": lambda weight: round(0.5 * weight, 2),
+        "Lasix (1mg/kg)": lambda weight: round(1 * weight, 2),
+        "Lignocaine (1.5mg/kg)": lambda weight: round(1.5 * weight, 2),
+        "Maxolone (0.1 - 0.3/kg)": lambda weight: f"{round(0.1 * weight, 2)} to {round(0.3 * weight, 2)}",
+        "Midazolam (0.1-0.2mg/kg)": lambda weight: f"{round(0.1 * weight, 2)} to {round(0.2 * weight, 2)}",
+        "Morphine (0.1-0.2mg/kg)": lambda weight: f"{round(0.1 * weight, 2)} to {round(0.2 * weight, 2)}",
+        "Paracetamol 'o' (15mg/kg)": lambda weight: round(15 * weight, 2),
+        "Paracetamol 'PR' (25mg/kg)": lambda weight: round(25 * weight, 2),
+        "Paraldehyde (0.2mL/kg)": lambda weight: round(0.2 * weight, 2),
+        "Pancuronium (0.1mg/kg)": lambda weight: round(0.1 * weight, 2),
+        "Phenobarbitone (20mg/kg)": lambda weight: round(20 * weight, 2),
+        "Phenytoin (20mg/kg)": lambda weight: round(20 * weight, 2),
+        "Propofol (1.5-3mg/kg)": lambda weight: f"{round(1.5 * weight, 2)} to {round(3 * weight, 2)}",
+        "Rocuronium (1mg/kg)": lambda weight: round(1 * weight, 2),
+        "Succinylcholine (1-2mg/kg)": lambda weight: f"{round(1 * weight, 2)} to {round(2 * weight, 2)}",
+        "Thiopental (2-5mg/kg)": lambda weight: f"{round(2 * weight, 2)} to {round(5 * weight, 2)}",
+        "Vecuronium (0.15-0.3mg/kg)": lambda weight: f"{round(0.15 * weight, 2)} to {round(0.3 * weight, 2)}"
+    }
+
+def calculate_common_doses(weight):
+    master_doses = get_master_doses()
+    common_drugs = [
+        "Amoxicillin, Flucloxacillin, Chloramphenicol (25mg/kg)",
+        "Buscopan (0.5mg/kg)",
+        "Ceftriaxone (50mg/kg)",
+        "Crystapen (30mg/kg)",
+        "Flagyl (7.5mg/kg)",
+        "Gentamicin (5-7mg/kg)",
+        "Hydrocortisone (4mg/kg)",
+        "Lasix (0.5mg/kg)",
+        "Lasix (1mg/kg)",
+        "Maxolone (0.1 - 0.3/kg)",
+        "Paracetamol 'o' (15mg/kg)",
+        "Paracetamol 'PR' (25mg/kg)"
+    ]
+    return {drug: master_doses[drug](weight) for drug in common_drugs}
+
+def calculate_emergency_doses(weight):
+    master_doses = get_master_doses()
+    emergency_drugs = [
+        "Adrenaline infusion (0.15mg/kg in 50mL n/saline at 1-10 mL/hr)",
+        "Paraldehyde (0.2mL/kg)",
+        "Diazepam (0.2-0.5mg/kg)",
+        "Phenytoin (20mg/kg)",
+        "Phenobarbitone (20mg/kg)"
+    ]
+    return {"Drugs": {drug: master_doses[drug](weight) for drug in emergency_drugs}}
+
+def calculate_rsi_ett_doses(weight):
+    master_doses = get_master_doses()
+    rsi_ett_drugs = {
+        "Pre-medication": [
+            "Atropine (0.02mg/kg)",
+            "Lignocaine (1.5mg/kg)"
+        ],
+        "Sedatives": [
+            "Thiopental (2-5mg/kg)",
+            "Ketamine (1.5-2mg/kg)",
+            "Propofol (1.5-3mg/kg)",
+            "Etomidate (0.2-0.4mg/kg)",
+            "Midazolam (0.1-0.2mg/kg)",
+            "Morphine (0.1-0.2mg/kg)",
+            "Fentanyl (2-4mcg/kg)"
+        ],
+        "Depolarizing Paralytics": [
+            "Succinylcholine (1-2mg/kg)"
+        ],
+        "Non-Depolarizing Paralytics": [
+            "Vecuronium (0.15-0.3mg/kg)",
+            "Pancuronium (0.1mg/kg)",
+            "Rocuronium (1mg/kg)"
+        ]
+    }
+    return {category: {drug: master_doses[drug](weight) for drug in drugs} for category, drugs in rsi_ett_drugs.items()}
+
+def calculate_all_drugs(weight):
+    master_doses = get_master_doses()
+    all_drugs = master_doses.keys()
+    return {drug: master_doses[drug](weight) for drug in sorted(all_drugs)}
+
+def calculate_fluids(weight):
+    bolus_fluids = {
+        "Bolus (10mL/kg)": 10 * weight,
+        "Bolus (15mL/kg)": 15 * weight,
+        "Bolus (20mL/kg)": 20 * weight,
+    }
+
+    if weight <= 10:
+        maintenance_rate = 4 * weight
+    elif weight <= 30:
+        maintenance_rate = (4 * 10) + (2 * (weight - 10))
+    else:
+        maintenance_rate = (4 * 10) + (2 * 20) + (1 * (weight - 30))
+
+    two_thirds_maintenance_rate = round(maintenance_rate * 2 / 3, 1)
+
+    return bolus_fluids, maintenance_rate, two_thirds_maintenance_rate
+
+def calculate_disease_doses(weight, disease):
+    master_doses = get_master_doses()
+    if disease == "Reactive Airways Disease":
+        disease_drugs = [
+            "Salbutamol (0.15mg/kg)",
+            "Amoxicillin (25mg/kg)",
+            "Hydrocortisone (4mg/kg)"
+        ]
+    elif disease == "Meningitis":
+        disease_drugs = [
+            "Ceftriaxone (50mg/kg)",
+            "Gentamicin (5-7mg/kg)",
+            "Paracetamol (15mg/kg)",
+            "Chloramphenicol (25mg/kg)",
+            "Phenobarbitone (20mg/kg)",
+            "Paraldehyde",
+            "Phenytoin (20mg/kg)"
+        ]
+    elif disease == "Malaria":
+        disease_drugs = [
+            "Artemether (3.2mg/kg)",
+            "Lumefantrine (4mg/kg)"
+        ]
+    elif disease == "Disease 4":
+        disease_drugs = [
+            "Disease 4 Drug A",
+            "Disease 4 Drug B"
+        ]
+    elif disease == "Disease 5":
+        disease_drugs = [
+            "Disease 5 Drug A",
+            "Disease 5 Drug B"
+        ]
+    else:
+        return "Invalid disease selection."
+    
+    return {drug: master_doses[drug](weight) for drug in disease_drugs}
+
+def calculate_paraldehyde_dose(weight):
+    if weight < 6:
+        return "Paraldehyde: 1 ml IM"
+    elif weight < 10:
+        return "Paraldehyde: 1 ½ ml IM"
+    elif weight < 15:
+        return "Paraldehyde: 2 ½ ml IM"
+    elif weight < 20:
+        return "Paraldehyde: 3 ml IM"
+    elif weight < 30:
+        return "Paraldehyde: 4 ml IM"
+    else:
+        return "Paraldehyde: 5 ml IM"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080, debug=True)

@@ -1,0 +1,82 @@
+/* Global font size settings */
+body {
+    font-size: 16px; /* Default font size for the body */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 32px; /* Font size for the main title */
+}
+
+h2 {
+    font-size: 24px; /* Font size for secondary headings */
+}
+
+h3 {
+    font-size: 20px; /* Font size for tertiary headings */
+}
+
+h4 {
+    font-size: 18px; /* Font size for quaternary headings */
+}
+
+p, label, input, a {
+    font-size: 16px; /* Font size for paragraphs, labels, inputs, and links */
+}
+
+.button {
+    font-size: 16px; /* Font size for buttons */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    /* Remove bottom margin to reduce empty space */
+    margin-bottom: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #255f4b;
+    color: white;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    /* Ensure footer is always at the bottom */
+    margin-top: auto;
+}
+
+.rate-box {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

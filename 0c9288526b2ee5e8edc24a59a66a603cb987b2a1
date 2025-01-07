@@ -1,0 +1,375 @@
+from flask import Flask, request, render_template, url_for, redirect
+
+app = Flask(__name__, static_folder='static', template_folder='templates')
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        weight_str = request.form["weight"]
+        calc_type = request.form.get("calc_type")
+        tbsa_str = request.form.get("tbsa")
+
+        print(f"Received calc_type: {calc_type}")  # Debug statement
+        print(f"Received weight: {weight_str}")  # Debug statement
+        if tbsa_str:
+            print(f"Received TBSA: {tbsa_str}")  # Debug statement
+
+        # Input validation (check for weight as a number)
+        if not calc_type:
+            error_message = "Please select a calculation type."
+            print(error_message)  # Debug statement
+        else:
+            try:
+                weight = float(weight_str)
+                tbsa = float(tbsa_str) if tbsa_str else None
+            except ValueError:
+                return "Invalid input. Please enter a valid number for weight and TBSA."
+
+            # Perform calculations based on selection
+            doses = {}
+            bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = {}, None, None
+            ett_data, ett_info, footnotes = None, None, None
+            parkland_total_volume, parkland_first_8_hours, parkland_next_16_hours = None, None, None
+            parkland_first_8_hours_rate, parkland_next_16_hours_rate = None, None
+            parkland_note = None
+            if calc_type == "common":
+                doses = calculate_common_doses(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "emergency":
+                doses = calculate_emergency_doses(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+                if tbsa:
+                    parkland_total_volume, parkland_first_8_hours, parkland_next_16_hours, parkland_first_8_hours_rate, parkland_next_16_hours_rate = calculate_parkland_formula(weight, tbsa)
+                    parkland_note = "Note: For burns, use Lactated Ringer's solution as the preferred choice of crystalloid solution."
+            elif calc_type == "RSI and ETT":
+                doses, ett_info = calculate_rsi_ett_doses(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "all_drugs":
+                doses = calculate_all_drugs(weight)
+                bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+            elif calc_type == "disease":
+                return redirect(url_for('disease'))
+            else:
+                return "Invalid calculation type."
+
+            print(f"Calculated doses: {doses}")  # Debug statement
+
+            return render_template("index.html", doses=doses, bolus_fluids=bolus_fluids, maintenance_rate=maintenance_rate, two_thirds_maintenance_rate=two_thirds_maintenance_rate, weight=weight, calc_type=calc_type, ett_info=ett_info, tbsa=tbsa, parkland_total_volume=parkland_total_volume, parkland_first_8_hours=parkland_first_8_hours, parkland_next_16_hours=parkland_next_16_hours, parkland_first_8_hours_rate=parkland_first_8_hours_rate, parkland_next_16_hours_rate=parkland_next_16_hours_rate, parkland_note=parkland_note if tbsa else None)
+    else:
+        return render_template("index.html")
+
+@app.route("/disease", methods=["GET", "POST"])
+def disease():
+    diseases = sorted([
+        "Reactive Airways Disease",
+        "Meningitis",
+        "Malaria",
+        "Asthma",
+        "Disease 4",
+        "Disease 5"
+    ])
+    if request.method == "POST":
+        weight_str = request.form["weight"]
+        disease = request.form.get("disease")
+
+        print(f"Received disease: {disease}")  # Debug statement
+
+        try:
+            weight = float(weight_str)
+        except ValueError:
+            return "Invalid input. Please enter a valid number for weight."
+
+        if not disease:
+            return "Please select a disease."
+
+        # Perform calculations based on the selected disease
+        try:
+            doses, footnotes = calculate_disease_doses(weight, disease)
+            print(f"Calculated doses: {doses}")  # Debug statement
+        except Exception as e:
+            print(f"Error calculating doses: {e}")  # Debug statement
+            return f"An error occurred while calculating doses: {e}"
+
+        return render_template("disease.html", doses=doses, weight=weight, disease=disease, footnotes=footnotes, diseases=diseases)
+    else:
+        return render_template("disease.html", diseases=diseases)
+
+def get_master_doses():
+    return {
+        # Note about concentrations and source of doses
+        "Note": "DRUGS ARE LISTED BY GENERIC NAME\n1/1000 = 1% (10mg/ml), 1/10000 = 0.1mg/ml\nSource: Drug Doses Frank Shann 2017 Edition",
+        "Adrenaline infusion (0.15mg/kg in 50mL n/saline at 1-10 mL/hr)": lambda weight: round(0.15 * weight, 2),
+        "Amoxicillin (25mg/kg)": lambda weight: round(25 * weight, 2),
+        "Flucloxacillin (25mg/kg)": lambda weight: round(25 * weight, 2),
+        "Chloramphenicol (25mg/kg)": lambda weight: round(25 * weight, 2),
+        "Artemether (3.2mg/kg)": lambda weight: round(3.2 * weight, 2),
+        "Atropine (0.02mg/kg)": lambda weight: round(0.02 * weight, 2),
+        "Buscopan (0.5mg/kg)": lambda weight: round(0.5 * weight, 2),
+        "Ceftriaxone (50mg/kg)": lambda weight: round(50 * weight, 2),
+        "Crystapen (30mg/kg)": lambda weight: round(30 * weight, 2),
+        "Diazepam (0.2-0.5mg/kg)": lambda weight: f"{round(0.2 * weight, 2)} to {round(0.5 * weight, 2)}",
+        "Etomidate (0.2-0.4mg/kg)": lambda weight: f"{round(0.2 * weight, 2)} to {round(0.4 * weight, 2)}",
+        "Fentanyl (2-4mcg/kg)": lambda weight: f"{round(2 * weight, 2)} to {round(4 * weight, 2)}",
+        "Flagyl (7.5mg/kg)": lambda weight: round(7.5 * weight, 2),
+        "Gentamicin (5-7mg/kg)": lambda weight: f"{round(5 * weight, 2)} to {round(7 * weight, 2)}",
+        "Hydrocortisone (4mg/kg)": lambda weight: round(4 * weight, 2),
+        "Ketamine (1.5-2mg/kg)": lambda weight: f"{round(1.5 * weight, 2)} to {round(2 * weight, 2)}",
+        "Lasix (0.5mg/kg)": lambda weight: round(0.5 * weight, 2),
+        "Lasix (1mg/kg)": lambda weight: round(1 * weight, 2),
+        "Lignocaine (1.5mg/kg)": lambda weight: round(1.5 * weight, 2),
+        "Lumefantrine (4mg/kg)": lambda weight: round(4 * weight, 2),
+        "Maxolone (0.1 - 0.3mg/kg)": lambda weight: f"{round(0.1 * weight, 2)} to {round(0.3 * weight, 2)}",
+        "Midazolam (0.1-0.2mg/kg)": lambda weight: f"{round(0.1 * weight, 2)} to {round(0.2 * weight, 2)}",
+        "Morphine (0.1-0.2mg/kg)": lambda weight: f"{round(0.1 * weight, 2)} to {round(0.2 * weight, 2)}",
+        "Paracetamol 'o' (15mg/kg)": lambda weight: round(15 * weight, 2),
+        "Paracetamol 'PR' (25mg/kg)": lambda weight: round(25 * weight, 2),
+        "Paraldehyde (0.2mL/kg)": lambda weight: round(0.2 * weight, 2),
+        "Pancuronium (0.1mg/kg)": lambda weight: round(0.1 * weight, 2),
+        "Phenobarbitone (20mg/kg)": lambda weight: round(20 * weight, 2),
+        "Phenytoin (20mg/kg)": lambda weight: round(20 * weight, 2),
+        "Propofol (1.5-3mg/kg)": lambda weight: f"{round(1.5 * weight, 2)} to {round(3 * weight, 2)}",
+        "Rocuronium (1mg/kg)": lambda weight: round(1 * weight, 2),
+        "Salbutamol (0.15mg/kg)": lambda weight: round(0.15 * weight, 2),
+        "Succinylcholine (1-2mg/kg)": lambda weight: f"{round(1 * weight, 2)} to {round(2 * weight, 2)}",
+        "Thiopental (2-5mg/kg)": lambda weight: f"{round(2 * weight, 2)} to {round(5 * weight, 2)}",
+        "Vecuronium (0.15-0.3mg/kg)": lambda weight: f"{round(0.15 * weight, 2)} to {round(0.3 * weight, 2)}",
+        "Abacavir (ABC) (8mg/kg)": lambda weight: round(8 * weight, 2),
+        "Abacavir 600mg + dolutegravir 50mg + lamivudine 300mg (Adult, NOT/kg: 1 tab daily)": lambda weight: "1 tab daily",
+        "Abacavir 600mg + lamivudine 300mg (>16yr: 1 tab daily)": lambda weight: "1 tab daily",
+        "Abacavir 300mg + lamivudine 150mg + zidovudine 300mg (>40kg: 1 tab 12H)": lambda weight: "1 tab 12H",
+        "Abarelix (Adult, NOT/kg: 1 vial (delivers 100mg) IM on days 1, 15, and 29, and then every 28 days)": lambda weight: "1 vial IM on days 1, 15, and 29, then every 28 days",
+        "Abatacept (NOT/kg: 500mg (40-60kg), 750mg (60-100 kg), 1g (>100kg) IV over 30min day 1, 2wk, 4wk, then every 4wk)": lambda weight: "500mg (40-60kg), 750mg (60-100 kg), 1g (>100kg) IV over 30min day 1, 2wk, 4wk, then every 4wk",
+        "Abciximab (0.25mg/kg IV stat 10min before angioplasty, then 0.2mg/kg/min (max 10mcg/min) IV for 12hr)": lambda weight: f"0.25mg/kg IV stat 10min before angioplasty, then 0.2mg/kg/min (max 10mcg/min) IV for 12hr",
+        "Abiraterone (Adult, NOT/kg: 1g daily + prednisolone 5mg 12H)": lambda weight: "1g daily + prednisolone 5mg 12H",
+        "Acamprosate (Adult, NOT/kg. <60kg: 666mg mane, 333mg noon and nocte. >60kg: 666mg 8H)": lambda weight: "<60kg: 666mg mane, 333mg noon and nocte. >60kg: 666mg 8H",
+        "Acarbose (1-4mg/kg (adult 50-200mg) 8H)": lambda weight: f"{round(1 * weight, 2)} to {round(4 * weight, 2)}",
+        "Acebutolol (4-8mg/kg (adult 200-400mg) 8-24H)": lambda weight: f"{round(4 * weight, 2)} to {round(8 * weight, 2)}",
+        "Acediofenac (2mg/kg (adult 100mg) 12H)": lambda weight: round(2 * weight, 2),
+        "Acemetacin (1.2mg/kg (adult 60mg) 8-12H)": lambda weight: round(1.2 * weight, 2),
+        "Acenocoumarol (See nicoumalone)": lambda weight: "See nicoumalone",
+        "Acetaminophen (See paracetamol)": lambda weight: "See paracetamol",
+        "Acetazolamide (5-10mg/kg (adult 100-250mg) 6-8H (daily for epilepsy), TB hydrocephalus: 25-50mg/kg 6-8H plus frusemide 0.25mg/kg 6H)": lambda weight: f"{round(5 * weight, 2)} to {round(10 * weight, 2)} (daily for epilepsy), {round(25 * weight, 2)} to {round(50 * weight, 2)} plus frusemide 0.25mg/kg 6H (TB hydrocephalus)",
+        "Acetic acid (1% 3 drops/ear 8H)": lambda weight: "1% 3 drops/ear 8H",
+        "Box jellyfish: apply vinegar": lambda weight: "apply vinegar",
+        "Acetohydroxamic acid (5mg/kg (adult 250mg))": lambda weight: round(5 * weight, 2),
+        "Acipimox (5mg/kg)": lambda weight: round(5 * weight, 2),
+        "Acitrelin (0.5-1mg/kg)": lambda weight: f"{round(0.5 * weight, 2)} to {round(1 * weight, 2)}",
+        "Acitretin (0.5-1mg/kg)": lambda weight: f"{round(0.5 * weight, 2)} to {round(1 * weight, 2)}",
+        "Aclidinium (322-400mcg)": lambda weight: f"{round(322 * weight, 2)} to {round(400 * weight, 2)}",
+        "Acriflavine hydrochloride (0.1% solution)": lambda weight: round(0.1 * weight, 2),
+        "Acrivastine (0.15mg/kg)": lambda weight: round(0.15 * weight, 2),
+        "Adalimumab (40mg for 15-30kg, 80mg for >30kg)": lambda weight: f"{round(40 * weight, 2) if 15 <= weight <= 30 else round(80 * weight, 2)}",
+        "Adapalene (0.1% cream/gel/lotion, 0.3% gel)": "Apply 0.1% daily, 0.3% gel daily",
+        "Adefovir (10mg daily oral)": lambda weight: round(10 * weight, 2),
+        "Adenosine (0.1mg/kg)": lambda weight: round(0.1 * weight, 2),
+        "Ado-trastuzumab (3.6mg/kg)": lambda weight: round(3.6 * weight, 2),
+        "Agalsidase alpha (0.2mg/kg)": lambda weight: round(0.2 * weight, 2),
+        "Agalsidase beta (0.2-1mg/kg)": lambda weight: f"{round(0.2 * weight, 2)} to {round(1 * weight, 2)}",
+        "Agar + paraffin 65% (5-10mL)": lambda weight: round(5 * weight, 2) if weight < 5 else round(10 * weight, 2),
+        "Agar + paraffin + phenolphthalein (2.5-5mL)": lambda weight: round(2.5 * weight, 2) if weight < 5 else round(5 * weight, 2),
+        "Agomelatine (25-50mg)": lambda weight: f"{round(25 * weight, 2)} to {round(50 * weight, 2)}",
+        "Albendazole (200mg for <10kg, 400mg for >10kg)": lambda weight: f"{200 if weight < 10 else 400}",
+        "Albumin (20%: 7-5mL/kg IV)": lambda weight: round(7 * weight, 2) if weight < 5 else round(5 * weight, 2),
+        "Aldesleukin (3,000,000-5,000,000 units/m2/day IV)": lambda weight: f"{round(3000000 * weight, 2)} to {round(5000000 * weight, 2)}",
+        "Alendronate (70mg + vitamin D3 2800u)": lambda weight: round(70 * weight, 2),
+        "Alfentanil (10mcg/kg)": lambda weight: round(10 * weight, 2),
+        "Alfuzosin (2.5-10mg)": lambda weight: f"{round(2.5 * weight, 2)} to {round(10 * weight, 2)}",
+        "Alirocumab (150mg SC every 2wk)": lambda weight: round(150 * weight, 2),
+        "Aliskiren (300mg daily oral)": lambda weight: round(300 * weight, 2),
+        "Allopurinol (10-20mg/kg daily oral)": lambda weight: f"{round(10 * weight, 2)} to {round(20 * weight, 2)}",
+        "Almotriptan (6.25-12.5mg)": lambda weight: f"{round(6.25 * weight, 2)} to {round(12.5 * weight, 2)}",
+        "Amiodarone (5-7mg/kg IV)": lambda weight: f"{round(5 * weight, 2)} to {round(7 * weight, 2)}",
+        "Amikacin (15mg/kg IM or IV)": lambda weight: round(15 * weight, 2),
+        "Amlodipine (2.5-10mg daily oral)": lambda weight: f"{round(2.5 * weight, 2)} to {round(10 * weight, 2)}",
+        "Amphotericin B (0.5-1mg/kg)": lambda weight: f"{round(0.5 * weight, 2)} to {round(1 * weight, 2)}",
+        "Aminophylline (5mg/kg)": lambda weight: round(5 * weight, 2),
+        "Oxygen (0.5-2 L/min by nasal prongs or 4-6 L/min by face mask)": lambda weight: "0.5-2 L/min by nasal prongs or 4-6 L/min by face mask",
+        "Salbutamol Respirator Solution (0.5% solution)": lambda weight: "0.5% solution",
+        "Prednisolone (5mg tabs)": lambda weight: "5mg tabs"
+    }
+
+def calculate_common_doses(weight):
+    master_doses = get_master_doses()
+    common_drugs = [
+        "Amoxicillin (25mg/kg)",
+        "Flucloxacillin (25mg/kg)",
+        "Chloramphenicol (25mg/kg)",
+        "Buscopan (0.5mg/kg)",
+        "Ceftriaxone (50mg/kg)",
+        "Crystapen (30mg/kg)",
+        "Flagyl (7.5mg/kg)",
+        "Gentamicin (5-7mg/kg)",
+        "Hydrocortisone (4mg/kg)",
+        "Lasix (0.5mg/kg)",
+        "Lasix (1mg/kg)",
+        "Maxolone (0.1 - 0.3mg/kg)",
+        "Paracetamol 'o' (15mg/kg)",
+        "Paracetamol 'PR' (25mg/kg)"
+    ]
+    return {drug: master_doses[drug](weight) for drug in common_drugs}
+
+def calculate_emergency_doses(weight):
+    master_doses = get_master_doses()
+    emergency_drugs = [
+        "Adrenaline infusion (0.15mg/kg in 50mL n/saline at 1-10 mL/hr)",
+        "Paraldehyde (0.2mL/kg)",
+        "Diazepam (0.2-0.5mg/kg)",
+        "Phenytoin (20mg/kg)",
+        "Phenobarbitone (20mg/kg)"
+    ]
+    return {"Drugs": {drug: master_doses[drug](weight) for drug in emergency_drugs}}
+
+def calculate_rsi_ett_doses(weight):
+    master_doses = get_master_doses()
+    rsi_ett_drugs = {
+        "Pre-medication": [
+            "Atropine (0.02mg/kg)",
+            "Lignocaine (1.5mg/kg)"
+        ],
+        "Sedatives": [
+            "Thiopental (2-5mg/kg)",
+            "Ketamine (1.5-2mg/kg)",
+            "Propofol (1.5-3mg/kg)",
+            "Etomidate (0.2-0.4mg/kg)",
+            "Midazolam (0.1-0.2mg/kg)",
+            "Morphine (0.1-0.2mg/kg)",
+            "Fentanyl (2-4mcg/kg)"
+        ],
+        "Depolarizing Paralytics": [
+            "Succinylcholine (1-2mg/kg)"
+        ],
+        "Non-Depolarizing Paralytics": [
+            "Vecuronium (0.15-0.3mg/kg)",
+            "Pancuronium (0.1mg/kg)",
+            "Rocuronium (1mg/kg)"
+        ]
+    }
+    
+    # Endotracheal Tube Information
+    ett_data = [
+        {"Age": "Birth", "Weight (kg)": "<0.7", "Internal Diameter (mm)": 2.0, "External Diameter (mm)": 2.9, "At Lip (cm)": 6, "At Nose (cm)": 6.5, "Sucker FG": 6},
+        {"Age": "Birth", "Weight (kg)": "<1", "Internal Diameter (mm)": 2.5, "External Diameter (mm)": 3.6, "At Lip (cm)": 6.5, "At Nose (cm)": 7, "Sucker FG": 6},
+        {"Age": "Birth", "Weight (kg)": "1.0", "Internal Diameter (mm)": 3.0, "External Diameter (mm)": 4.3, "At Lip (cm)": 7, "At Nose (cm)": 7.5, "Sucker FG": 7},
+        {"Age": "Birth", "Weight (kg)": "2.0", "Internal Diameter (mm)": 3.0, "External Diameter (mm)": 4.3, "At Lip (cm)": 8, "At Nose (cm)": 9, "Sucker FG": 7},
+        {"Age": "Birth", "Weight (kg)": "3.0", "Internal Diameter (mm)": 3.0, "External Diameter (mm)": 4.3, "At Lip (cm)": 9, "At Nose (cm)": 10.5, "Sucker FG": 7},
+        {"Age": "Birth", "Weight (kg)": "3.5", "Internal Diameter (mm)": 3.5, "External Diameter (mm)": 4.9, "At Lip (cm)": 10, "At Nose (cm)": 11, "Sucker FG": 8},
+        {"Age": "3 months", "Weight (kg)": "6.0", "Internal Diameter (mm)": 3.5, "External Diameter (mm)": 4.9, "At Lip (cm)": 11, "At Nose (cm)": 12, "Sucker FG": 8},
+        {"Age": "1 year", "Weight (kg)": "10", "Internal Diameter (mm)": 4.0, "External Diameter (mm)": 5.6, "At Lip (cm)": 13, "At Nose (cm)": 14, "Sucker FG": 8},
+        {"Age": "2 years", "Weight (kg)": "12", "Internal Diameter (mm)": 4.5, "External Diameter (mm)": 6.2, "At Lip (cm)": 14, "At Nose (cm)": 15, "Sucker FG": 8},
+        {"Age": "3 years", "Weight (kg)": "14", "Internal Diameter (mm)": 4.5, "External Diameter (mm)": 6.2, "At Lip (cm)": 14.5, "At Nose (cm)": 16, "Sucker FG": 8},
+        {"Age": "4 years", "Weight (kg)": "16", "Internal Diameter (mm)": 5.0, "External Diameter (mm)": 6.9, "At Lip (cm)": 15, "At Nose (cm)": 17, "Sucker FG": 10},
+        {"Age": "6 years", "Weight (kg)": "20", "Internal Diameter (mm)": 5.5, "External Diameter (mm)": 7.5, "At Lip (cm)": 16, "At Nose (cm)": 19, "Sucker FG": 10},
+        {"Age": "8 years", "Weight (kg)": "24", "Internal Diameter (mm)": 6.0, "External Diameter (mm)": 8.2, "At Lip (cm)": 17, "At Nose (cm)": 20, "Sucker FG": 10},
+        {"Age": "10 years", "Weight (kg)": "30", "Internal Diameter (mm)": 6.5, "External Diameter (mm)": 8.9, "At Lip (cm)": 18, "At Nose (cm)": 21, "Sucker FG": 12},
+        {"Age": "12 years", "Weight (kg)": "38", "Internal Diameter (mm)": 7.0, "External Diameter (mm)": 9.5, "At Lip (cm)": 19, "At Nose (cm)": 22, "Sucker FG": 12},
+        {"Age": "14 years", "Weight (kg)": "50", "Internal Diameter (mm)": 7.5, "External Diameter (mm)": 10.2, "At Lip (cm)": 20, "At Nose (cm)": 23, "Sucker FG": 12},
+        {"Age": "Adult", "Weight (kg)": "60", "Internal Diameter (mm)": 8.0, "External Diameter (mm)": 10.8, "At Lip (cm)": 21, "At Nose (cm)": 24, "Sucker FG": 12},
+        {"Age": "Adult", "Weight (kg)": "70", "Internal Diameter (mm)": 9.0, "External Diameter (mm)": 12.1, "At Lip (cm)": 21, "At Nose (cm)": 25, "Sucker FG": 12},
+    ]
+
+    # Determine appropriate ETT size and length for the child's weight
+    ett_info = next((ett for ett in ett_data if weight <= float(ett["Weight (kg)"].replace("<", ""))), ett_data[-1])
+
+    return {category: {drug: master_doses[drug](weight) for drug in drugs} for category, drugs in rsi_ett_drugs.items()}, ett_info
+
+def calculate_all_drugs(weight):
+    master_doses = get_master_doses()
+    all_drugs = [drug for drug in master_doses.keys() if callable(master_doses[drug])]
+    return {drug: master_doses[drug](weight) for drug in sorted(all_drugs)}
+
+def calculate_fluids(weight):
+    bolus_fluids = {
+        "Bolus (10mL/kg)": 10 * weight,
+        "Bolus (15mL/kg)": 15 * weight,
+        "Bolus (20mL/kg)": 20 * weight,
+    }
+
+    if weight <= 10:
+        maintenance_rate = 4 * weight
+    elif weight <= 30:
+        maintenance_rate = (4 * 10) + (2 * (weight - 10))
+    else:
+        maintenance_rate = (4 * 10) + (2 * 20) + (1 * (weight - 30))
+
+    two_thirds_maintenance_rate = round(maintenance_rate * 2 / 3, 1)
+
+    return bolus_fluids, maintenance_rate, two_thirds_maintenance_rate
+
+def calculate_disease_doses(weight, disease):
+    master_doses = get_master_doses()
+    footnotes = []
+    if disease == "Reactive Airways Disease":
+        disease_drugs = [
+            "Salbutamol (0.15mg/kg)",
+            "Amoxicillin (25mg/kg)",
+            "Hydrocortisone (4mg/kg)"
+        ]
+    elif disease == "Meningitis":
+        disease_drugs = [
+            "Ceftriaxone (50mg/kg)",
+            "Gentamicin (5-7mg/kg)",
+            "Paracetamol 'o' (15mg/kg)",
+            "Chloramphenicol (25mg/kg)",
+            "Phenobarbitone (20mg/kg)",
+            "Paraldehyde (0.2mL/kg)",
+            "Phenytoin (20mg/kg)"
+        ]
+    elif disease == "Malaria":
+        disease_drugs = [
+            "Artemether (3.2mg/kg)",
+            "Lumefantrine (4mg/kg)"
+        ]
+    elif disease == "Asthma":
+        bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+        disease_drugs = [
+            "Salbutamol (0.15mg/kg)",
+            "Prednisolone (5mg tabs)",
+            "Hydrocortisone (4mg/kg)",
+            "Aminophylline (5mg/kg)",
+            "Crystapen (30mg/kg)",
+            "Amoxicillin (25mg/kg)"
+        ]
+        footnotes.append("Oxygen: 0.5-2 L/min by nasal prongs or 4-6 L/min by face mask")
+        footnotes.append("Salbutamol Respirator Solution: 0.5% solution")
+        footnotes.append("I.V. fluid: Hartman’s solution or 0.45% NaCl + 5% dextrose")
+        footnotes.append("Give aminophylline 6 hourly; add into the burette and add Hartmann’s solution up to the hourly maintenance amount. Run this over one hour, then continue the dextrose saline at maintenance rate. If you do not have a burette, inject the aminophylline intravenously slowly over at least 15 minutes every 6 hours.")
+        footnotes.append("IV Aminophylline can be dangerous – Do not give IV aminophylline if the child has already had aminophylline in the last 4 hours. Stop giving aminophylline if the child gets a headache or starts vomiting.")
+    elif disease == "Disease 4":
+        disease_drugs = [
+            "Disease 4 Drug A",
+            "Disease 4 Drug B"
+        ]
+    elif disease == "Disease 5":
+        disease_drugs = [
+            "Disease 5 Drug A",
+            "Disease 5 Drug B"
+        ]
+    else:
+        raise ValueError("Invalid disease selection.")
+    
+    return {drug: master_doses[drug](weight) if callable(master_doses[drug]) else drug.split(":")[0] + ": " + master_doses[drug] for drug in disease_drugs}, footnotes
+
+def calculate_paraldehyde_dose(weight):
+    if weight < 6:
+        return "Paraldehyde: 1 ml IM"
+    elif weight < 10:
+        return "Paraldehyde: 1 ½ ml IM"
+    elif weight < 15:
+        return "Paraldehyde: 2 ½ ml IM"
+    elif weight < 20:
+        return "Paraldehyde: 3 ml IM"
+    elif weight < 30:
+        return "Paraldehyde: 4 ml IM"
+    else:
+        return "Paraldehyde: 5 ml IM"
+
+def calculate_parkland_formula(weight, tbsa):
+    total_volume = 3 * weight * tbsa
+    first_8_hours = total_volume / 2
+    next_16_hours = total_volume / 2
+    first_8_hours_rate = first_8_hours / 8
+    next_16_hours_rate = next_16_hours / 16
+    return total_volume, first_8_hours, first_8_hours_rate, next_16_hours, next_16_hours_rate
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080, debug=True)

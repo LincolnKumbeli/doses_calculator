@@ -1,53 +1,97 @@
+/* Global font size settings */
 body {
+    font-size: 16px; /* Default font size for the body */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 60px; /* Space for footer */
 }
 
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1, h2, h3 {
-    color: #007bff;
+h1 {
+    font-size: 32px; /* Font size for the main title */
     text-align: center;
 }
 
-form {
-    margin-bottom: 20px;
+h2 {
+    font-size: 24px; /* Font size for secondary headings */
 }
 
-form p {
-    font-size: 18px;
-    margin-bottom: 10px;
+h3 {
+    font-size: 20px; /* Font size for tertiary headings */
 }
 
-form input[type="text"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
+h4 {
+    font-size: 18px; /* Font size for quaternary headings */
+}
+
+p, label, input, a {
+    font-size: 16px; /* Font size for paragraphs, labels, inputs, and links */
+}
+
+.button {
+    font-size: 16px; /* Font size for buttons */
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    flex: 1;
+    /* Remove bottom margin to reduce empty space */
+    margin-bottom: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+    max-width: 100%; /* Ensure container does not exceed viewport width */
+    overflow: hidden; /* Hide overflow content */
+    flex: 1;
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-form input[type="submit"] {
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    max-width: 100%; /* Ensure input does not exceed container width */
+}
+
+input[type="text"]#tbsa {
+    display: none; /* Hide TBSA input by default */
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
     background-color: #007bff;
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-form input[type="submit"]:hover {
+input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
@@ -64,12 +108,129 @@ ul li {
     border-radius: 4px;
 }
 
+li.success {
+    color: green;
+}
+
+li.danger {
+    color: red;
+}
+
+li.info {
+    color: blue;
+}
+
 footer {
     text-align: center;
-    padding: 20px;
-    background-color: #007bff;
+    padding: 5px;
+    background-color: #255f4b;
     color: white;
-    position: fixed;
+    position: relative;
     width: 100%;
     bottom: 0;
+    /* Ensure footer is always at the bottom */
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #255f4b;
+    color: white;
+    text-align: center;
+    z-index: 100;
+}
+
+.rate-box {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.bottom-section p {
+    margin: 0;
+    flex: 1;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Align form labels and input boxes */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Allow wrapping */
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    flex: 0 0 200px; /* Adjust the width as needed */
+    margin-right: 10px;
+}
+
+.form-group input[type="text"] {
+    flex: 0 0 150px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#burn_area_input {
+    display: none;
+}
+
+/* Dark mode input styling */
+[data-theme="dark"] .form-group input[type="text"] {
+    background-color: #404040;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+/* Dark mode text input styling for emergency calculations */
+[data-theme="dark"] .emergency-input input[type="text"] {
+    background-color: #404040;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 5px 0;
+    width: 100%; /* Ensure input does not exceed container width */
+}
+
+/* Layout improvements */
+form {
+    margin-bottom: 30px;
+}
+
+/* Results styling */
+.results-section {
+    margin-top: 30px;
+}
+
+.calculation-box {
+    margin-bottom: 20px;
 }

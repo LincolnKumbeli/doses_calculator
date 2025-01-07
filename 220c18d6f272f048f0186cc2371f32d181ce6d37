@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG Paediatric Drug Doses Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <p>This application is intended for use by healthcare professionals.</p>
+        <p><strong><a href="/">Home</a></strong></p>
+        <h1>PNG Paediatric Drug Doses Calculator</h1>
+        <form method="post">
+            <p>Calculation Type:</p>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="common" name="calc_type" value="common" checked>
+                    <label for="common">Common Calculations</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="emergency" name="calc_type" value="emergency">
+                    <label for="emergency">Emergency Calculations</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="RSI" name="calc_type" value="RSI and ETT">
+                    <label for="RSI">RSI and ETT</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="all_drugs" name="calc_type" value="all_drugs">
+                    <label for="all_drugs">All Drugs (Alphabetical Order)</label>
+                </div>
+            </div>
+            <a href="{{ url_for('disease') }}" class="button">Go to Disease Conditions</a><br>
+            <br>
+            Enter the child's weight in kg: <input type="text" name="weight"><br>
+            <div id="burn_area_input" style="display: none;">
+                Enter the percentage of total body surface area (TBSA) burned: <input type="text" name="tbsa"><br>
+                
+            </div>
+            <input type="submit" value="Calculate">
+        </form>
+
+        {% if calc_type %}
+            <h2>Child's Weight: {{ weight }} kg</h2>
+            {% if calc_type == "common" %}
+                <h2>Drug Doses (mg)</h2>
+                <ul>
+                    {% for drug, dose in doses.items() %}
+                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% endfor %}
+                </ul>
+
+                <h2>Fluid Requirements</h2>
+                <ul>
+                    {% for bolus, volume in bolus_fluids.items() %}
+                    <li>{{ bolus }}: {{ volume }} mL</li>
+                    {% endfor %}
+                </ul>
+                <p class="rate-box">Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
+                <p class="rate-box">Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+            {% elif calc_type == "emergency" %}
+                <h2>Emergency Calculations</h2>
+                
+                <h3>Drugs</h3>
+                {% if "Drugs" in doses %}
+                <ul>
+                    {% for drug, dose in doses["Drugs"].items() %}
+                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                <h3>Fluid Requirements</h3>
+                <ul>
+                    {% for bolus, volume in bolus_fluids.items() %}
+                    <li>{{ bolus }}: {{ volume }} mL</li>
+                    {% endfor %}
+                </ul>
+                <p class="rate-box">Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</p>
+                <p class="rate-box">Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</p>
+
+                {% if tbsa %}
+                <h3>Parkland Formula</h3>
+                <div class="rate-box">
+                    <p>Total fluid volume: {{ parkland_total_volume }} mL</p>
+                    <p>First 8 hours: {{ parkland_first_8_hours }} mL ({{ parkland_first_8_hours_rate }} mL/hour)</p>
+                    <p>Next 16 hours: {{ parkland_next_16_hours }} mL ({{ parkland_next_16_hours_rate }} mL/hour)</p>
+                    <p><small>Note: Use Lactated Ringer's solution as the preferred choice of crystalloid solution.</small></p>
+                </div>
+                {% endif %}
+            {% elif calc_type == "RSI and ETT" %}
+                <h3>RSI and ETT Calculations</h3>
+                <h4>Pre-medication</h4>
+                <ul>
+                    {% for drug, dose in doses["Pre-medication"].items() %}
+                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% endfor %}
+                </ul>
+                <h4>Sedatives</h4>
+                <ul>
+                    {% for drug, dose in doses["Sedatives"].items() %}
+                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% endfor %}
+                </ul>
+                <h4>Depolarizing Paralytics</h4>
+                <ul>
+                    {% for drug, dose in doses["Depolarizing Paralytics"].items() %}
+                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% endfor %}
+                </ul>
+                <h4>Non-Depolarizing Paralytics</h4>
+                <ul>
+                    {% for drug, dose in doses["Non-Depolarizing Paralytics"].items() %}
+                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% endfor %}
+                </ul>
+
+                <h4>Appropriate ETT Size and Length</h4>
+                <div class="rate-box">
+                    <p>Internal Diameter: {{ ett_info["Internal Diameter (mm)"] }} mm</p>
+                    <p>At Lip: {{ ett_info["At Lip (cm)"] }} cm</p>
+                    <p>At Nose: {{ ett_info["At Nose (cm)"] }} cm</p>
+                </div>
+            {% elif calc_type == "all_drugs" %}
+                <h2>All Drugs (Alphabetical Order)</h2>
+                <p>DRUGS ARE LISTED BY GENERIC NAME</p>
+                <p>1/1000 = 1% (10mg/ml), 1/10000 = 0.1mg/ml</p>
+                <p>Source: Drug Doses Frank Shann 2017 Edition</p>
+                <ul>
+                    {% for drug, dose in doses.items() %}
+                    <li>{{ drug }}: {{ dose }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <p><strong><a href="/">Go back</a></strong></p>
+        {% endif %}
+    </div>
+    <footer>
+        <p>&copy; 2024 Lincoln Kumbeli - developmental phase, use with caution</p>
+    </footer>
+    <script>
+        document.getElementById('emergency').addEventListener('change', function() {
+            document.getElementById('burn_area_input').style.display = 'block';
+        });
+        document.querySelectorAll('input[name="calc_type"]').forEach(function(elem) {
+            elem.addEventListener('change', function() {
+                if (this.value !== 'emergency') {
+                    document.getElementById('burn_area_input').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

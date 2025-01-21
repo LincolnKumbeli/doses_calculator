@@ -1,75 +1,659 @@
+:root {
+    --primary-color: #255f4b;
+    --primary-hover: #1a472a;
+    --text-color: #333;
+    --bg-color: #f4f4f4;
+}
+
+/* Global font size settings */
 body {
-    font-family: Arial, sans-serif;
+    font-size: 16px; /* Default font size for the body */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+h1, h2, h3, h4 {
+    color: #255f4b;
+    margin-bottom: 0.8rem;  /* Reduced margin */
+}
+
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4 {
+    color: #4CAF50;
+}
+
+h1 {
+    font-size: clamp(24px, 5vw, 32px); /* Responsive font size for the main title */
+}
+
+h2 {
+    font-size: clamp(20px, 4vw, 24px); /* Responsive font size for secondary headings */
+}
+
+h3 {
+    font-size: clamp(18px, 3.5vw, 20px); /* Responsive font size for tertiary headings */
+}
+
+h4 {
+    font-size: 18px; /* Font size for quaternary headings */
+}
+
+p, label, input, a {
+    font-size: 16px; /* Font size for paragraphs, labels, inputs, and links */
+}
+
+.button {
+    font-size: 16px; /* Font size for buttons */
+}
+
+/* Base container adjustments */
 .container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
-h1, h2, h3 {
-    color: #007bff;
-    text-align: center;
+@media (min-width: 768px) {
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px 30px;
+    }
 }
 
-form {
-    margin-bottom: 20px;
-}
-
-form p {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-form input[type="text"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form input[type="submit"] {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-form input[type="submit"]:hover {
-    background-color: #0056b3;
+body.dark-mode .container {
+    background-color: #2e2e2e;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
 ul {
     list-style-type: none;
     padding: 0;
+    margin: 10px 0;  /* Reduced margin */
 }
 
 ul li {
     background-color: #fff;
-    margin: 5px 0;
-    padding: 10px;
+    margin: 5px 0;  /* Reduced margin */
+    padding: 10px 15px;  /* Reduced padding */
     border: 1px solid #ccc;
     border-radius: 4px;
+    word-break: break-word; /* Responsive list items */
+    hyphens: auto; /* Responsive list items */
+}
+
+body.dark-mode ul li {
+    background-color: #3e3e3e;
+    border-color: #555;
 }
 
 footer {
     text-align: center;
-    padding: 20px;
-    background-color: #007bff;
+    padding: 10px;
+    background-color: var(--primary-color);
     color: white;
-    position: fixed;
     width: 100%;
-    bottom: 0;
+    height: 40px;  /* Fixed height for footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.dark-mode footer {
+    background-color: #1a472a;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+/* Form elements */
+input[type="text"], 
+input[type="number"] {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Standardized form elements */
+input[type="text"], 
+input[type="number"],
+input[type="submit"],
+select {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    width: 100%; /* Responsive form elements */
+    max-width: 300px; /* Responsive form elements */
+    box-sizing: border-box; /* Responsive form elements */
+}
+
+input[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    width: auto;
+    min-width: 100px;
+}
+
+input[type="radio"] {
+    margin-right: 8px;
+    margin-left: 4px;
+}
+
+input[type="radio"] + label {
+    margin-right: 16px;
+}
+
+body.dark-mode input[type="text"], 
+body.dark-mode input[type="number"],
+body.dark-mode input[type="submit"],
+body.dark-mode select {
+    background-color: #3e3e3e;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+body.dark-mode input[type="submit"] {
+    background-color: #4CAF50;
+}
+
+body.dark-mode input[type="submit"]:hover {
+    background-color: #3d8b40;
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 15px;
+}
+
+body.dark-mode input[type="text"], 
+body.dark-mode input[type="number"] {
+    background-color: #3e3e3e;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+/* Theme toggle styles */
+.theme-toggle {
+    position: relative;  /* Changed from absolute */
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+body.dark-mode .theme-toggle {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle img {
+    width: 24px;
+    height: 24px;
+    filter: invert(0);
+}
+
+body.dark-mode .theme-toggle img {
+    filter: invert(1);
+}
+
+/* Links */
+a {
+    color: #255f4b;
+    text-decoration: none;
+}
+
+body.dark-mode a {
+    color: #4CAF50;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 3px 8px;  /* Reduced from 5px 10px */
+    background-color: var(--primary-color);
+    color: #ffffff;  /* Explicit white color for better contrast */
+    border: none;
+    border-radius: 3px;  /* Reduced from 4px */
+    cursor: pointer;
+    margin: 3px 0;  /* Reduced from 5px */
+    font-size: 14px;  /* Reduced from 16px */
+    opacity: 0.9;  /* Makes the button slightly less prominent */
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);  /* Added text shadow for better readability */
+}
+
+body.dark-mode .button {
+    background-color: #4CAF50;
+    opacity: 0.85;
+    color: #ffffff;  /* Explicit white color in dark mode */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);  /* Stronger text shadow in dark mode */
+}
+
+.button:hover {
+    background-color: var(--primary-hover);
+    text-decoration: none;
+    opacity: 1;  /* Full opacity on hover */
+}
+
+body.dark-mode .button:hover {
+    background-color: #3d8b40;
+    opacity: 1;
+}
+
+/* Navigation buttons container */
+.nav-buttons {
+    position: relative;  /* Changed from fixed */
+    width: 100%;
+    max-width: 800px;  /* Match container width */
+    margin: 20px auto 0;  /* Center align and add top margin */
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    margin-bottom: 30px;  /* Increased margin */
+}
+
+/* Home button styling */
+.home-button {
+    position: relative;  /* Changed from absolute */
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: var(--primary-color);
+    color: #ffffff;  /* Explicit white color */
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    opacity: 0.9;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);  /* Add text shadow for better contrast */
+}
+
+body.dark-mode .home-button {
+    background-color: #4CAF50;
+    color: #ffffff;  /* Keep text white in dark mode */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);  /* Stronger text shadow in dark mode */
+}
+
+.home-button:hover {
+    opacity: 1;
+    text-decoration: none;
+    color: #ffffff;  /* Maintain white text on hover */
+}
+
+/* Fluid rates styling */
+.fluid-rates {
+    margin: 15px 0;
+}
+
+.fluid-rates input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: default;
+}
+
+body.dark-mode .fluid-rates input[type="text"] {
+    background-color: #3e3e3e;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+/* Warning message styling */
+.warning-message {
+    background-color: #f8f8f8;  /* Light grey background */
+    color: #666;  /* Darker grey text */
+    padding: 12px 20px;  /* Increased padding */
+    margin-bottom: 30px;  /* Increased margin */
+    text-align: center;
+    border-radius: 4px;
+    font-weight: 500;  /* Slightly less bold */
+    font-size: 14px;
+    border: 1px solid #ddd;  /* Light border */
+}
+
+body.dark-mode .warning-message {
+    background-color: #2a2a2a;  /* Darker background for dark mode */
+    color: #999;  /* Lighter grey text for dark mode */
+    border-color: #444;  /* Darker border for dark mode */
+}
+
+/* Form layout and spacing */
+form {
+    margin: 40px 0;  /* Doubled from 20px */
+}
+
+form p {
+    margin-bottom: 35px;  /* Increased margin */
+    font-weight: bold;
+}
+
+/* Radio button group styling */
+.radio-group {
+    display: grid;
+    grid-template-columns: 1fr; /* Responsive radio group */
+    gap: 10px; /* Responsive radio group */
+    margin-bottom: 20px;
+    padding: 10px 0;  /* Added vertical padding */
+    margin: 15px 0;  /* Reduced margin */
+}
+
+@media (min-width: 768px) {
+    .radio-group {
+        grid-template-columns: repeat(2, 1fr); /* Responsive radio group */
+    }
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;  /* Reduced padding */
+}
+
+input[type="radio"] {
+    margin: 0 10px 0 0;  /* Right margin only */
+}
+
+input[type="radio"] + label {
+    margin: 0;  /* Remove default margins */
+}
+
+/* Weight input group */
+.weight-input {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Weight input and submit button container */
+.weight-input-group {
+    display: flex;
+    flex-direction: column; /* Weight input group responsiveness */
+    gap: 10px; /* Weight input group responsiveness */
+    width: 100%; /* Weight input group responsiveness */
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .weight-input-group {
+        flex-direction: row; /* Weight input group responsiveness */
+        align-items: flex-end; /* Weight input group responsiveness */
+    }
+}
+
+.weight-input-group input[type="submit"] {
+    margin-left: auto;  /* Pushes submit button to the right */
+    width: 120px;
+}
+
+.weight-input-group label {
+    white-space: nowrap;
+}
+
+.weight-input-group input[type="text"] {
+    flex-grow: 1;
+    width: auto;
+}
+
+.input-stack {
+    width: 100%;
+}
+
+/* Bottom input container */
+.bottom-input {
+    width: 100%;
+    padding: 15px 0;  /* Reduced padding */
+    background-color: inherit;
+    border-top: 1px solid #ccc;
+    margin-top: 25px;  /* Reduced margin */
+}
+
+body.dark-mode .bottom-input {
+    border-color: #555;
+}
+
+/* Disease footer styling */
+.disease-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.current-disease {
+    color: #255f4b;
+    font-weight: 500;
+    font-style: italic;
+}
+
+body.dark-mode .disease-footer {
+    border-color: #555;
+}
+
+body.dark-mode .current-disease {
+    color: #4CAF50;
+}
+
+/* Disease display adjustments */
+.disease-content {
+    margin-top: 20px;
+}
+
+/* Results section styling */
+.results-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+    display: grid; /* Results section responsiveness */
+    grid-template-columns: 1fr; /* Results section responsiveness */
+    gap: 20px; /* Results section responsiveness */
+}
+
+@media (min-width: 768px) {
+    .results-section {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Results section responsiveness */
+    }
+}
+
+.footnotes {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+}
+
+.footnote {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+body.dark-mode .footnotes {
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .footnote {
+    color: #999;
+}
+
+/* TBSA input styling */
+.tbsa-input {
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+}
+
+.tbsa-input label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.tbsa-input input[type="text"] {
+    width: 100px;
+}
+
+body.dark-mode .tbsa-input {
+    border-color: #555;
+}
+
+/* Disease page specific styles */
+.disease-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.results-section {
+    margin-top: 20px;
+}
+
+.results-section .drug-section,
+.results-section .fluid-section {
+    margin: 15px 0;
+}
+
+.fluid-section {
+    display: grid; /* Fluid section responsiveness */
+    grid-template-columns: 1fr; /* Fluid section responsiveness */
+    gap: 15px; /* Fluid section responsiveness */
+}
+
+@media (min-width: 768px) {
+    .fluid-section {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Fluid section responsiveness */
+    }
+}
+
+.footnotes {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: inherit;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.footnote {
+    margin: 5px 0;
+    font-size: 14px;
+    color: inherit;
+}
+
+body.dark-mode .disease-section,
+body.dark-mode .footnotes {
+    border-color: #555;
+}
+
+/* Main content wrapper */
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: var(--primary-color);
+    color: white;
+    border-bottom: none;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 0;
+    margin-top: auto;
+}
+
+/* Table styles */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    border-bottom: none;
+}
+
+.table td {
+    vertical-align: middle;
+    border-color: rgba(0,0,0,0.05);
+}
+
+.table tbody tr:hover {
+    background-color: rgba(37, 95, 75, 0.05);
+}
+
+body.dark-mode .table th {
+    background-color: #4CAF50;
+}
+
+body.dark-mode .table td {
+    border-color: rgba(255,255,255,0.05);
+}
+
+body.dark-mode .table tbody tr:hover {
+    background-color: rgba(76, 175, 80, 0.05);
 }

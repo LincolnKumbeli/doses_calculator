@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title text-center mb-0">
+                    <i class="fas fa-heartbeat me-2"></i>Disease Specific Calculations
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="warning-message">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    This application is intended for use by healthcare professionals
+                </div>
+
+                <form method="post" class="needs-validation" novalidate>
+                    <div class="radio-group mb-4">
+                        <h5 class="mb-3">Select Disease:</h5>
+                        {% for disease in [
+                            'Anaemia',
+                            'Asthma',
+                            'Conjunctivitis',
+                            'Malaria',
+                            'Meningitis',
+                            'Pneumonia',
+                            'Reactive Airways Disease',
+                            'Sepsis'
+                        ] %}
+                        <div class="radio-option">
+                            <input type="radio" id="{{ disease|lower }}" name="disease" 
+                                   value="{{ disease }}" class="form-check-input" required
+                                   {% if disease == selected_disease %}checked{% endif %}>
+                            <label class="form-check-label w-100" for="{{ disease|lower }}">{{ disease }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="bottom-input">
+                        <div class="weight-input-group">
+                            <div class="input-stack">
+                                <label for="weight">Weight (kg):</label>
+                                <input type="text" id="weight" name="weight" class="form-control" required placeholder="Enter weight">
+                            </div>
+                            <button type="submit" class="calculate-btn">
+                                <i class="fas fa-calculator me-2"></i>Calculate
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if doses %}
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title text-center mb-0">Results for {{ disease }}</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="mb-3">Child's Weight: {{ weight }} kg</h4>
+
+                <div class="drug-section">
+                    <h5>Drug Doses</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Drug</th>
+                                    <th class="text-end">Calculated Dose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for drug, dose in doses.items() %}
+                                <tr>
+                                    <td>{{ drug }}</td>
+                                    <td class="text-end">{{ dose }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {% if footnotes %}
+                <div class="alert alert-info mt-4">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-info-circle me-2"></i>Clinical Notes:
+                    </h5>
+                    <ul class="list-unstyled mb-0">
+                        {% for note in footnotes %}
+                        <li class="mb-2">• {{ note }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if bolus_fluids %}
+                <div class="fluid-section mt-4">
+                    <h5>Fluid Requirements</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Bolus Options</h6>
+                            <ul class="list-unstyled">
+                                {% for bolus, volume in bolus_fluids.items() %}
+                                <li>{{ bolus }}: {{ volume }} mL</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Maintenance Rates</h6>
+                            <ul class="list-unstyled">
+                                <li>4:2:1 Rule: {{ maintenance_rate }} mL/hour</li>
+                                <li>⅔ Maintenance: {{ two_thirds_maintenance_rate }} mL/hour</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

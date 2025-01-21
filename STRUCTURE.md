@@ -38,10 +38,24 @@ Must always contain:
 - RSI and ETT: Pre-medications, sedatives, paralytics, and ETT sizes
 
 ### Disease Specific Results:
-- Selected disease name
-- Drug doses
-- Clinical notes (if applicable)
-- Fluid calculations (if applicable)
+Must display results in the following order:
+1. Drug Doses:
+   - Table format with drug name and calculated dose
+   - Clear column headers
+   - Organized alphabetically
+
+2. Fluid Requirements (if applicable):
+   - Bolus options
+   - Maintenance rates
+   - Two-thirds maintenance rate
+   - Clear section separation
+
+3. Clinical Notes (if applicable):
+   - Warning messages first
+   - Monitoring requirements
+   - Treatment guidelines
+   - Additional precautions
+   - Clear bullet points
 
 ## 4. Navigation
 Must maintain:

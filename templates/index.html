@@ -28,12 +28,11 @@
                 <input type="radio" id="RSI" name="calc_type" value="RSI and ETT">
                 <label for="RSI">RSI and ETT</label>
             </div>
-        </div>
-
-        <div class="text-center mb-4">
-            <a href="{{ url_for('disease') }}" class="button">
-                <i class="fas fa-heartbeat me-2"></i>Go to Disease Conditions
-            </a>
+            <div class="radio-option disease-link">
+                <a href="{{ url_for('disease') }}" class="btn btn-outline-success w-100">
+                    <i class="fas fa-heartbeat me-2"></i>Go to Disease Conditions
+                </a>
+            </div>
         </div>
 
         <div class="bottom-input">

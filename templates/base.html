@@ -10,37 +10,87 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --warning-color: #ffc107;
-            --info-color: #0dcaf0;
-            --light-bg: #ffffff;
-            --dark-bg: #212529;
+            /* Core colors as defined in STRUCTURE.md */
+            --primary-color: #198754;    /* Bootstrap success green */
+            --secondary-color: #20c997;  /* Teal green */
+            --text-light: #ffffff;       /* White text */
+            --text-dark: #212529;        /* Dark text */
+            --bg-light: #ffffff;         /* Light background */
+            --bg-dark: #2c3034;          /* Dark background */
+            --bg-section: #f8f9fa;       /* Section background */
+            --border-color: rgba(25, 135, 84, 0.2);  /* Green border */
         }
 
+        /* Base styles */
         body {
-            background-color: var(--light-bg);
-            color: #212529;
-            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
         }
 
-        .navbar {
-            background-color: var(--primary-color) !important;
-        }
-
-        .card {
-            background-color: #ffffff;
-            border: 1px solid rgba(25, 135, 84, 0.2);
+        /* Card and section styling */
+        .card, .section {
+            background-color: var(--bg-section);
+            border: 1px solid var(--border-color);
         }
 
         .card-header {
             background-color: var(--primary-color);
-            color: white;
+            color: var(--text-light);
         }
 
-        .btn-primary {
+        /* Table styling */
+        .table {
+            background-color: transparent;
+        }
+
+        .table thead th {
             background-color: var(--primary-color);
+            color: var(--text-light);
+            border-color: var(--border-color);
+        }
+
+        .table tbody td {
+            background-color: transparent;
+            border-color: var (--border-color);
+        }
+
+        /* Dark mode adjustments */
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        body.dark-mode .card,
+        body.dark-mode .section {
+            background-color: var(--bg-dark);
+            border-color: var(--primary-color);
+        }
+
+        body.dark-mode .table {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .table thead th {
+            background-color: var(--primary-color);
+        }
+
+        body.dark-mode .table tbody td {
+            background-color: var(--bg-dark);
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .navbar .nav-link {
+            color: var(--text-light) !important;
+        }
+
+        /* Buttons and interactive elements */
+        .btn-primary, .calculate-btn {
+            background-color: var(--primary-color);
+            color: var(--text-light);
             border-color: var(--primary-color);
         }
 
@@ -51,7 +101,17 @@
 
         .btn-outline-primary:hover {
             background-color: var(--primary-color);
-            color: white;
+            color: var(--text-light);
+        }
+
+        .btn-outline-success {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-success:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
         }
 
         .alert-warning {
@@ -63,7 +123,7 @@
         .alert-info {
             background-color: rgba(32, 201, 151, 0.1);
             border-color: var(--info-color);
-            color: var(--info-color);
+            color: var (--info-color);
         }
 
         .content-wrapper {
@@ -99,9 +159,15 @@
             border-bottom: none;
         }
 
+        .radio-option.disease-link {
+            border-top: 2px solid rgba(25, 135, 84, 0.2);
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
         .button, .calculate-btn {
             background-color: var(--primary-color);
-            color: white;
+            color: var(--text-light);
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
@@ -111,7 +177,7 @@
 
         .button:hover, .calculate-btn:hover {
             background-color: var(--secondary-color);
-            color: white;
+            color: var (--text-light);
         }
 
         .drug-section, .fluid-section {
@@ -123,35 +189,62 @@
 
         /* Dark mode adjustments */
         body.dark-mode {
-            background-color: var(--dark-bg);
-            color: #ffffff;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
         }
 
         body.dark-mode .card {
-            background-color: #2c3034;
+            background-color: var(--bg-dark);
             border-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        body.dark-mode .card-body {
+            background-color: var(--bg-dark);
         }
 
         body.dark-mode .alert {
             background-color: rgba(25, 135, 84, 0.2);
             border-color: var(--primary-color);
-            color: #ffffff;
+            color: var(--text-light);
+        }
+
+        /* Fix for table background in dark mode */
+        body.dark-mode .table {
+            color: var(--text-light);
+            background-color: transparent;
+        }
+
+        body.dark-mode .table thead th {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: var(--text-light);
+            border-color: var(--primary-color);
+        }
+
+        body.dark-mode .table td {
+            background-color: var(--bg-dark);
+            border-color: rgba(25, 135, 84, 0.2);
+        }
+
+        body.dark-mode .table-hover tbody tr:hover {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: var(--text-light);
         }
 
         body.dark-mode .table {
-            color: #ffffff;
+            color: var(--text-light);
         }
 
         body.dark-mode .form-control {
-            background-color: #2c3034;
+            background-color: var(--bg-dark);
             border-color: var(--primary-color);
-            color: #ffffff;
+            color: var(--text-light);
         }
 
         body.dark-mode .form-control:focus {
-            background-color: #2c3034;
+            background-color: var(--bg-dark);
             border-color: var(--secondary-color);
-            color: #ffffff;
+            color: var(--text-light);
         }
 
         body.dark-mode .warning-message,
@@ -164,14 +257,456 @@
 
         body.dark-mode input[type="text"],
         body.dark-mode input[type="number"] {
-            background-color: var(--dark-bg);
+            background-color: var(--bg-dark);
             border-color: var(--primary-color);
-            color: white;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .btn-outline-success {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        body.dark-mode .btn-outline-success:hover {
+            background-color: var(--secondary-color);
+            color: var(--bg-dark);
+        }
+
+        body.dark-mode .radio-option label {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .form-check-label {
+            color: var(--text-light);
+        }
+
+        /* Header consistency */
+        .bg-success {
+            background-color: var(--primary-color) !important;
+        }
+
+        .card-header.bg-success {
+            border-bottom: none;
+        }
+
+        /* Table styles */
+        .table {
+            margin-bottom: 0;
+            background-color: transparent;
+        }
+
+        .table thead th {
+            background-color: var(--table-bg);
+            color: var(--text-light);
+            border-color: var(--border-color);
+        }
+
+        .table tbody td {
+            border-color: var(--border-color);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--table-hover);
+        }
+
+        /* Dark mode specific styles */
+        body.dark-mode .table {
+            color: var(--text-light);
+            background-color: transparent;
+        }
+
+        body.dark-mode .table thead th,
+        body.dark-mode .table tbody td {
+            background-color: var(--table-bg);
+            border-color: var(--border-color);
+        }
+
+        body.dark-mode .table-hover tbody tr:hover {
+            background-color: var(--table-hover);
+            color: var(--text-light);
+        }
+
+        /* Card body background in both modes */
+        .card-body {
+            background-color: var(--card-content-bg);
+            color: var(--text-light);
+        }
+
+        /* Light mode overrides */
+        body:not(.dark-mode) .card-body {
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        body:not(.dark-mode) .table {
+            color: var(--text-dark);
+        }
+
+        body:not(.dark-mode) .table thead th {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        body:not(.dark-mode) .table tbody td {
+            background-color: #ffffff;
+        }
+
+        /* Card and content styling */
+        .card-body {
+            background-color: var(--card-content-bg);
+        }
+
+        .table {
+            background-color: transparent;
+        }
+
+        .table tbody td {
+            background-color: var(--card-content-bg);
+        }
+
+        /* Dark mode adjustments */
+        body.dark-mode .card-body,
+        body.dark-mode .table tbody td,
+        body.dark-mode .drug-section,
+        body.dark-mode .fluid-section {
+            background-color: var(--card-content-dark);
+        }
+
+        body.dark-mode .table {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .table thead th {
+            background-color: rgba(25, 135, 84, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        /* Remove any conflicting background colors */
+        .table-hover tbody tr:hover {
+            background-color: rgba(25, 135, 84, 0.1) !important;
+        }
+
+        /* Navbar styles */
+        .navbar-dark .nav-link {
+            color: #ffffff !important;
+            opacity: 0.9;
+        }
+
+        .navbar-dark .nav-link:hover {
+            opacity: 1;
+        }
+
+        .navbar-dark .btn-link.nav-link {
+            color: #ffffff !important;
+            text-decoration: none;
+        }
+
+        /* Light mode navbar */
+        .navbar-dark {
+            background-color: var(--primary-color) !important;
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+        }
+
+        .navbar-dark .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff !important;  /* Light text for dark navbar */
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            opacity: 1;
+        }
+
+        /* Light theme navbar */
+        .navbar.bg-light {
+            background-color: var(--bg-light) !important;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: var(--primary-color) !important;  /* Dark text for light navbar */
+        }
+
+        .navbar-light .btn-link.nav-link {
+            color: var(--primary-color) !important;
+            text-decoration: none;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
+            color: inherit !important;
+        }
+
+        /* Update navbar styles for light/dark modes */
+        .navbar .nav-link,
+        .navbar .btn-link.nav-link {
+            color: var(--text-light) !important;  /* White text for both light and dark navbar */
+        }
+
+        .navbar .nav-link:hover {
+            opacity: 0.8;
+        }
+
+        /* Override for light theme */
+        body:not(.dark-mode) .navbar .nav-link,
+        body:not(.dark-mode) .navbar .btn-link.nav-link {
+            color: var(--text-light) !important;  /* Keep white text in light mode */
+        }
+
+        /* Unified section styling */
+        .card-body,
+        .drug-section,
+        .fluid-section,
+        .results-section .table,
+        .clinical-notes {
+            background-color: var(--section-bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        /* Table styling */
+        .table {
+            background-color: transparent;
+        }
+
+        .table tbody td {
+            background-color: transparent;
+        }
+
+        /* Dark mode section backgrounds */
+        body.dark-mode .card-body,
+        body.dark-mode .drug-section,
+        body.dark-mode .fluid-section,
+        body.dark-mode .results-section .table,
+        body.dark-mode .clinical-notes {
+            background-color: var(--section-bg-dark);
+            color: var(--text-light);
+        }
+
+        body.dark-mode .table tbody td {
+            background-color: transparent;
+        }
+
+        /* Update table text colors for dark mode */
+        body.dark-mode .table,
+        body.dark-mode .table th,
+        body.dark-mode .table td,
+        body.dark-mode .card-body,
+        body.dark-mode .results-section,
+        body.dark-mode .drug-section,
+        body.dark-mode .fluid-section,
+        body.dark-mode .clinical-notes {
+            color: var(--text-light) !important;
+        }
+
+        /* Ensure list items in drug sections are also white in dark mode */
+        body.dark-mode .drug-section ul li,
+        body.dark-mode .fluid-section ul li,
+        body.dark-mode .clinical-notes ul li {
+            color: var(--text-light);
+        }
+
+        /* Make sure table hover doesn't affect text color */
+        body.dark-mode .table-hover tbody tr:hover {
+            color: var(--text-light) !important;
+        }
+
+        /* Updated navbar styles */
+        .navbar-brand, 
+        .navbar-dark .navbar-nav .nav-link,
+        .navbar-dark .btn-link.nav-link {
+            color: var(--text-dark) !important;
+            transition: opacity 0.2s;
+        }
+
+        /* Dark mode navbar */
+        body.dark-mode .navbar-brand,
+        body.dark-mode .navbar-nav .nav-link,
+        body.dark-mode .btn-link.nav-link {
+            color: var(--text-light) !important;
+        }
+
+        /* Light mode navbar */
+        body:not(.dark-mode) .navbar-brand,
+        body:not(.dark-mode) .navbar-nav .nav-link,
+        body:not(.dark-mode) .btn-link.nav-link {
+            color: var(--text-dark) !important;
+        }
+
+        /* Hover effects */
+        .navbar-brand:hover,
+        .navbar-nav .nav-link:hover,
+        .btn-link.nav-link:hover {
+            opacity: 0.8;
+        }
+
+        /* Updated navbar styles for consistent colors */
+        .navbar-brand, 
+        .navbar-dark .navbar-nav .nav-link,
+        .navbar-dark .btn-link.nav-link {
+            color: var(--text-light) !important;  /* Default white for navbar */
+            transition: opacity 0.2s;
+        }
+
+        /* Light mode - make all navbar items the same color */
+        body:not(.dark-mode) .navbar-brand,
+        body:not(.dark-mode) .navbar-nav .nav-link,
+        body:not(.dark-mode) .btn-link.nav-link,
+        body:not(.dark-mode) #themeToggle {
+            color: var(--text-light) !important;  /* Keep white text in light mode */
+        }
+
+        /* Dark mode - keep white text */
+        body.dark-mode .navbar-brand,
+        body.dark-mode .navbar-nav .nav-link,
+        body.dark-mode .btn-link.nav-link,
+        body.dark-mode #themeToggle {
+            color: var(--text-light) !important;
+        }
+
+        /* Hover effects */
+        .navbar-brand:hover,
+        .navbar-nav .nav-link:hover,
+        .btn-link.nav-link:hover,
+        #themeToggle:hover {
+            opacity: 0.8;
+        }
+
+        /* Updated navbar styles with grey text */
+        .navbar-brand, 
+        .navbar-dark .navbar-nav .nav-link,
+        .navbar-dark .btn-link.nav-link,
+        #themeToggle {
+            color: #6c757d !important;  /* Bootstrap grey color */
+            transition: opacity 0.2s;
+        }
+
+        /* Dark mode - keep white text */
+        body.dark-mode .navbar-brand,
+        body.dark-mode .navbar-nav .nav-link,
+        body.dark-mode .btn-link.nav-link,
+        body.dark-mode #themeToggle {
+            color: var(--text-light) !important;
+        }
+
+        /* Remove any conflicting navbar color styles */
+        .navbar .nav-link,
+        .navbar .btn-link.nav-link,
+        body:not(.dark-mode) .navbar-brand,
+        body:not(.dark-mode) .navbar-nav .nav-link,
+        body:not(.dark-mode) .btn-link.nav-link,
+        body:not(.dark-mode) #themeToggle {
+            color: #6c757d !important;
+        }
+
+        /* Hover effects - slightly darker grey in light mode */
+        .navbar-brand:hover,
+        .navbar-nav .nav-link:hover,
+        .btn-link.nav-link:hover,
+        #themeToggle:hover {
+            color: #495057 !important;
+            opacity: 1;
+        }
+
+        /* Dark mode hover - keep white with opacity */
+        body.dark-mode .navbar-brand:hover,
+        body.dark-mode .navbar-nav .nav-link:hover,
+        body.dark-mode .btn-link.nav-link:hover,
+        body.dark-mode #themeToggle:hover {
+            color: var(--text-light) !important;
+            opacity: 0.8;
+        }
+
+        /* Updated navbar styles with better contrast */
+        .navbar-brand {
+            color: var(--text-light) !important;  /* White color for better contrast */
+            transition: opacity 0.2s;
+        }
+
+        /* Keep nav links grey in light mode */
+        .navbar-dark .navbar-nav .nav-link,
+        .navbar-dark .btn-link.nav-link,
+        #themeToggle {
+            color: #6c757d !important;
+        }
+
+        /* Hover effects for brand and nav items */
+        .navbar-brand:hover {
+            color: var(--text-light) !important;
+            opacity: 0.8;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .btn-link.nav-link:hover,
+        #themeToggle:hover {
+            color: #495057 !important;
+            opacity: 1;
+        }
+
+        /* Dark mode styles remain unchanged */
+        body.dark-mode .navbar-brand,
+        body.dark-mode .navbar-nav .nav-link,
+        body.dark-mode .btn-link.nav-link,
+        body.dark-mode #themeToggle {
+            color: var(--text-light) !important;
+        }
+
+        /* Updated navbar styles with black text */
+        .navbar-brand, 
+        .navbar-dark .navbar-nav .nav-link,
+        .navbar-dark .btn-link.nav-link,
+        #themeToggle {
+            color: var(--text-dark) !important;  /* Black text */
+            transition: opacity 0.2s;
+        }
+
+        /* Keep nav links black in light mode */
+        .navbar .nav-link,
+        .navbar .btn-link.nav-link,
+        body:not(.dark-mode) .navbar-brand,
+        body:not(.dark-mode) .navbar-nav .nav-link,
+        body:not(.dark-mode) .btn-link.nav-link,
+        body:not(.dark-mode) #themeToggle {
+            color: var(--text-dark) !important;  /* Black text in light mode */
+        }
+
+        /* Hover effects - slightly lighter black in light mode */
+        .navbar-brand:hover,
+        .navbar-nav .nav-link:hover,
+        .btn-link.nav-link:hover,
+        #themeToggle:hover {
+            color: #495057 !important;
+            opacity: 0.8;
+        }
+
+        /* Dark mode - keep white text */
+        body.dark-mode .navbar-brand,
+        body.dark-mode .navbar-nav .nav-link,
+        body.dark-mode .btn-link.nav-link,
+        body.dark-mode #themeToggle {
+            color: var(--text-light) !important;
+        }
+
+        /* Dark mode hover - keep white with opacity */
+        body.dark-mode .navbar-brand:hover,
+        body.dark-mode .navbar-nav .nav-link:hover,
+        body.dark-mode .btn-link.nav-link:hover,
+        body.dark-mode #themeToggle:hover {
+            color: var(--text-light) !important;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <i class="fas fa-pills me-2"></i>PNG Drug Doses Calculator
@@ -188,8 +723,8 @@
                         <a class="nav-link" href="/disease"><i class="fas fa-heartbeat me-1"></i>Diseases</a>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-link nav-link" onclick="toggleTheme()">
-                            <i class="fas fa-moon me-1"></i>Theme
+                        <button class="btn btn-link nav-link" onclick="toggleTheme()" id="themeToggle">
+                            <i class="fas fa-sun me-1"></i>Light
                         </button>
                     </li>
                 </ul>
@@ -220,13 +755,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            body.classList.toggle('dark-mode');
+            
+            // Update button content based on theme
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-moon me-1"></i>Dark';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-sun me-1"></i>Light';
+            }
+            
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
         }
 
         // Check for saved theme preference
         if (localStorage.getItem('darkMode') === 'true') {
             document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon me-1"></i>Dark';
         }
     </script>
 </body>

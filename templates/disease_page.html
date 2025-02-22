@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+            <h4 class="card-title">{{ disease }} Management Protocol</h4>
+        </div>
+        <div class="card-body">
+            <p>{{ management_protocol | safe }}</p>  <!-- Allow HTML rendering -->
+            <a href="{{ url_for('disease') }}" class="btn btn-outline-success mt-3">Back to Disease Categories</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

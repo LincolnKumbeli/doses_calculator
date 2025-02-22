@@ -657,3 +657,22 @@ body.dark-mode .table td {
 body.dark-mode .table tbody tr:hover {
     background-color: rgba(76, 175, 80, 0.05);
 }
+
+/* Disease Dropdown Layout */
+.disease-dropdowns {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns for dropdowns */
+    gap: 15px; /* Spacing between columns */
+}
+
+.disease-dropdowns .category {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Space between label and dropdown */
+}
+
+@media (max-width: 1200px) {
+    .disease-dropdowns {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+}

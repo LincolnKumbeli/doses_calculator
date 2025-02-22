@@ -15,38 +15,22 @@
                     <i class="fas fa-exclamation-triangle me-2"></i>
                     This application is intended for use by healthcare professionals
                 </div>
-
-                <form method="post" class="needs-validation" novalidate>
-                    <div class="radio-group mb-4">
-                        <h5 class="mb-3">Select Disease:</h5>
-                        {% for disease in [
-                            'Anaemia',
-                            'Asthma',
-                            'Conjunctivitis',
-                            'Malaria',
-                            'Meningitis',
-                            'Pneumonia',
-                            'Reactive Airways Disease',
-                            'Sepsis'
-                        ] %}
-                        <div class="radio-option">
-                            <input type="radio" id="{{ disease|lower }}" name="disease" 
-                                   value="{{ disease }}" class="form-check-input" required
-                                   {% if disease == selected_disease %}checked{% endif %}>
-                            <label class="form-check-label w-100" for="{{ disease|lower }}">{{ disease }}</label>
-                        </div>
-                        {% endfor %}
-                    </div>
-
-                    <div class="bottom-input">
-                        <div class="weight-input-group">
-                            <div class="input-stack">
-                                <label for="weight">Weight (kg):</label>
-                                <input type="text" id="weight" name="weight" class="form-control" required placeholder="Enter weight">
-                            </div>
-                            <button type="submit" class="calculate-btn">
-                                <i class="fas fa-calculator me-2"></i>Calculate
-                            </button>
+                <form method="POST" id="diseaseForm">
+                    <div class="disease-dropdowns">
+                        <div class="row">
+                            {% for category, subcategories in categories.items() %}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="disease_{{ category }}">{{ category }}</label>
+                                        <select class="form-control" id="disease_{{ category }}" name="disease" style="background-color: #255f4b; color: #fff;" onchange="location = this.value;">
+                                            <option value="" disabled selected>&#9662;</option>
+                                            {% for subcategory in subcategories %}
+                                                <option value="{{ url_for('disease_page', disease=subcategory) }}">{{ subcategory }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </form>

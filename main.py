@@ -24,6 +24,90 @@ app.secret_key = 'your_secret_key_here'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
+def calculate_ett_size(weight):
+    """Calculate ETT size and details based on weight"""
+    if weight < 3:
+        return {
+            "Age": "Newborn < 3kg",
+            "Internal Diameter (mm)": 3.0,
+            "External Diameter (mm)": 4.2,
+            "Length at Lip (cm)": 9,
+            "Length at Nose (cm)": 10.5,
+            "Sucker Size (FG)": 6
+        }
+    elif weight < 4:
+        return {
+            "Age": "Newborn 3-4kg",
+            "Internal Diameter (mm)": 3.5,
+            "External Diameter (mm)": 4.8,
+            "Length at Lip (cm)": 10,
+            "Length at Nose (cm)": 11.5,
+            "Sucker Size (FG)": 8
+        }
+    elif weight < 6:
+        return {
+            "Age": "3-6 months",
+            "Internal Diameter (mm)": 3.5,
+            "External Diameter (mm)": 4.8,
+            "Length at Lip (cm)": 11,
+            "Length at Nose (cm)": 12.5,
+            "Sucker Size (FG)": 8
+        }
+    elif weight < 8:
+        return {
+            "Age": "6-12 months",
+            "Internal Diameter (mm)": 4.0,
+            "External Diameter (mm)": 5.5,
+            "Length at Lip (cm)": 12,
+            "Length at Nose (cm)": 14,
+            "Sucker Size (FG)": 8
+        }
+    elif weight < 10:
+        return {
+            "Age": "1-2 years",
+            "Internal Diameter (mm)": 4.5,
+            "External Diameter (mm)": 6.2,
+            "Length at Lip (cm)": 13,
+            "Length at Nose (cm)": 15,
+            "Sucker Size (FG)": 10
+        }
+    elif weight < 12:
+        return {
+            "Age": "2-3 years",
+            "Internal Diameter (mm)": 5.0,
+            "External Diameter (mm)": 6.9,
+            "Length at Lip (cm)": 14,
+            "Length at Nose (cm)": 16,
+            "Sucker Size (FG)": 10
+        }
+    elif weight < 14:
+        return {
+            "Age": "3-4 years",
+            "Internal Diameter (mm)": 5.5,
+            "External Diameter (mm)": 7.5,
+            "Length at Lip (cm)": 15,
+            "Length at Nose (cm)": 17,
+            "Sucker Size (FG)": 12
+        }
+    elif weight < 16:
+        return {
+            "Age": "4-5 years",
+            "Internal Diameter (mm)": 6.0,
+            "External Diameter (mm)": 8.2,
+            "Length at Lip (cm)": 16,
+            "Length at Nose (cm)": 18,
+            "Sucker Size (FG)": 14
+        }
+    else:
+        return {
+            "Age": "5+ years",
+            "Internal Diameter (mm)": 6.5,
+            "External Diameter (mm)": 8.9,
+            "Length at Lip (cm)": 17,
+            "Length at Nose (cm)": 19,
+            "Sucker Size (FG)": 14
+        }
+
 def calculate_doses(weight, category):
     """ Returns calculated drug doses based on weight, capped at max dose if available """
     if category not in drug_data:
@@ -77,9 +161,13 @@ def index():
         # Perform calculations based on selection
         doses = calculate_doses(weight, calc_type)
         bolus_fluids, maintenance_rate, two_thirds_maintenance_rate, parkland_data = {}, None, None, None
+        ett_info = None
 
         if calc_type in ["common", "emergency", "rsi_ett_drugs"]:
             bolus_fluids, maintenance_rate, two_thirds_maintenance_rate = calculate_fluids(weight)
+
+        if calc_type == "rsi_ett_drugs":
+            ett_info = calculate_ett_size(weight)
 
         if calc_type == "emergency" and tbsa:
             total_volume, first_8_hours, first_8_hours_rate, next_16_hours, next_16_hours_rate = calculate_parkland_formula(weight, tbsa)
@@ -97,6 +185,7 @@ def index():
             maintenance_rate=maintenance_rate if calc_type in ["common", "emergency", "rsi_ett_drugs"] else None, 
             two_thirds_maintenance_rate=two_thirds_maintenance_rate if calc_type in ["common", "emergency", "rsi_ett_drugs"] else None, 
             parkland_data=parkland_data,
+            ett_info=ett_info,
             weight=weight, 
             calc_type=calc_type
         )

@@ -54,5 +54,16 @@ drug_data = {
         'Salbutamol (Ventolin)': {'dose_per_kg': 0.15, 'max_dose': 0.15, 'frequency': 'PRN', 'route': 'oral', 'duration': 'as required'},  # 0.15mg, oral; respiratory solution diluted in 4ml normal saline, as required
         'Tinidazole': {'dose_per_kg': 500, 'max_dose': 500, 'frequency': 'daily', 'route': 'oral', 'duration': 'varies'},  # 500mg daily, oral, course varies by indication
         'Zinc': {'fixed_dose': {10: 10, 20: 20}, 'frequency': 'daily', 'route': 'oral', 'duration': 'as required'}  # 5-10mg daily, oral, as required
+    },
+    'emergency': {
+        'Adrenaline': {'dose_per_kg': 0.01, 'max_dose': 1, 'frequency': 'PRN', 'route': 'IM/IV'},
+        'Atropine': {'dose_per_kg': 0.02, 'max_dose': 0.6, 'frequency': 'PRN', 'route': 'IV'},
+        'Diazepam': {'dose_per_kg': 0.25, 'max_dose': 10, 'frequency': 'PRN', 'route': 'IV/PR'},
+        'Hydrocortisone': {'dose_per_kg': 4, 'max_dose': 100, 'frequency': 'PRN', 'route': 'IV'}
+    },
+    'rsi_ett_drugs': {
+        'Ketamine': {'dose_per_kg': 2, 'max_dose': 100, 'frequency': 'Once', 'route': 'IV'},
+        'Atropine': {'dose_per_kg': 0.02, 'max_dose': 0.6, 'frequency': 'Once', 'route': 'IV'},
+        'Morphine': {'dose_per_kg': 0.1, 'max_dose': 10, 'frequency': 'PRN', 'route': 'IV'}
     }
 }

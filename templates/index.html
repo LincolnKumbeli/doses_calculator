@@ -25,8 +25,8 @@
                 <label for="emergency">Emergency Calculations</label>
             </div>
             <div class="radio-option">
-                <input type="radio" id="RSI" name="calc_type" value="RSI and ETT">
-                <label for="RSI">RSI and ETT</label>
+                <input type="radio" id="rsi_ett_drugs" name="calc_type" value="rsi_ett_drugs">
+                <label for="rsi_ett_drugs">RSI and ETT</label>
             </div>
             <div class="radio-option disease-link">
                 <a href="{{ url_for('disease') }}" class="btn btn-outline-success w-100">
@@ -65,7 +65,7 @@
             <ul>
                 {% for drug, dose in doses.items() %}
                     {% if drug != "Note" %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
+                    <li>{{ drug }}: {{ dose }}</li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -78,7 +78,7 @@
             <h2>Drug Doses (mg)</h2>
             <ul>
                 {% for drug, dose in doses.items() %}
-                <li>{{ drug }}: {{ dose }} mg</li>
+                <li>{{ drug }}: {{ dose }}</li>
                 {% endfor %}
             </ul>
 
@@ -102,13 +102,11 @@
             
             <div class="drug-section">
                 <h3>Drugs</h3>
-                {% if "Drugs" in doses %}
                 <ul>
-                    {% for drug, dose in doses["Drugs"].items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% for drug, dose in doses.items() %}
+                    <li>{{ drug }}: {{ dose }}</li>
                     {% endfor %}
                 </ul>
-                {% endif %}
             </div>
             
             <h2>Fluid Requirements</h2>
@@ -135,55 +133,45 @@
                     <li>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</li>
                 </ul>
             </div>
-        {% elif calc_type == "RSI and ETT" %}
+        {% elif calc_type == "rsi_ett_drugs" %}
             <h3>RSI and ETT Calculations</h3>
             
-            <!-- Add ETT Info Section -->
+            <div class="drug-section">
+                <h3>Drug Doses</h3>
+                <ul>
+                    {% for drug, dose in doses.items() %}
+                    <li>{{ drug }}: {{ dose }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
             {% if ett_info %}
             <div class="drug-section">
-                <h4>Endotracheal Tube Information</h4>
+                <h3>Endotracheal Tube Information</h3>
                 <ul>
                     <li>Age Group: {{ ett_info["Age"] }}</li>
-                    <li>Weight Range: {{ ett_info["Weight (kg)"] }} kg</li>
                     <li>Internal Diameter: {{ ett_info["Internal Diameter (mm)"] }} mm</li>
                     <li>External Diameter: {{ ett_info["External Diameter (mm)"] }} mm</li>
-                    <li>Length at Lip: {{ ett_info["At Lip (cm)"] }} cm</li>
-                    <li>Length at Nose: {{ ett_info["At Nose (cm)"] }} cm</li>
-                    <li>Sucker Size: {{ ett_info["Sucker FG"] }} FG</li>
+                    <li>Length at Lip: {{ ett_info["Length at Lip (cm)"] }} cm</li>
+                    <li>Length at Nose: {{ ett_info["Length at Nose (cm)"] }} cm</li>
+                    <li>Sucker Size: {{ ett_info["Sucker Size (FG)"] }} FG</li>
                 </ul>
             </div>
             {% endif %}
-            
-            <div class="drug-section">
-                <h4>Pre-medication</h4>
+
+            <h2>Fluid Requirements</h2>
+            <div class="fluid-section">
+                <h3>Bolus Options</h3>
                 <ul>
-                    {% for drug, dose in doses["Pre-medication"].items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
+                    {% for bolus, volume in bolus_fluids.items() %}
+                    <li>{{ bolus }}: {{ volume }} mL</li>
                     {% endfor %}
                 </ul>
-            </div>
-            <div class="drug-section">
-                <h4>Sedatives</h4>
+
+                <h3>Maintenance Rates</h3>
                 <ul>
-                    {% for drug, dose in doses["Sedatives"].items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="drug-section">
-                <h4>Depolarizing Paralytics</h4>
-                <ul>
-                    {% for drug, dose in doses["Depolarizing Paralytics"].items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="drug-section">
-                <h4>Non-Depolarizing Paralytics</h4>
-                <ul>
-                    {% for drug, dose in doses["Non-Depolarizing Paralytics"].items() %}
-                    <li>{{ drug }}: {{ dose }} mg</li>
-                    {% endfor %}
+                    <li>Maintenance Rate (4:2:1 Rule): {{ maintenance_rate }} mL/hour</li>
+                    <li>Two Thirds Maintenance Rate (⅔ MR): {{ two_thirds_maintenance_rate }} mL/hour</li>
                 </ul>
             </div>
         {% endif %}

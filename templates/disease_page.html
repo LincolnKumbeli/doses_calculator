@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="content-wrapper">
-    <div class="card shadow-sm mb-4">
-        <div class="card-header bg-success text-white">
-            <h4 class="card-title">{{ disease }} Management Protocol</h4>
-        </div>
-        <div class="card-body">
-            <p>{{ management_protocol | safe }}</p>  <!-- Allow HTML rendering -->
-            <a href="{{ url_for('disease') }}" class="btn btn-outline-success mt-3">Back to Disease Categories</a>
-        </div>
-    </div>
+<div class="container mt-4">
+    <a href="{{ url_for('disease') }}" class="btn btn-primary text-white mb-3">
+        <i class="fas fa-arrow-left"></i> Back to Disease List
+    </a>
+    
+    <h2 class="mb-4">{{ disease }}</h2>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if calculator_results %}
+        {{ calculator_results | safe }}
+    {% endif %}
+    
+    {{ management_protocol | safe }}
 </div>
 {% endblock %}

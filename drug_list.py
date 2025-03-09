@@ -62,8 +62,26 @@ drug_data = {
         'Hydrocortisone': {'dose_per_kg': 4, 'max_dose': 100, 'frequency': 'PRN', 'route': 'IV'}
     },
     'rsi_ett_drugs': {
-        'Ketamine': {'dose_per_kg': 2, 'max_dose': 100, 'frequency': 'Once', 'route': 'IV'},
-        'Atropine': {'dose_per_kg': 0.02, 'max_dose': 0.6, 'frequency': 'Once', 'route': 'IV'},
-        'Morphine': {'dose_per_kg': 0.1, 'max_dose': 10, 'frequency': 'PRN', 'route': 'IV'}
+        'premedication': {
+            'Atropine': {'dose_per_kg': 0.02, 'max_dose': 0.6, 'frequency': 'Once', 'route': 'IV'},
+            'Lidocaine': {'dose_per_kg': 1, 'max_dose': 30, 'frequency': 'Once', 'route': 'IV'}
+        },
+        'sedatives': {
+            'Thiopental': {'dose_per_kg': [2, 5], 'max_dose': 150, 'frequency': 'Once', 'route': 'IV'},
+            'Etomidate': {'dose_per_kg': [0.2, 0.4], 'max_dose': 12, 'frequency': 'Once', 'route': 'IV'},
+            'Ketamine': {'dose_per_kg': [1.5, 2], 'max_dose': 60, 'frequency': 'Once', 'route': 'IV'},
+            'Propofol': {'dose_per_kg': [1.5, 3], 'max_dose': 90, 'frequency': 'Once', 'route': 'IV'},
+            'Midazolam': {'dose_per_kg': [0.1, 0.2], 'max_dose': 6, 'frequency': 'Once', 'route': 'IV'},
+            'Fentanyl': {'dose_per_kg': [0.002, 0.004], 'max_dose': 0.12, 'frequency': 'Once', 'route': 'IV', 'units': 'mg'},
+            'Morphine': {'dose_per_kg': [0.1, 0.2], 'max_dose': 6, 'frequency': 'Once', 'route': 'IV'}
+        },
+        'depolarizing_paralytics': {
+            'Succinylcholine': {'dose_per_kg': [1, 2], 'max_dose': 60, 'frequency': 'Once', 'route': 'IV'}
+        },
+        'non_depolarizing_paralytics': {
+            'Rocuronium': {'dose_per_kg': [0.6, 1.2], 'max_dose': 36, 'frequency': 'Once', 'route': 'IV'},
+            'Vecuronium': {'dose_per_kg': 0.1, 'max_dose': 3, 'frequency': 'Once', 'route': 'IV'},
+            'Pancuronium': {'dose_per_kg': 0.1, 'max_dose': 3, 'frequency': 'Once', 'route': 'IV'}
+        }
     }
 }

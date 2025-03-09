@@ -1,0 +1,23 @@
+{% if weight %}
+<div class="calculator-results mb-4">
+    <h4>Calculated doses for {{ weight }}kg:</h4>
+    <ul class="list-unstyled">
+        {% if ceftriaxone_dose %}
+        <li>• Ceftriaxone {{ ceftriaxone_dose }}ml IV/IM twice daily</li>
+        {% endif %}
+        {% if chloramphenicol_dose %}
+        <li>• Chloramphenicol {{ chloramphenicol_dose }}mg IV/IM 6 hourly</li>
+        {% endif %}
+        {% if benzylpen_dose %}
+        <li>• Benzyl Penicillin {{ benzylpen_dose }} units IM 3 hourly</li>
+        {% endif %}
+        {% if phenobarb_loading and phenobarb_maintenance %}
+        <li>• Phenobarbitone: {{ phenobarb_loading }} then {{ phenobarb_maintenance }} daily</li>
+        {% endif %}
+        {% if fluclox_dose %}
+        <li>• Flucloxacillin {{ fluclox_dose }}mg IV/IM/oral QID</li>
+        {% endif %}
+    </ul>
+    <hr>
+</div>
+{% endif %} 

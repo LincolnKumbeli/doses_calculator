@@ -172,10 +172,10 @@ disease_data = {
 
         <h5>a. Salbutamol (Ventolin)</h5>
         <ul>
-            <li>Use a Metered Dose Inhaler (“puffer”) and a spacing device.</li>
+            <li>Use a Metered Dose Inhaler ("puffer") and a spacing device.</li>
             <li>Children less than about 7 years of age cannot coordinate breathing with a puffer so a "spacing device" is required. This can be bought from a pharmacy or made from a 750ml cordial bottle or a 500ml IV fluid bottle with a hole in the bottom for the puffer.</li>
             <li>Give 2-4 puffs of salbutamol (Ventolin) 4 times a day.</li>
-            <li>If you don’t have a “puffer” use Salbutamol tablets.</li>
+            <li>If you don't have a "puffer" use Salbutamol tablets.</li>
         </ul>
 
         <table border="1">
@@ -234,7 +234,7 @@ disease_data = {
             <tr><td>30 or more</td><td>100 mg</td></tr>
         </table>
 
-        <h5>e. I.V. Fluid (Hartman’s solution or 0.45% NaCl +5% dextrose)</h5>
+        <h5>e. I.V. Fluid (Hartman's solution or 0.45% NaCl +5% dextrose)</h5>
         <p>Give this only if the child is too sick to drink. Do not give excess IV fluid to a child with asthma.</p>
 
         <table border="1">
@@ -532,7 +532,7 @@ disease_data = {
         <ul>
             <li>Breastfeeding should be initiated or begin within one (1) hour of birth.</li>
             <li>Skin-to-skin (or Kangaroo-mother care) should be encouraged at all deliveries to help the initiation of breastfeeding.</li>
-            <li>For most babies, the easiest and best schedule is ‘on-demand’ breastfeeding.</li>
+            <li>For most babies, the easiest and best schedule is 'on-demand' breastfeeding.</li>
             <li>Infants who cannot demand feed (such as low or very low birth weight and sick babies) should be fed every 2-3 hours.</li>
             <li>Infants who cannot suck on the breast (e.g., very premature, sick babies, or babies with severe cleft palate) should be given expressed breast milk (EBM) by cup or by nasogastric tube.</li>
             <li>The first yellow milk a mother makes (colostrum) should be given to the baby. It should not be thrown away. It contains nutrients and important anti-infective substances that are part of the baby's defense against infection.</li>
@@ -594,85 +594,78 @@ disease_data = {
         <p><strong>REMEMBER:</strong> Breast milk is best for babies. It reduces the risk of infection and malnutrition.</p>
     """,
     "Burns and scalds": """
-        <h3>BURNS AND SCALDS</h3>
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">BURNS AND SCALDS</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-form mb-4">
+                <h4 class="text-success">Parkland Formula Calculator</h4>
+                <p class="text-muted">Calculate fluid requirements for burns using the Parkland formula (3ml x %TBSA x weight for children)</p>
+                <form action="/calculate_burns" method="POST">
+                    <div class="form-group mb-3">
+                        <label for="weight" class="form-label">Patient's Weight (kg):</label>
+                        <input type="number" step="0.1" min="0" max="150" class="form-control" id="weight" name="weight" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tbsa" class="form-label">Total Body Surface Area Burned (%):</label>
+                        <input type="number" step="0.1" min="0" max="100" class="form-control" id="tbsa" name="tbsa" required>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Calculate Fluid Requirements</button>
+                </form>
+            </div>
 
-        <h4>FIRST AID</h4>
-        <p>As a first aid treatment, immediately immersing the burnt area in water will reduce the severity of the burn.</p>
-        <ul>
-            <li>Give pethidine IM every 6 hours for severe pain.</li>
-            <li>Give tetanus toxoid ½ ml IM.</li>
-            <li>Give extra fluids.
-                <ul>
-                    <li>If the burn is more than 10% (one tenth) of the body area, give intravenous fluids. Start with 0.9% sodium chloride (normal saline) in the Health Centre.</li>
-                </ul>
-            </li>
-        </ul>
+            <h4 class="text-success">1. Assessment of Burns</h4>
+            <ul>
+                <li>Calculate the total body surface area (TBSA) burned using the rule of nines or palm method</li>
+                <li>Assess the depth of burns:
+                    <ul>
+                        <li>Superficial (first degree): Red, painful, no blisters</li>
+                        <li>Partial thickness (second degree): Blisters, very painful</li>
+                        <li>Full thickness (third degree): White or black, painless</li>
+                    </ul>
+                </li>
+            </ul>
 
-        <h4>Fluid Administration</h4>
-        <table border="1">
-            <tr>
-                <th>Weight (kg)</th>
-                <th>Quickly</th>
-                <th>Later Fluid (drip rate*)</th>
-            </tr>
-            <tr><td>3 - 5.9</td><td>100 ml</td><td>25 ml/hour (7 drops/min)</td></tr>
-            <tr><td>6 - 9.9</td><td>150 ml</td><td>50 ml/hour (13 drops/min)</td></tr>
-            <tr><td>10 - 14.9</td><td>250 ml</td><td>75 ml/hour (20 drops/min)</td></tr>
-            <tr><td>15 - 19.9</td><td>350 ml</td><td>100 ml/hour (25 drops/min)</td></tr>
-            <tr><td>20 - 29.9</td><td>500 ml</td><td>100 ml/hour (25 drops/min)</td></tr>
-            <tr><td>30 – 50</td><td>700 ml</td><td>150 ml/hour (40 drops/min)</td></tr>
-        </table>
-        <p><i>*This is the drip rate when using an adult giving set. When using a paediatric burette, 1 drop/min = 1ml/hour.</i></p>
+            <h4 class="text-success">2. Initial Management</h4>
+            <ul>
+                <li>Remove clothing and jewelry</li>
+                <li>Cool the burn with cool (not cold) water for 10-20 minutes</li>
+                <li>Cover with clean, non-stick dressing</li>
+                <li>Keep patient warm</li>
+            </ul>
 
-        <ul>
-            <li>Refer urgently to hospital any child who has burns to more than 10% of their body area.</li>
-            <li>Clean and dress the burn.</li>
-        </ul>
+            <h4 class="text-success">3. Fluid Resuscitation</h4>
+            <ul>
+                <li>Use Parkland formula for burns >10% TBSA</li>
+                <li>Give 50% of calculated fluid in first 8 hours</li>
+                <li>Give remaining 50% over next 16 hours</li>
+                <li>Monitor urine output (aim for 1-2ml/kg/hour)</li>
+            </ul>
 
-        <h4>If there is no pus or inflammation:</h4>
-        <ul>
-            <li>Do not give antibiotics.</li>
-            <li>Clean with antiseptic solution, e.g. chlorhexidine (Savlon) or sterile Normal Saline.</li>
-            <li>Then either:
-                <ul>
-                    <li>Apply an antiseptic dressing to the burnt area and change the dressing every 3 days.</li>
-                    <li>OR apply silver sulphadiazine cream to the burnt area each day.</li>
-                </ul>
-            </li>
-        </ul>
+            <h4 class="text-success">4. Pain Management</h4>
+            <ul>
+                <li>Give paracetamol for mild pain</li>
+                <li>Consider stronger analgesia for severe burns</li>
+            </ul>
 
-        <h4>If there is dirt or pus in the burn:</h4>
-        <ul>
-            <li>Clean away dirt and dead tissue with antiseptic solution e.g. chlorhexidine (Savlon) or sterile Normal Saline.</li>
-            <li>Apply an antiseptic dressing to the burnt area, and change it once or twice a day.</li>
-            <li>Give benzyl penicillin (Crystapen) IM or IV 4 times a day until the inflammation goes away, then Amoxicillin orally TDS for 5 days.</li>
-        </ul>
+            <h4 class="text-success">5. Referral Criteria</h4>
+            <ul>
+                <li>Burns >10% TBSA</li>
+                <li>Full thickness burns</li>
+                <li>Burns to face, hands, feet, or genitals</li>
+                <li>Circumferential burns</li>
+                <li>Electrical or chemical burns</li>
+            </ul>
 
-        <h4>When the burnt area is clean:</h4>
-        <ul>
-            <li>Change the dressing every 3 days.</li>
-            <li>OR apply silver sulphadiazine cream daily.</li>
-        </ul>
-
-        <h4>Estimating Burn Area in Young Children:</h4>
-        <table border="1">
-            <tr>
-                <th>Part of body affected</th>
-                <th>% Area of body (Front)</th>
-                <th>% Area of body (Back)</th>
-            </tr>
-            <tr><td>Arm (each)</td><td>3.5%</td><td>3.5%</td></tr>
-            <tr><td>Leg (each)</td><td>7%</td><td>7%</td></tr>
-            <tr><td>Chest</td><td>7%</td><td>7%</td></tr>
-            <tr><td>Abdomen</td><td>7%</td><td>7%</td></tr>
-            <tr><td>Head</td><td>14%</td><td>14%</td></tr>
-        </table>
-
-        <h4>REFER URGENTLY TO HOSPITAL:</h4>
-        <p><strong>CHILDREN WHO HAVE BURNS TO MORE THAN 10% OF THE BODY AREA</strong></p>
+            <div class="alert alert-warning">
+                <strong>Note:</strong> For severe burns, start fluid resuscitation immediately and refer urgently to hospital.
+            </div>
+        </div>
+    </div>
     """,
     "Checklist for sick children: 2 months - 5 years": """
-        <h3>Checklist for Sick Children: 2 Months - 5 Years</h3>
+        
         <p>Greet the mother then ask her what is wrong with her child.</p>
 
         <h4>Step 1</h4>
@@ -729,7 +722,6 @@ disease_data = {
 
     "Checklist for infants: less than 2 months": """
 
-    <h3>CHECKLIST FOR INFANTS: LESS THAN 2 MONTHS</h3>
 
     <p>Follow each of the 8 steps for every infant less than 2 months. Greet the mother, and ask her what is wrong with her baby.</p>
 
@@ -750,10 +742,10 @@ disease_data = {
     <h4>STEP 3: LOOK FOR JAUNDICE</h4>
     <p>Look for yellow eyes and yellow feet.</p>
     
-    <h4>STEP 4: ASSESS BABY’S WEIGHT</h4>
+    <h4>STEP 4: ASSESS BABY'S WEIGHT</h4>
     <p>Weigh the baby and assess the growth curve.</p>
 
-    <h4>STEP 5: ASK ABOUT BABY’S FEEDING</h4>
+    <h4>STEP 5: ASK ABOUT BABY'S FEEDING</h4>
     <p>Check feeding pattern: emphasize exclusive breastfeeding.</p>
 
     <h4>STEP 6: CHECK FOR MALFORMATIONS</h4>
@@ -772,7 +764,7 @@ disease_data = {
         <ul>
             <li><strong>Non-accidental injury:</strong> Any soft tissue or bony injury that is not the result of an accident.</li>
             <li><strong>Sexual abuse:</strong> Any use of a child by an adult for sexual stimulation.</li>
-            <li><strong>Emotional abuse:</strong> Undermining a child’s self-esteem.</li>
+            <li><strong>Emotional abuse:</strong> Undermining a child's self-esteem.</li>
             <li><strong>Neglect:</strong> Failing to provide adequate care and a safe environment for a child.</li>
         </ul>
 
@@ -792,7 +784,7 @@ disease_data = {
             <li>Treat any physical injuries or sexually transmitted infections.</li>
         </ul>
 
-        <p><strong>REMEMBER:</strong> THE SAFETY, HEALTH, AND WELL-BEING OF THE CHILD IS OF PRIME IMPORTANCE. CHILD ABUSE IS EVERYBODY’S BUSINESS. NO-ONE, INCLUDING THE PARENTS, HAS THE RIGHT TO HURT A CHILD IN ANY WAY.</p>
+        <p><strong>REMEMBER:</strong> THE SAFETY, HEALTH, AND WELL-BEING OF THE CHILD IS OF PRIME IMPORTANCE. CHILD ABUSE IS EVERYBODY'S BUSINESS. NO-ONE, INCLUDING THE PARENTS, HAS THE RIGHT TO HURT A CHILD IN ANY WAY.</p>
 
         <h3>SEXUAL ABUSE OF CHILDREN</h3>
         <p>Sexual abuse of children is defined as the use of children by adults for sexual pleasure. It covers a range of conditions, with rape being at the severe end of the range.</p>
@@ -814,16 +806,16 @@ disease_data = {
             <li>Take appropriate swabs for examination and culture if facilities are available.</li>
             <li>Treat for Sexually Transmitted Infections.</li>
             <li>Consider providing a course of prophylactic Antiretroviral treatment.</li>
-            <li>Make good records both in the Child’s Health Record Book and in a separate health facility record.</li>
+            <li>Make good records both in the Child's Health Record Book and in a separate health facility record.</li>
             <li>Report the case to the Police and other relevant authorities such as the Child Welfare Department. (Sexual abuse is a mandatorily reportable condition).</li>
-            <li>Make every effort to follow up on the child’s condition.</li>
+            <li>Make every effort to follow up on the child's condition.</li>
         </ul>
 
         <h3>RAPE</h3>
         <p>Children who have suffered rape should almost always be admitted. They need a very careful examination which might only be possible under an anaesthetic, and they may need surgical treatment in addition to vaginal and/or anal swabs being taken.</p>
         <p>Their clothing should not be washed, but should be kept in a plastic bag for possible forensic use.</p>
         <p>Child abuse - of any kind and particularly child sexual abuse - is an unpleasant matter to deal with. The natural response is to be shocked but not to get involved in trying to deal properly with the situation.</p>
-        <p>Remember that if the Health Worker doesn’t do the right thing, the child – and perhaps other children - will probably be abused again. It is possible to take appropriate action (e.g., in reporting the matter) as a group rather than as an individual if there are possibilities of confrontation.</p>
+        <p>Remember that if the Health Worker doesn't do the right thing, the child – and perhaps other children - will probably be abused again. It is possible to take appropriate action (e.g., in reporting the matter) as a group rather than as an individual if there are possibilities of confrontation.</p>
 
         <h4>AS FOR ALL CASES OF SEXUAL ABUSE BASELINE BLOOD SPECIMENS FOR HIV AND VDRL TESTING SHOULD BE TAKEN. THE CHILD SHOULD RECEIVE TREATMENT FOR SEXUALLY TRANSMITTED DISEASES WITH:</h4>
         
@@ -1402,7 +1394,7 @@ disease_data = {
             <li>Reassess the child every 3-4 hours.</li>
             <li>If the child is no longer dehydrated, switch to mild diarrhoea treatment.</li>
             <li>If moderate dehydration persists, continue ORS and feeding.</li>
-            <li>If severe dehydration appears, switch to IV half-strength Darrow’s solution.</li>
+            <li>If severe dehydration appears, switch to IV half-strength Darrow's solution.</li>
             <li>Encourage continued breastfeeding.</li>
             <li>If the child vomits: wait 10 minutes and continue giving ORS slowly.</li>
             <li>If repeated vomiting occurs: give IV HSD as for severe diarrhoea.</li>
@@ -1465,7 +1457,7 @@ disease_data = {
         </table>
 
         <h3>Treatment</h3>
-        <p><strong>Fluids:</strong> Give IV Half Strength Darrow’s (HSD) or Hartmann's solution.</p>
+        <p><strong>Fluids:</strong> Give IV Half Strength Darrow's (HSD) or Hartmann's solution.</p>
 
         <h4>Step 1: Give Fast IV Fluid</h4>
         <table border="1">
@@ -1511,8 +1503,8 @@ disease_data = {
         <p>Switch to Oral Rehydration Solution (ORS), 1 cup every 3 hours.</p>
 
         <h3>Alternative If IV Access Fails</h3>
-        <p>If you cannot insert a drip, give Oral Rehydration Solution (ORS) or Half Strength Darrow’s (HSD) via nasogastric tube.</p>
-        <p>Ensure the tube is in the stomach and splint the child’s elbows.</p>
+        <p>If you cannot insert a drip, give Oral Rehydration Solution (ORS) or Half Strength Darrow's (HSD) via nasogastric tube.</p>
+        <p>Ensure the tube is in the stomach and splint the child's elbows.</p>
 
         <h3>Other Treatment</h3>
         <ul>
@@ -1568,7 +1560,7 @@ disease_data = {
         <p><strong>Rehydration and replacement of electrolytes</strong> is the most important part of cholera treatment:</p>
         <ul>
             <li>The patient should receive different rehydration therapy (oral or intravenous fluids) depending on the dehydration severity.</li>
-            <li>Use <strong>Hartmann’s solution or Normal Saline</strong> for IV therapy.</li>
+            <li>Use <strong>Hartmann's solution or Normal Saline</strong> for IV therapy.</li>
             <li>Oral rehydration solution (ORS) should be used during and after IV therapy.</li>
         </ul>
 
@@ -1812,7 +1804,7 @@ disease_data = {
 
         <h4>All adults should follow the basic rules of HIV prevention:</h4>
         <ul>
-            <li><strong>Abstinence:</strong> Don’t have sex.</li>
+            <li><strong>Abstinence:</strong> Don't have sex.</li>
             <li><strong>Be faithful:</strong> Have one partner who is faithful to you.</li>
             <li><strong>Use a condom:</strong> If you are sexually active, always use a condom.</li>
         </ul>
@@ -1890,7 +1882,7 @@ disease_data = {
             <li><strong>c.</strong> Nursing care: Give the best nursing care you can. Children with HIV infection and their families need care, kindness, and consideration. The risks of infection to staff are very small if guidelines for nursing infected patients are followed (e.g., avoiding contact with blood and body secretions by wearing gloves).</li>
             <li><strong>d.</strong> Breastfeeding: Counsel the mother about feeding options:
                 <ul>
-                    <li>The baby’s best chance of survival is exclusive breastfeeding for the first six months after birth, followed by the introduction of complementary feeding after six months, with breastfeeding continuing for as long as the mother wishes and is able to do so, irrespective of the mother’s or baby’s HIV status.</li>
+                    <li>The baby's best chance of survival is exclusive breastfeeding for the first six months after birth, followed by the introduction of complementary feeding after six months, with breastfeeding continuing for as long as the mother wishes and is able to do so, irrespective of the mother's or baby's HIV status.</li>
                 </ul>
             </li>
         </ul>
@@ -1907,7 +1899,7 @@ disease_data = {
         <h3>Other Important Considerations</h3>
         <ul>
             <li><strong>e.</strong> Explanation: Once the diagnosis is confirmed, explain as simply and kindly as possible about HIV infection.</li>
-            <li><strong>f.</strong> Respect: Respect the patient’s and family’s right to confidentiality.</li>
+            <li><strong>f.</strong> Respect: Respect the patient's and family's right to confidentiality.</li>
             <li><strong>g.</strong> Prophylaxis for Pneumocystis Pneumonia: All infants of HIV-positive mothers should receive cotrimoxazole:
                 <ul>
                     <li>&lt; 6 months: 2.5 ml once daily</li>
@@ -1993,7 +1985,7 @@ disease_data = {
             <li>If the ice packs have melted by the end of the day, all remaining vaccines whether opened or not should be discarded.</li>
             <li>If ice packs are still partly frozen at the end of the day, put all unopened vaccine vials back in the refrigerator and use these first at the next immunisation session.</li>
             <li>Write the date on the vials before returning them to the refrigerator.</li>
-            <li>Don't forget to check whether the child’s brothers and sisters and mother need immunisation also.</li>
+            <li>Don't forget to check whether the child's brothers and sisters and mother need immunisation also.</li>
         </ul>
 
         <h4>Guidelines for Vaccine Administration</h4>
@@ -2355,11 +2347,307 @@ disease_data = {
     "Measles": "Management details for measles go here...",
     "Medicine for mothers to take home": "Management details for medicine for mothers to take home go here...",
     "Milk mixtures": "Management details for milk mixtures go here...",
-    "Meningitis or severe sepsis": "Management details for meningitis or severe sepsis go here...",
+    "Meningitis or severe sepsis": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">MENINGITIS OR SEVERE SEPSIS</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-section mb-4">
+                <h4>Drug Calculator</h4>
+                <form method="POST" action="/calculate_meningitis" class="mb-3">
+                    <div class="form-group">
+                        <label for="weight">Enter patient's weight (kg):</label>
+                        <input type="number" step="0.1" min="0" max="100" name="weight" id="weight" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <p class="lead">Always think about meningitis or severe sepsis when you see any very sick or convulsing child.</p>
+
+            <p>The signs of meningitis or severe sepsis are high fever, severe headache, neck stiffness, severe vomiting, repeated convulsions, lethargy or unconsciousness, bulging fontanelle, severe respiratory distress, shock (weak and fast pulse, and cold hands, and capillary refill time more than 3 sec) or purpura (red or black spots on the skin).</p>
+
+            <p>If you suspect meningitis or severe sepsis give IM or IV ceftriaxone plus treatment for severe malaria.</p>
+            <p>If there are any signs of skin sepsis (boils, pustules, swollen joints) give flucloxacillin also.</p>
+
+            <h4>EMERGENCY TREATMENT</h4>
+            <ul>
+                <li>Nurse any unconscious or convulsing child on the side and keep the airway clear.</li>
+                <li>Give oxygen if there is severe respiratory distress, cyanosis or the oxygen level is <94%</li>
+                <li>If the child is shocked (weak and fast pulse, and cold hands, and capillary refill time more than 3 sec), give IV Normal Saline or Hartmann's solution, a bolus of 10-20ml/kg over 30-60 minutes, then reassess.</li>
+                <li>If the shock does not resolve the child will need a further bolus of 10-20ml/kg.</li>
+            </ul>
+
+            <h4>Investigations</h4>
+            <ul>
+                <li>Do a lumbar puncture if you can, except when the child is extremely ill. Send CSF for cell count, Gram stain, protein, sugar, and bacterial culture.</li>
+                <li>Blood slide or RDT for malaria. If not available, treat for malaria.</li>
+                <li>Haemoglobin.</li>
+                <li>Dextrostix to check for hypoglycaemia. If unconscious or fitting give sugar under the tongue (a teaspoon of sugar with water repeated every 20 mins) or 5ml/kg 10% dextrose if the child has a drip running.</li>
+                <li>Oxygen saturation (SpO2) using a pulse oximeter, if SpO2<94% give oxygen.</li>
+            </ul>
+
+            <h4>1. Antibiotics</h4>
+            <p>Many infections causing meningitis and severe sepsis are now resistant to chloramphenicol. Ceftriaxone is the most effective treatment for meningitis in PNG.</p>
+            <ul>
+                <li>Give ceftriaxone 50mg/kg IM or IV twice daily for 10 days</li>
+                <li>Vial of 1 gram mixed with 9.6 ml sterile water to give 1gram/ 10 ml</li>
+                <li>When possible, calculate exact dose for the weight of the child, otherwise use dosing table below:</li>
+            </ul>
+
+            <h5>CEFTRIAXONE DOSING TABLE (50 mg/kg IV twice daily)</h5>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Weight</th>
+                    <th>No of mls given TWICE a day</th>
+                    <th>Weight</th>
+                    <th>No of mls given TWICE daily</th>
+                </tr>
+                <tr>
+                    <td>3 - 3.9 kg</td>
+                    <td>1.8 ml</td>
+                    <td>12 - 14.9 kg</td>
+                    <td>6.5 ml</td>
+                </tr>
+                <tr>
+                    <td>4 - 5.9 kg</td>
+                    <td>2.5 ml</td>
+                    <td>15 - 17.9 kg</td>
+                    <td>8 ml</td>
+                </tr>
+                <tr>
+                    <td>6 - 7.9 kg</td>
+                    <td>3.5 ml</td>
+                    <td>18 - 21.9 kg</td>
+                    <td>9.5 ml</td>
+                </tr>
+                <tr>
+                    <td>8 - 9.9 kg</td>
+                    <td>4.5 ml</td>
+                    <td>22 - 24.9 kg</td>
+                    <td>12 ml</td>
+                </tr>
+                <tr>
+                    <td>10 - 11.9 kg</td>
+                    <td>5.5 ml</td>
+                    <td>25 - 29.9 kg</td>
+                    <td>13 ml</td>
+                </tr>
+            </table>
+
+            <p>It is important that stocks of ceftriaxone are available, so get some in. (cefotaxime - given 6 hourly - or ceftazadime are alternatives)</p>
+
+            <p>If the child has any signs of skin sepsis (boils, pustules, swollen joints) give cloxacillin or flucloxacillin.</p>
+            <p>If ceftriaxone, cefotaxime or ceftazadime are not available give chloramphenicol 25mg/kg IM or IV every 6 hours for 14 days and refer the child when safe to do so.</p>
+            <p>If you do not have either ceftriaxone or chloramphenicol, give benzyl (crystalline) penicillin IM every 3 hours and refer to hospital immediately.</p>
+
+            <h4>2. Anticonvulsants</h4>
+            <ul>
+                <li>Give oxygen</li>
+                <li>Check the blood glucose if you can and give 5ml/kg 10% dextrose IV or sugar under tongue if confirmed or suspected hypoglycaemia.</li>
+                <li>Give rectal diazepam</li>
+                <li>Prevent further fits with phenobarbitone. Give loading (starting) dose IM and then daily maintenance dose orally while the child is in hospital.</li>
+            </ul>
+
+            <h5>Doses of Phenobarbitone 200mg/ml Ampoule or 30mg Tab</h5>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Weight (kg)</th>
+                    <th>Loading (Starting) Dose</th>
+                    <th>Daily Maintenance Dose</th>
+                </tr>
+                <tr>
+                    <td>3 — 5.9</td>
+                    <td>¼ ml IM or 2 tabs</td>
+                    <td>½ tab</td>
+                </tr>
+                <tr>
+                    <td>6 — 9.9</td>
+                    <td>½ ml IM or 3 tabs</td>
+                    <td>1 tab</td>
+                </tr>
+                <tr>
+                    <td>10 — 14.9</td>
+                    <td>¾ ml IM or 5 tabs</td>
+                    <td>2 tabs</td>
+                </tr>
+                <tr>
+                    <td>15 — 19.9</td>
+                    <td>1 ml IM or 6 tabs</td>
+                    <td>3 tabs</td>
+                </tr>
+                <tr>
+                    <td>20 — 29.9</td>
+                    <td>1 ml IM or 7 tabs</td>
+                    <td>4 tabs</td>
+                </tr>
+                <tr>
+                    <td>30kg or more</td>
+                    <td>1 ml IM or 7 tabs</td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <h4>3. Nutrition</h4>
+            <p>If the child is alert and awake, allow her to breast feed.</p>
+            <p>Use a nasogastric tube if the child is too sick to feed. Use expressed breast milk (EBM) or full strength full cream milk given at least 4 times a day.</p>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Weight (kg)</th>
+                    <th>No of ml</th>
+                    <th>Weight (kg)</th>
+                    <th>No of ml</th>
+                </tr>
+                <tr>
+                    <td>3 - 5.9</td>
+                    <td>100 ml</td>
+                    <td>15 - 19.9</td>
+                    <td>250 ml</td>
+                </tr>
+                <tr>
+                    <td>6 - 9.9</td>
+                    <td>150 ml</td>
+                    <td>20 - 29.9</td>
+                    <td>300 ml</td>
+                </tr>
+                <tr>
+                    <td>10 - 14.9</td>
+                    <td>200 ml</td>
+                    <td>30- 49.9</td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <h4>4. Fluids</h4>
+            <p>Avoid fluid overload in children with meningitis. Check daily to see if the child has eyelid or facial swelling. If present give less fluid.</p>
+
+            <h4>5. Blood transfusion</h4>
+            <p>If the child has a haemoglobin less than 6g/dL, give a transfusion of packed cells if you can (see section on Anaemia).</p>
+
+            <div class="alert alert-warning mt-4">
+                <ul class="mb-0">
+                    <li>Meningitis must be detected early</li>
+                    <li>Think of meningitis or severe sepsis in any very sick child</li>
+                    <li>Not all children with meningitis will have neck stiffness</li>
+                    <li>Antibiotic resistance is common in meningitis, so treat with ceftriaxone</li>
+                    <li>Avoid fluid overload by avoiding intravenous fluids, regularly check for facial swelling</li>
+                </ul>
+            </div>
+        </div>
+    </div>""",
     "Moderate malnutrition: summary": "Management details for moderate malnutrition go here...",
     "Multi-drug resistant (MDR) TB": "Management details for MDR TB go here...",
-    "Oedema (swelling)": "Management details for oedema go here...",
-    "Osteomyelitis, septic arthritis, and pyomyositis": "Management details for osteomyelitis, septic arthritis, and pyomyositis go here...",
+    "Oedema (swelling)": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">OEDEMA (SWELLING)</h3>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li>Oedema is swelling caused by collection of fluid in the subcutaneous tissues.</li>
+                <li>Oedema may be localised or generalised.</li>
+                <li>Localised oedema is usually due to obstruction to veins or to lymphatics (often due to tuberculosis of the lymph glands).</li>
+                <li>Generalised oedema may be due to:
+                    <ul>
+                        <li>Low protein in blood:
+                            <ul>
+                                <li>Kwashiorkor</li>
+                                <li>Nephrotic Syndrome</li>
+                                <li>Intestinal parasites</li>
+                                <li>Liver disease</li>
+                            </ul>
+                        </li>
+                        <li>Reduced excretion of water: Renal Disease</li>
+                        <li>Heart failure</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>MANAGEMENT</h4>
+            <ul>
+                <li>If the child has signs of heart failure (big liver and pulse more than 160 beats/min), give a dose of im or oral furosemide (lasix) and treat with digoxin. If no response within 24 hours refer the child urgently to hospital.</li>
+                <li>If the child has signs of kwashiorkor (peeling skin, thin brittle hair) start treatment for severe malnutrition and refer the child urgently to hospital.</li>
+                <li>If the child has severe, generalised swelling refer the child urgently to hospital.</li>
+                <li>If the child has dark brown or red urine commence treatment with amoxicillin and refer urgently to hospital</li>
+                <li>If the child has mild swelling and is not "sick" treat with a 3 day course of albendazole:
+                    <ul>
+                        <li>But if no improvement, refer the child to hospital</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="alert alert-warning">
+                <strong>Note:</strong> Most children with oedema need urgent referral to hospital
+            </div>
+        </div>
+    </div>
+    """,
+    "Osteomyelitis, septic arthritis, and pyomyositis": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">OSTEOMYELITIS, SEPTIC ARTHRITIS AND PYOMYOSITIS</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-form mb-4">
+                <h4>Drug Dose Calculator</h4>
+                <form action="/calculate_osteomyelitis" method="post">
+                    <div class="form-group">
+                        <label for="weight">Patient's Weight (kg):</label>
+                        <input type="number" step="0.1" class="form-control" id="weight" name="weight" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <h4>1. Symptoms & Signs</h4>
+            <ul>
+                <li>A child with a painful limb and a fever may have osteomyelitis.</li>
+                <li>A child with a painful joint and a fever may have septic arthritis.</li>
+                <li>A child with swelling in a muscle and fever may have pyomyositis.</li>
+            </ul>
+
+            <div class="alert alert-warning">
+                <strong>Note:</strong> These are all serious infections. It is often difficult to be sure which one is present. Always give flucloxacillin/cloxacillin even if there is a history of the limb being injured.
+            </div>
+
+            <h4>2. If fever, tenderness and swelling remain after 48 hours of treatment, refer to hospital.</h4>
+
+            <h4>3. Early surgical incision and drainage may be important.</h4>
+
+            <h4>TREATMENT</h4>
+
+            <h5>1. Flucloxacillin or Cloxacillin for 4 weeks</h5>
+            <p>Give IM or IV every 6 hours if:</p>
+            <ul>
+                <li>Child is very sick or</li>
+                <li>Child is vomiting</li>
+                <li>The child is under 3 months of age</li>
+            </ul>
+            <p>Otherwise give orally, suspension or capsules every 6 hours. If you do not have any flucloxacillin, give chloramphenicol at 25mg/kg per dose every 6 hours and send the child to hospital as soon as possible.</p>
+            <ul>
+                <li>If child is not improving on flucloxacillin or chloramphenicol, refer to a paediatrician or to an orthopaedic doctor.</li>
+                <li>The commonest cause of Osteomyelitis is Staphylococcus Aureus. Paediatricians should be aware there is increasing resistance to Flucloxacillin (oxacillin).</li>
+            </ul>
+
+            <h5>2. Blood transfusion</h5>
+            <p>If the child is anaemic (haemoglobin less than 6.0g/dL), give a blood transfusion of packed cells if this is possible.</p>
+
+            <h4>Investigations (to be done if possible)</h4>
+            <ol>
+                <li>Hb and WCC every 2 weeks to check for chloramphenicol toxicity.</li>
+                <li>X-ray of bone — to assess progress.</li>
+                <li>Culture pus — to see whether the antibiotic should be changed.</li>
+                <li>Blood culture.</li>
+            </ol>
+
+            <div class="alert alert-danger">
+                <strong>IMPORTANT:</strong> IF A CHILD WITH OSTEOMYELITIS, SEPTIC ARTHRITIS OR PYOMYOSITIS IS NOT IMPROVING AFTER 48 HOURS, REFER TO HOSPITAL.
+            </div>
+        </div>
+    </div>
+    """,
     "Otitis media - Acute": "Management details for acute otitis media go here...",
     "Otitis media - Chronic": "Management details for chronic otitis media go here...",
     "Paediatric rules": """ 
@@ -2370,7 +2658,7 @@ disease_data = {
     <ul>
         <li>There is no contra-indication to giving measles/rubella vaccine.</li>
         <li>Pentavalent, pneumococcal, and hepatitis B vaccines should not be given if the child has a fever above 38ºC. They should be given when the temperature has settled.</li>
-        <li>Check the child’s brothers and sisters and immunise them if their vaccines are not up to date.</li>
+        <li>Check the child's brothers and sisters and immunise them if their vaccines are not up to date.</li>
         <li>Always immunize a child who is due for vaccinations even if he is the only one attending the clinic.</li>
         <li>If the mother is pregnant, she needs tetanus toxoid. Check that she is going to antenatal clinic.</li>
         <li>Give vitamin A supplementation doses to all children at 6, 12, and 18 months.</li>
@@ -2451,7 +2739,152 @@ disease_data = {
 
     <strong>7. Talk to both parents</strong> about family planning options and the benefits of birth spacing.
     """,
-    "Pertussis (Whooping cough)": "Management details for pertussis go here...",
+    "Pertussis (Whooping cough)": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">PERTUSSIS (WHOOPING COUGH)</h3>
+        </div>
+        <div class="card-body">
+            <h4>1. Treat as outpatient, if mild.</h4>
+
+            <h4>2. Admit to hospital or health centre if child is less than 6 months old, or if there are complications e.g.:</h4>
+            <ul>
+                <li>Pneumonia</li>
+                <li>Heart failure</li>
+                <li>Convulsions</li>
+                <li>Malnutrition</li>
+            </ul>
+
+            <h4>OUTPATIENT TREATMENT</h4>
+
+            <h5>1. Advice</h5>
+            <ul>
+                <li>Warn the mother that the illness may last from 6 to 8 weeks.</li>
+                <li>Encourage the mother to feed the child immediately after vomiting.</li>
+                <li>Treat with erythromycin as per inpatient treatment below.</li>
+                <li>Tell the mother to return if the child has:
+                    <ul>
+                        <li>Fever and shortness of breath.</li>
+                        <li>Convulsions.</li>
+                        <li>Loss of weight.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h5>2. Prevent spread of pertussis</h5>
+            <ul>
+                <li>Give pentavalent vaccine to non-immunised brothers and sisters.</li>
+            </ul>
+
+            <h4>INPATIENT TREATMENT</h4>
+
+            <h5>1. If the child goes blue with a cough spasm, give oxygen if available and gentle and brief suction.</h5>
+
+            <h5>2. Give erythromycin or chloramphenicol. This stops the child from infecting others, and also treats pneumonia if it is present.</h5>
+            <ul>
+                <li>Give IM chloramphenicol 4 times daily if the child is less than 3 months old or has severe pneumonia.</li>
+                <li>Otherwise give oral chloramphenicol for 5 days if the child does not have pneumonia.</li>
+                <li>Give chloramphenicol for 5—10 days if the child does have pneumonia.</li>
+            </ul>
+
+            <p><strong>Chloramphenicol IV/IM:</strong> Add 4ml sterile water to 1gram vial chloramphenicol.</p>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Weight</th>
+                            <th>No of mls</th>
+                            <th>Weight</th>
+                            <th>No of mls</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3 — 4.9kg*</td>
+                            <td>½ ml</td>
+                            <td>15 — 19.9kg</td>
+                            <td>2 ml</td>
+                        </tr>
+                        <tr>
+                            <td>5 — 6.9kg</td>
+                            <td>¾ ml</td>
+                            <td>20 — 29.9kg</td>
+                            <td>2½ ml</td>
+                        </tr>
+                        <tr>
+                            <td>7 — 9.9kg</td>
+                            <td>1 ml</td>
+                            <td>30 — 49.9kg</td>
+                            <td>3 ml</td>
+                        </tr>
+                        <tr>
+                            <td>10 — 14.9kg</td>
+                            <td>1½ ml</td>
+                            <td>Adult</td>
+                            <td>4 ml</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Chloramphenicol PO</strong></p>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Weight (kg)</th>
+                            <th>Oral Chloramphenicol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3 — 4.9</td>
+                            <td>4 ml suspension</td>
+                        </tr>
+                        <tr>
+                            <td>5 — 6.9</td>
+                            <td>6 ml suspension</td>
+                        </tr>
+                        <tr>
+                            <td>7 — 9.9</td>
+                            <td>8 ml suspension</td>
+                        </tr>
+                        <tr>
+                            <td>10 — 14.9</td>
+                            <td>12 ml suspension or 1 capsule</td>
+                        </tr>
+                        <tr>
+                            <td>15 — 19.9</td>
+                            <td>15 ml suspension or 1 capsule</td>
+                        </tr>
+                        <tr>
+                            <td>20 — 49.9</td>
+                            <td>2 capsules</td>
+                        </tr>
+                        <tr>
+                            <td>Adult</td>
+                            <td>4 capsules</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h5>3. Treat heart failure if present.</h5>
+
+            <h5>4. Treat convulsions if they occur.</h5>
+
+            <h5>5. Encourage the mother to feed the child immediately after vomiting.</h5>
+
+            <h5>6. Treat malnutrition if present.</h5>
+
+            <div class="alert alert-warning">
+                <strong>REMEMBER, PREVENTION IS BEST. PERTUSSIS IS PREVENTED BY PENTAVALENT VACCINE.</strong>
+            </div>
+        </div>
+    </div>
+    """,
     "Pigbel": "Management details for pigbel go here...",
     "PNG immunization schedule": """
         <h3>PNG Immunization Schedule</h3>
@@ -2470,13 +2903,13 @@ disease_data = {
                 <td>Intradermal left upper arm</td>
             </tr>
             <tr>
-                <td>Hepatitis B Vaccine</td>
+                <td>Hepatitis B</td>
                 <td>As soon as possible after birth (within 24 hours)</td>
                 <td>0.5ml (10mcg)</td>
                 <td>Intramuscular right thigh</td>
             </tr>
             <tr>
-                <td>Oral Polio (OPV/Sabin)</td>
+                <td>Oral Polio</td>
                 <td>
                     1. One month of age<br>
                     2. One month after 1st dose<br>
@@ -2486,65 +2919,40 @@ disease_data = {
                 <td>Orally</td>
             </tr>
             <tr>
-                <td>Inactivated Polio Vaccine (IPV)</td>
+                <td>Inactivated Polio</td>
                 <td>Give one dose at the same time as the 3rd dose of OPV. So at 3 months child gets OPV + IPV</td>
                 <td>0.5ml</td>
                 <td>Intramuscularly right thigh</td>
             </tr>
             <tr>
-                <td>Pentavalent Vaccine</td>
-                <td>
-                    1. One month of age<br>
-                    2. One month after 1st dose<br>
-                    3. One month after 2nd dose
-                </td>
-                <td>0.5ml</td>
-                <td>Intramuscular right thigh</td>
-            </tr>
-            <tr>
-                <td>Pneumococcal Conjugate Vaccine (PCV-13)</td>
-                <td>
-                    1. One month of age<br>
-                    2. One month after 1st dose<br>
-                    3. One month after 2nd dose
-                </td>
-                <td>0.5ml</td>
-                <td>Intramuscular left thigh</td>
-            </tr>
-            <tr>
-                <td>Measles/Rubella Vaccine (MR)</td>
+                <td>Measles/Rubella</td>
                 <td>
                     1. At 6 months of age or as soon as possible afterwards<br>
                     2. At 9 months of age or 3 months after the first dose<br>
                     3. At 18 months of age
                 </td>
                 <td>0.5ml</td>
-                <td>Subcutaneous right upper arm (Do not give IM)</td>
+                <td>Subcutaneous, right upper arm</td>
+            </tr>
+            <tr>
+                <td>Pentavalent</td>
+                <td>
+                    1. One month of age<br>
+                    2. One month after 1st dose<br>
+                    3. One month after 2nd dose
+                </td>
+                <td>0.5ml</td>
+                <td>Intramuscular, right anterolateral mid-thigh</td>
+            </tr>
+            <tr>
+                <td>Pneumococcal</td>
+                <td>0.5ml</td>
+                <td>Intramuscular, left anterolateral mid-thigh</td>
             </tr>
             <tr>
                 <td>Tetanus Toxoid</td>
-                <td>
-                    1. First year community school<br>
-                    2. Last year community school<br>
-                    3. During pregnancy (2 doses, 4 weeks apart in the first pregnancy, one dose in each of the next pregnancies)
-                </td>
                 <td>0.5ml</td>
-                <td>Intramuscular into left upper arm</td>
-            </tr>
-            <tr>
-                <td>HPV - Human Papilloma Virus</td>
-                <td>Currently availability and schedule under review</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Vitamin A Capsules</td>
-                <td>
-                    6 months & 9 months: 100,000 units (Blue capsule)<br>
-                    18 months of age: 200,000 units (Red capsule)
-                </td>
-                <td>-</td>
-                <td>Orally</td>
+                <td>Intramuscular, left upper arm</td>
             </tr>
         </table>
 
@@ -2611,17 +3019,1798 @@ disease_data = {
         <p>* A dose of MR vaccine is recommended at school entry.</p>
     """,
     "Pneumonia or bronchiolitis": "Management details for pneumonia or bronchiolitis go here...",
-    "Poisoning": "Management details for poisoning go here...",
+    "Poisoning": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">POISONING</h3>
+        </div>
+        <div class="card-body">
+            <h4>Try and find out:</h4>
+            <ol>
+                <li>What drug or poison was swallowed?</li>
+                <li>How much was taken?</li>
+                <li>What time it happened?</li>
+            </ol>
+
+            <h4>TREATMENT</h4>
+            <p>a. If the child has swallowed kerosene, petrol or a petrol-based substance, OR if the child's mouth and throat have been burnt by the substance swallowed (e.g. bleach, toilet cleaner, or battery acid)</p>
+            <ul>
+                <li>Do not make the child vomit.</li>
+                <li>Give milk to drink.</li>
+                <li>If cough or shortness of breath, treat for pneumonia.</li>
+            </ul>
+
+            <p>b. If the child has swallowed any other poisons (e.g. medicines) within the last 4 hours</p>
+            <ul>
+                <li>Make the child vomit if he is conscious.
+                    <ul>
+                        <li>Give the child a cupful of milk or water to drink.</li>
+                        <li>Rub the back of the child's mouth (throat) with a spatula or handle of a spoon.</li>
+                        <li>If he does not vomit, give Syrup of Ipecac. 15ml.</li>
+                        <li>If no vomiting after 10 minutes, rub the back of his mouth (throat) again with a spatula or handle of a spoon.</li>
+                    </ul>
+                </li>
+                <li>Do not make the child vomit if he is unconscious.</li>
+                <li>Transfer as soon as possible.</li>
+                <li>After the child has vomited, or if the ingestion occurred more than 4 hours ago, or if the child is unconscious give:
+                    <ul>
+                        <li>Activated Charcoal, by mouth or nasogastric tube:
+                            <ul>
+                                <li>Medicoal 5g packet in 100ml drinking water or</li>
+                                <li>Charcoal tab 200mg 25 tabs crushed in 100ml drinking water or</li>
+                                <li>Locally prepared powdered charcoal, 5g to 100ml water can be used.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Weight</th>
+                    <th>No. of mls</th>
+                    <th>Weight</th>
+                    <th>No. of mls</th>
+                </tr>
+                <tr>
+                    <td>3—5.9kg</td>
+                    <td>20 ml</td>
+                    <td>15—19.9kg</td>
+                    <td>80 ml</td>
+                </tr>
+                <tr>
+                    <td>6—9.9kg</td>
+                    <td>40 ml</td>
+                    <td>20—29.9kg</td>
+                    <td>100 ml</td>
+                </tr>
+                <tr>
+                    <td>10—14.9kg</td>
+                    <td>60 ml</td>
+                    <td>30—39.9kg</td>
+                    <td>130 ml</td>
+                </tr>
+            </table>
+
+            <ul>
+                <li>Give 3 doses, 20 minutes between each dose.</li>
+                <li>Activated charcoal causes severe lung disease if aspirated.</li>
+                <li>If giving it by nasogastric tube, be sure the tube is in the stomach.</li>
+            </ul>
+
+            <p>c. Keep the child under observation for 4-24 hours depending on the poison swallowed.</p>
+            <p>d. Transfer to hospital or health centre as soon as possible any child with poisoning who is:</p>
+            <ul>
+                <li>Unconscious on admission.</li>
+                <li>Becoming drowsy or semiconscious.</li>
+                <li>Has burns of the mouth and throat.</li>
+                <li>Is in severe respiratory distress or cyanosed.</li>
+                <li>Has signs of heart failure.</li>
+            </ul>
+
+            <p>e. If you have a poisons book available — check for any special treatment required.</p>
+
+            <h4>PREVENTION</h4>
+            <ol>
+                <li>Teach parents to keep kerosene, drugs, and other harmful things out of reach of children.</li>
+                <li>Kerosene should not be kept in soft drink or beer bottles.</li>
+                <li>Advise parents on first aid for future occurrences, i.e.:
+                    <ul>
+                        <li>Give 1 cup of milk or water.</li>
+                        <li>Do not make the child vomit if he has swallowed kerosene, petrol, petrol-based products or if his mouth and throat have been burned.</li>
+                        <li>Make the child vomit if other poisons have been taken.</li>
+                        <li>Take the child to a health facility as soon as possible.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </div>
+    """,
     "Pulmonary TB": "Management details for pulmonary TB go here...",
-    "Resuscitation": "Management details for resuscitation go here...",
-    "Rheumatic fever and rheumatic heart disease": "Management details for rheumatic fever and rheumatic heart disease go here...",
+    "Resuscitation": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">RESUSCITATION</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-section mb-4">
+                <h4>Drug Calculator</h4>
+                <form method="POST" action="/calculate_resuscitation" class="mb-3">
+                    <div class="form-group">
+                        <label for="weight">Enter patient's weight (kg):</label>
+                        <input type="number" step="0.1" min="0" max="100" name="weight" id="weight" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <h4>1. General</h4>
+            <p>Remember the ABCD of resuscitation: Airways, Breathing, Cardiac, Drugs</p>
+
+            <h4>A. Airways</h4>
+            <ul>
+                <li>Clear the airways: use suction</li>
+                <li>Keep the airway open by lifting the chin and pulling the jaw forward</li>
+                <li>Use a plastic (Guedel) airway if available</li>
+            </ul>
+
+            <h4>B. Breathing</h4>
+            <ul>
+                <li>Put oxygen or air into the lungs:
+                    <ul>
+                        <li>Ventilation bag or</li>
+                        <li>Use mouth to mouth resuscitation</li>
+                        <li>Inflate the lungs about 20 times per minute.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>C. Cardiac</h4>
+            <ul>
+                <li>Start external cardiac massage if no response to ventilation</li>
+                <li>Squeeze the heart against the backbone by pressing with your hand over the sternum using:
+                    <ul>
+                        <li>One person: 30 compression to 2 breaths</li>
+                        <li>Two person: 15 compression to 2 breaths</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>D. Drugs</h4>
+            <ul>
+                <li>Adrenaline — if there is no heartbeat.
+                    <ul>
+                        <li>Mix ½ ml adrenaline 1 in 1000 with 4½ ml of water for injection. Give 1ml of this diluted adrenaline by one of the following methods:
+                            <ul>
+                                <li>down the endotracheal tube if there is one. This is the best way.</li>
+                                <li>intravenously or IM.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <hr>
+
+            <h4>2. RESUSCITATION OF BABIES</h4>
+            <p>Quickly dry the baby and keep him/her warm during the resuscitation.</p>
+
+            <h4>A. Clear the airways</h4>
+            <ul>
+                <li>(suction, and lift the chin and pull the jaw forward).</li>
+            </ul>
+
+            <h4>B. Get oxygen or air into the lungs</h4>
+            <ul>
+                <li>Use a baby ventilation bag and mask or</li>
+                <li>Frog breathing (using a nasal catheter and oxygen at 2-4 litres/minute) or</li>
+                <li>Mouth to face resuscitation</li>
+                <li>A + B are far more important than giving drugs.</li>
+            </ul>
+
+            <h4>C. Cardiac</h4>
+            <ul>
+                <li>Not usually required in neonatal resuscitation.</li>
+            </ul>
+
+            <h4>D. Drugs – most babies do not need drugs.</h4>
+            <ul>
+                <li>Drugs are only given if the baby is not breathing on his own when he is pink and has a good pulse rate (more than 100/min) after doing Steps A and B above.
+                    <ul>
+                        <li>If mother has been given morphine or pethidine within four hours of delivery, give the baby:
+                            <ul>
+                                <li>narcan injection (0.4mg/ml) ¼ ml/kg IV or sublingually or IM.</li>
+                            </ul>
+                        </li>
+                        <li>If no improvement, give 10% dextrose 5ml/kg IV over 5 minutes. (or 4.3% dextrose if 10% not available).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>IT IS IMPORTANT TO HAVE ALL YOUR EQUIPMENT READY BEFORE THE BABY IS BORN.</strong></p>
+        </div>
+    </div>
+    """,
+    "Rheumatic fever and rheumatic heart disease": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">RHEUMATIC FEVER AND RHEUMATIC HEART DISEASE</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-section mb-4">
+                <h4>Drug Calculator</h4>
+                <form method="POST" action="/calculate_rheumatic_fever" class="mb-3">
+                    <div class="form-group">
+                        <label for="weight">Enter patient's weight (kg):</label>
+                        <input type="number" step="0.1" min="0" max="100" name="weight" id="weight" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <p>Rheumatic fever and rheumatic heart disease can follow streptococcus pyogenes infection of the throat or skin. Some children present with fever and pains in the large joints that may move from one joint to another. The infection can damage the heart valves (especially the mitral and aortic valves), leading to respiratory distress and heart failure. Children with mild disease may have a heart murmur. Severe disease can present with fever, fast or difficult breathing, and lethargy. They may have chest pain or fainting. Affected children are usually over 5 years of age. Children in heart failure will have a fast heart rate, respiratory distress, and a large liver.</p>
+
+            <h4>DIAGNOSIS</h4>
+            <p>Diagnosis of rheumatic fever is very important because penicillin prophylaxis can prevent further episodes of rheumatic fever and avoid worsening damage to the heart valves.</p>
+            <p>Acute rheumatic fever is diagnosed clinically (Jones criteria):</p>
+            <ul>
+                <li>Two major criteria or 1 major AND 2 minor criteria:
+                    <ul>
+                        <li>Major criteria: new heart murmur, polyarthritis (swelling and pain of many joints), chorea (abnormal movements), subcutaneous nodules (raised swellings in skin), erythema marginatum (red rash)</li>
+                        <li>Minor criteria: fever, polyarthralgia, raised white cell count and ESR, prolonged PR interval on ECG, previous history of RF</li>
+                    </ul>
+                </li>
+                <li>If available, echocardiography is useful in confirming rheumatic heart disease.</li>
+            </ul>
+
+            <h4>MANAGEMENT</h4>
+            <ul>
+                <li>Admit to hospital.</li>
+                <li>Aspirin (25mg per kg every 6 hours) until fever subsides then reduce dose to 12.5mg per kg every 6 hours until joint pains subsided.</li>
+                <li>If in heart failure: give frusemide (1mg/kg 6 hourly), digoxin (10 microgram/kg daily) and oxygen. Check for anaemia and give a blood transfusion if the Hb < 8mg/dL.</li>
+                <li>If heart failure is severe give prednisolone (1mg/kg/day) orally instead of aspirin.</li>
+                <li>Give IV crystapen or amoxil orally if able to swallow.</li>
+                <li>Refer to a specialist if not improving.</li>
+            </ul>
+
+            <h4>Follow-up care</h4>
+            <ul>
+                <li>All children will need ongoing antibiotic prophylaxis. Give monthly benzathine penicillin (37.5mg/kg IM, max 900mg) or daily Pen V.</li>
+                <li>Ensure vaccinations are up-to-date.</li>
+                <li>Review every 3-6 months.</li>
+            </ul>
+        </div>
+    </div>
+    """,
     "Severe malnutrition: summary": "Management details for severe malnutrition go here...",
-    "Sexually transmitted infections (STIs)": "Management details for STIs go here...",
-    "Skin diseases": "Management details for skin diseases go here...",
+    "Sexually transmitted infections (STIs)": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">SEXUALLY TRANSMITTED INFECTIONS (STIs)</h3>
+        </div>
+        <div class="card-body">
+            <p>All STIs should be reported to the Provincial Health Office.</p>
+
+            <h4>CONGENITAL SYPHILIS</h4>
+            <ul>
+                <li>Sometimes the baby is born dead (stillborn).</li>
+                <li>If born alive, the baby may have:
+                    <ul>
+                        <li>Blisters or skin rash, often on the palms of the hands or soles of the feet.</li>
+                        <li>Bleeding spots (petechiae) or bruising.</li>
+                        <li>Enlarged liver and spleen.</li>
+                        <li>Prolonged jaundice.</li>
+                    </ul>
+                </li>
+                <li>Sometimes the baby may look normal at birth but within a few weeks develops:
+                    <ul>
+                        <li>Sores around the mouth.</li>
+                        <li>Bloody nasal discharge.</li>
+                    </ul>
+                </li>
+                <li>Send blood from baby and mother for VDRL test if you can.</li>
+            </ul>
+
+            <h4>TREATMENT</h4>
+            <p>a. Benzathine penicillin single (stat) dose IMI</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Weight</th>
+                        <th>No. of mls</th>
+                        <th>No. of units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Less than 2.5 Kg</td>
+                        <td>½ ml</td>
+                        <td>120,000 units</td>
+                    </tr>
+                    <tr>
+                        <td>More than 2.5 Kg</td>
+                        <td>1 ml</td>
+                        <td>240,000 units</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>b. Benzyl penicillin (crystapen) IM or IV twice daily for 10 days</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Weight</th>
+                        <th>No. of mls</th>
+                        <th>No. of units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Less than 2.5 Kg</td>
+                        <td>¼ ml B.D.</td>
+                        <td>125,000 units</td>
+                    </tr>
+                    <tr>
+                        <td>More than 2.5 Kg</td>
+                        <td>½ ml B.D.</td>
+                        <td>250,000 units</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>c. Treat mother and father.</p>
+
+            <ul>
+                <li>When mother has a positive VDRL test during pregnancy:
+                    <ul>
+                        <li>If baby is well with no signs of congenital syphilis:
+                            <ul>
+                                <li>Give single (stat) dose of benzathine penicillin IM.</li>
+                                <li>Check that both mother and father have been treated.</li>
+                                <li>If pale, check Hb (many are anaemic).</li>
+                            </ul>
+                        </li>
+                        <li>If baby has any signs of congenital syphilis:
+                            <ul>
+                                <li>Give single (stat) dose of benzathine penicillin IM.</li>
+                                <li>AND benzyl penicillin IM twice daily for 10 days.</li>
+                                <li>Check both parents have been treated.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>GONORRHOEA</h4>
+            <ol>
+                <li>In babies – gonococcal conjunctivitis
+                    <ul>
+                        <li>Presents as severe neonatal conjunctivitis.</li>
+                        <li>Treat as for severe neonatal conjunctivitis.</li>
+                        <li>Treat mother and father for genital discharge syndrome and other sexually transmitted diseases.</li>
+                    </ul>
+                </li>
+                <li>Genital discharge in young children
+                    <ul>
+                        <li>Suspect vulvovaginitis in girls with purulent vaginal discharge. Pain on passing urine may also be present.</li>
+                        <li>Send a swab for culture if you can.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>TREATMENT FOR CHILD</h4>
+            <p>Give one dose of azithromycin plus amoxicillin and augmentin (amoxicillin and clavulinic acid) and probenecid tablets.</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Weight</th>
+                        <th>Azithromycin</th>
+                        <th>Amoxicillin</th>
+                        <th>Augmentin</th>
+                        <th>Probenecid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Less than 10kg</td>
+                        <td>½ tab (250mg)</td>
+                        <td>1gm (4x250mg)</td>
+                        <td>½ tab</td>
+                        <td>½ tab</td>
+                    </tr>
+                    <tr>
+                        <td>More than 10kg</td>
+                        <td>1 tab (500mg)</td>
+                        <td>1½ gm (6x250mg)</td>
+                        <td>1 tab</td>
+                        <td>1 tab</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul>
+                <li>Confirmed gonococcal disease in a young child almost always means that the child has been or is being sexually abused.
+                    <ul>
+                        <li>Discuss the problem with a medical officer if you can.</li>
+                        <li>Check the child for evidence of other sexually transmitted diseases (syphilis, HIV infection) and treat if present.</li>
+                        <li>Discuss the problem with the child's family if you feel this is the right thing to do.</li>
+                        <li>Check the adult members of the family for evidence of sexually transmitted disease and treat if present.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>Remember</strong>: However you deal with this very difficult problem, your first responsibility is to do what is best for the child.</p>
+
+            <h4>HIV infection</h4>
+            <p>See Child Abuse Section for HIV infection prophylaxis or ART.</p>
+
+            <h4>PREVENTION IS BEST</h4>
+            <ul>
+                <li>HIV (AIDS) IS A PREVENTABLE DISEASE</li>
+                <li>ALL SEXUALLY TRANSMITTED DISEASES ARE PREVENTABLE</li>
+            </ul>
+        </div>
+    </div>
+    """,
+    "Skin diseases": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">SKIN DISEASES</h3>
+        </div>
+        <div class="card-body">
+            <h4>BOILS OR ABSCESSES</h4>
+            <p>a. If pus is present (the boil is fluctuant) treatment is incision and drainage.</p>
+            <ul>
+                <li>Antibiotics are not usually required.</li>
+            </ul>
+
+            <p>b. If pus is not yet present:</p>
+            <ul>
+                <li>If the child is not sick
+                    <ul>
+                        <li>Check the abscess every day.</li>
+                        <li>When pus has formed, incise and drain.</li>
+                    </ul>
+                </li>
+                <li>If the child has a high fever or looks sick or has multiple abscesses:
+                    <ul>
+                        <li>Give flucloxacillin or chloramphenicol.</li>
+                        <li>When pus has formed, incise and drain.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p>c. Remember:</p>
+            <ul>
+                <li>A febrile child with a hot, swollen, and tender limb probably has osteomyelitis.</li>
+            </ul>
+
+            <h4>IMPETIGO</h4>
+            <p>Multiple crusting sores, usually on the face.</p>
+            <ol>
+                <li>Clean scabs away with antiseptic, e.g. chlorhexidine (Savlon).</li>
+                <li>Apply crystal violet (gentian violet).</li>
+                <li>Give amoxicillin orally 3 times daily for 5 days. If no improvement after 5 days, change to cotrimoxazole (septrin) or erythromycin.</li>
+            </ol>
+
+            <h4>GRILE (ringworm, tinea imbricata)</h4>
+            <ol>
+                <li>Clean skin with soap and water.</li>
+                <li>Apply benzoic acid compound ointment half strength (Whitfield's) OR salicylic acid paint (grile lotion). Do not apply to the face. Apply to no more than ¼ of the body on any one day. Use once a day for 4 weeks.
+                    <ul>
+                        <li>If no improvement, use griseofulvin tablets.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>SCABIES</h4>
+            <ol>
+                <li>Treat the mother as well as the child. Try to treat other members of the family too. Encourage them to wash the whole body every day.</li>
+                <li>Wash the patient with soap and water.</li>
+                <li>Apply scabies lotion to all the body except the face.</li>
+                <li>Explain to the mother:
+                    <ul>
+                        <li>Wash off the scabies lotion after 24 hours.</li>
+                        <li>Wash clothes and blankets and dry them in the sun.</li>
+                        <li>Return in 4 days for a second treatment.</li>
+                    </ul>
+                </li>
+                <li>If the scabies is infected, treat with amoxicillin.</li>
+            </ol>
+
+            <h4>SORES AND ULCERS</h4>
+            <ol>
+                <li>Clean dirt and dead tissue away with antiseptic solution like sterile normal saline.</li>
+                <li>If the sore is infected, painful, swollen, and red, apply antiseptic dressings (e.g. acriflavine) daily until the sore is clean and pink.</li>
+                <li>Make sure that ulcers, sores, and cuts which are clean are kept clean. Apply dry dressings every day.</li>
+                <li>If any of the sores are raised, consider yaws as a possible cause.</li>
+                <li>If there are many infected sores: give amoxicillin orally 3 times daily for 5 days.</li>
+                <li>If the ulcer is larger than a 10 toea coin give amoxicillin.</li>
+                <li>If the ulcer does not get better after amoxicillin, change to cotrimoxazole (septrin) orally twice daily for 5 days and tinidazole orally once daily for 3 days.</li>
+                <li>If the ulcer is bigger than a one Kina coin, it needs skin grafting when it is clean.</li>
+            </ol>
+
+            <h4>PREVENTION OF SKIN DISEASES</h4>
+            <p>Skin diseases can often be prevented by good skin hygiene. The use of soap and water should be encouraged.</p>
+            <p>Advise parents:</p>
+            <ul>
+                <li>Keep the skin clean. Use soap and water.</li>
+                <li>Get treatment for small skin sores before they get big.</li>
+                <li>Use of medicated soaps may prevent small skin sores becoming serious.</li>
+            </ul>
+        </div>
+    </div>
+    """,
     "Snake bite": "Management details for snake bite go here...",
     "Tables of drug doses": "Management details for tables of drug doses go here...",
     "Tuberculosis": "Management details for tuberculosis go here...",
     "Typhoid": "Management details for typhoid go here...",
-    "Urinary symptoms": "Management details for urinary symptoms go here...",
-    "Yaws": "Management details for yaws go here..."
+    "Urinary symptoms": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">URINARY SYMPTOMS</h3>
+        </div>
+        <div class="card-body">
+            <h4>1. Pain on passing urine:</h4>
+            <ul>
+                <li>If possible, collect a urine sample for microscopy (and culture).
+                    <ul>
+                        <li>Urine collection (see Paediatrics for doctors in PNG, p. 378).</li>
+                        <li>Look at the urine in a glass bottle.
+                            <ul>
+                                <li>If it is cloudy, treat for urinary infection.
+                                    <ul>
+                                        <li>Give cotrimoxazole (septrin) twice a day for 1 week. Arrange for the child to be checked by a doctor later.</li>
+                                    </ul>
+                                </li>
+                                <li>If it is clear, check the penis or vulva to see if there is any cause for pain.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Note</strong>: Infants do not complain of pain on passing urine, but if they have a urinary infection, they are likely to be irritable, to cry, to feed poorly, and to be febrile. Urinary infection should always be considered in a sick febrile child with no obvious source of infection.</li>
+            </ul>
+
+            <h4>2. Passing blood in the urine:</h4>
+            <ul>
+                <li>All children passing blood in the urine should be admitted to hospital or health centre for investigation and treatment.
+                    <ul>
+                        <li>If oedema is present, start treatment with amoxicillin oral daily for 10 days. Measure the blood pressure if you can. If more than 120/90, discuss the problem with a doctor.</li>
+                        <li>If there is no oedema, start treatment with Cotrimoxazole. Arrange for the child to be checked by a doctor later.</li>
+                        <li>If bleeding continues after 2 days treatment, refer patient to hospital.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    """,
+    "Yaws": "Management details for yaws go here...",
+    "Snake bite": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">SNAKE BITE</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-section mb-4">
+                <h4>Drug Calculator</h4>
+                <form method="POST" action="/calculate_snake_bite" class="mb-3">
+                    <div class="form-group">
+                        <label for="weight">Enter patient's weight (kg):</label>
+                        <input type="number" step="0.1" min="0" max="100" name="weight" id="weight" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <h4>First aid (at the place where the child is bitten)</h4>
+            <ol>
+                <li>Bandage the whole length of the bitten limb if possible, starting from the hand or foot, and working towards the shoulder or thigh. The bandage (or strip of cloth) should be as firm as an ankle bandage. It should only be released when the patient is at a place where antivenom is available.</li>
+                <li>Splint the affected limb to prevent movement. Place child in left lateral recovery position and keep airway clear.</li>
+            </ol>
+
+            <h4>Admit</h4>
+            <ul>
+                <li>All children who have definitely been bitten by a venomous snake.</li>
+                <li>All children who may have been bitten by a venomous snake.</li>
+            </ul>
+
+            <h4>Look for symptoms and signs of poisoning (envenomation)</h4>
+            <ul>
+                <li>Nausea and vomiting</li>
+                <li>Abdominal pain</li>
+                <li>Difficulty seeing properly</li>
+                <li>Difficulty with breathing</li>
+                <li>Painful lymph glands</li>
+                <li>Weakness of limbs</li>
+                <li>Drooping eyelids</li>
+                <li>Dribbling of saliva</li>
+            </ul>
+
+            <h4>Check for blood clotting time</h4>
+            <ul>
+                <li>Take a blood sample, leave for 20 minutes without shaking in glass tube or bottle. An abnormal test is if the blood has not clotted after 20 mins.</li>
+            </ul>
+
+            <h4>TREATMENT</h4>
+            <p>a. No signs of envenomation and blood is clotted by 20 minutes:</p>
+            <ul>
+                <li>Keep on bed rest.</li>
+                <li>Hourly observations for at least 12 hours after admission.</li>
+                <li>If signs of envenomation appear treat as in section b.</li>
+                <li>Tetanus toxoid ½ml IM stat.</li>
+                <li>Do not touch the site of the bite.</li>
+                <li>Give amoxicillin for 5 days.</li>
+            </ul>
+
+            <p>b. Signs of poisoning (envenomation) or blood is not clotted after 20 minutes:</p>
+            <ul>
+                <li>Give 1 vial of snake antivenom as soon as you can.</li>
+            </ul>
+
+            <h4>Giving snake antivenom:</h4>
+            <ul>
+                <li>Rest the child in bed. Nurse on the side and keep airway clear.</li>
+                <li>Set up a drip: with Hartmann's solution or dextrose/saline.</li>
+                <li>Give diluted adrenaline subcutaneously: Draw up ¼ ml of 1 in 1000 adrenaline in a syringe and make it up to 2 ½ml with sterile water.</li>
+            </ul>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Age (years)</th>
+                        <th>Weight (kg)</th>
+                        <th>Dose (ml)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1-3</td>
+                        <td>Less than 11</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>4-7</td>
+                        <td>11-15</td>
+                        <td>1 ½</td>
+                    </tr>
+                    <tr>
+                        <td>8-11</td>
+                        <td>16-20</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul>
+                <li>Add 1 vial of snake antivenom to 100mls of IV fluid in a burette and infuse over 30-60 minutes. Then run drip at maintenance rate.</li>
+                <li>Give tetanus toxoid ½ml IM stat.</li>
+                <li>Do not touch the site of the bite.</li>
+                <li>Give crystapen IV or amoxicillin for 5 days.</li>
+            </ul>
+
+            <h4>If there is a mild reaction to the antivenom: (fever, skin rash)</h4>
+            <ul>
+                <li>Give promethazine IM.</li>
+                <li>Continue giving the antivenom slowly over 1 hour, but if the symptoms become severe, stop.</li>
+            </ul>
+
+            <h4>If there is a severe reaction: (wheezing, shock with weak pulse)</h4>
+            <ul>
+                <li>Immediately stop giving the antivenom.</li>
+                <li>Give another dose of diluted adrenaline intramuscularly.</li>
+                <li>Give hydrocortisone 100mg IV.</li>
+                <li>Give oxygen if available, and use an Ambu bag if patient stops breathing.</li>
+            </ul>
+
+            <p>When the child is stabilized continue giving the antivenom slowly. If there are no signs of the severe reaction subsiding after 30 minutes give one more dose of diluted adrenaline intramuscularly.</p>
+
+            <p><strong>Note</strong>: Nursing care is very important. Keep the airway clear and nurse the child in the left lateral position. Early referral of severely envenomated patients, patients who are deteriorating after antivenom, and in situations where antivenom is not available may be lifesaving. Ensure the child is nursed properly during transport.</p>
+        </div>
+    </div>
+    """,
+    "Typhoid": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">TYPHOID</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-section mb-4">
+                <h4>Drug Calculator</h4>
+                <form method="POST" action="/calculate_typhoid" class="mb-3">
+                    <div class="form-group">
+                        <label for="weight">Enter patient's weight (kg):</label>
+                        <input type="number" step="0.1" min="0" max="100" name="weight" id="weight" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <p>A child may have typhoid if he/she:</p>
+            <ul>
+                <li>Comes from an area where typhoid is common.</li>
+                <li>Has persisting fever.</li>
+                <li>Has one or more of the following:
+                    <ul>
+                        <li>Headache</li>
+                        <li>Diarrhoea (with or without blood)</li>
+                        <li>Abdominal pain</li>
+                        <li>Confusion</li>
+                        <li>Abdominal tenderness</li>
+                        <li>Talking nonsense</li>
+                        <li>Abdominal distension</li>
+                        <li>Dehydration</li>
+                        <li>Constipation</li>
+                        <li>Looking or feeling very sick</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>If you think the child has typhoid:</h4>
+            <ol>
+                <li>Admit to hospital or health centre.
+                    <ul>
+                        <li>If health centre, start treatment and transfer urgently to hospital if the child:
+                            <ul>
+                                <li>Has a distended tender abdomen.</li>
+                                <li>Has rectal bleeding or melaena (black, sticky stools).</li>
+                                <li>Has severe abdominal pain.</li>
+                                <li>Is unconscious or confused.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Do a 'Widal' blood test if possible to confirm the diagnosis.
+                    <ul>
+                        <li>A titre of 1:160 or higher is likely to indicate true typhoid fever but a titre of < 1:80 may indicate previous exposure.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>TREATMENT</h4>
+            <ol>
+                <li>Chloramphenicol (CMP) for at least 2 weeks; 3 weeks if possible.
+                    <ul>
+                        <li>Give intramuscularly 6 hourly to start with and change to oral when the patient improves.</li>
+                        <li>If not responding to CMP, use ciprofloxacin.</li>
+                        <li>If you do not have chloramphenicol or ciprofloxacin, give amoxicillin (25mg/kg, max 500mg) 6 hourly for 3 weeks, or cotrimoxazole for at least 2 weeks.</li>
+                    </ul>
+                </li>
+                <li>Antimalarials
+                    <ul>
+                        <li>Test and treat if positive.</li>
+                    </ul>
+                </li>
+                <li>Fluids
+                    <ol type="a">
+                        <li>If dehydrated: rehydrate with either ORS or intravenous ½ strength Darrow's Solution.</li>
+                        <li>If not dehydrated:
+                            <ul>
+                                <li>If vomiting or the child has a distended, tender abdomen, give intravenous maintenance fluids.</li>
+                                <li>If not vomiting and the abdomen is soft, give milk and other oral fluids.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+                <li>Nutrition rehabilitation
+                    <ul>
+                        <li>Children who have typhoid need extra nutrition to build themselves back to normal.
+                            <ol>
+                                <li>Give extra food.</li>
+                                <li>Give 1ml multiple vitamin liquid daily.</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p><strong>Note</strong>: Even with the correct treatment, the child may take 1 to 2 weeks to get better. The fever may remain for up to a week.</p>
+
+            <h4>PREVENTION</h4>
+            <ul>
+                <li>Typhoid is spread by poor hygiene.</li>
+                <li>Advise patient and parents:
+                    <ul>
+                        <li>To wash hands thoroughly with soap and water after toilet.</li>
+                        <li>To wash hands thoroughly with soap and water before cooking and eating.</li>
+                        <li>To check they use clean, safe drinking water.</li>
+                        <li>To be careful about buying "fast foods" and ready to eat cooked food and ice-creams from unhygienic places.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>At the present time the typhoid vaccine is not very important in typhoid prevention. Emphasis must be placed on hygiene.</strong></p>
+        </div>
+    </div>
+    """,
+    "Yaws": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">YAWS</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-section mb-4">
+                <h4>Drug Calculator</h4>
+                <form method="POST" action="/calculate_yaws" class="mb-3">
+                    <div class="form-group">
+                        <label for="weight">Enter patient's weight (kg):</label>
+                        <input type="number" step="0.1" min="0" max="100" name="weight" id="weight" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <p>Yaws is becoming more common again in Papua New Guinea. It usually occurs in children over the age of 6 years and is most common in coastal areas.</p>
+
+            <p>The first sign of yaws is a skin sore that is:</p>
+            <ul>
+                <li>Raised and reddish brown, with a yellow crust.</li>
+                <li>Usually on the leg.</li>
+                <li>Usually painless.</li>
+                <li>Sometimes ulcerated.</li>
+                <li>Unresponsive to standard sore treatments.</li>
+                <li>Heals slowly over a few months.</li>
+            </ul>
+
+            <p>Later, many children develop bony problems. These usually start with chronic pain in the long bones and swellings of the fingers, forearms, legs, and bridge of the nose. The skin sore may have healed by this stage. The VDRL test is positive.</p>
+
+            <h4>TREATMENT</h4>
+            <ol>
+                <li>Give a single dose of IM benzathine penicillin:
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Weight (kg)</th>
+                                <th>Dose (ml) IM</th>
+                                <th>Weight (kg)</th>
+                                <th>Dose (ml) IM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>3-9.9</td>
+                                <td>1</td>
+                                <td>30-39.9</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>10-19.9</td>
+                                <td>2</td>
+                                <td>40-49.9</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>20-29.9</td>
+                                <td>3</td>
+                                <td>Adult</td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li>Or Azithromycin 30 mg/kg oral stat, if you have it.
+                    <ul>
+                        <li>The sores, pains, and bone problems get better very quickly.</li>
+                        <li>Treat close contacts with benzathine penicillin or azithromycin 30 mg/kg oral stat if you have it.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p>Notify your provincial health office.</p>
+        </div>
+    </div>
+    """,
+    "Tables of drug doses": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">TABLES OF DRUG DOSES</h3>
+        </div>
+        <div class="card-body">
+            <h4>MAINTENANCE DOSES OF COMMONLY USED DRUGS (CHILDREN OLDER THAN 1 MONTH)</h4>
+            <p><em>Dose per kilogram body weight, and number of doses each day.</em></p>
+
+            <h5>Antibiotics</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Dose/kg</th>
+                            <th>No. of doses per day</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Amoxicillin</td><td>25mg</td><td>3</td><td>Oral</td></tr>
+                        <tr><td>2. Ampicillin</td><td>50mg</td><td>4</td><td>IM, IV or Oral</td></tr>
+                        <tr><td>3. Azithromycin</td><td>15mg</td><td>1</td><td>Oral</td></tr>
+                        <tr><td>4. Ceftriaxone</td><td>50mg</td><td>2</td><td>IM, IV</td></tr>
+                        <tr><td>5. Chloramphenicol</td><td>25mg</td><td>4</td><td>IM, IV or Oral</td></tr>
+                        <tr><td>6. Ciprofloxacillin</td><td>10-20mg</td><td>2</td><td>Oral</td></tr>
+                        <tr><td>7. Cloxacillin/Flucloxacillin</td><td>25mg to 50 mg</td><td>4</td><td>IM, IV or Oral</td></tr>
+                        <tr><td>8. Cotrimoxazole</td><td>5mg trimethoprim</td><td>2</td><td>Oral</td></tr>
+                        <tr><td>9. Crystapen</td><td>25,000u</td><td>4</td><td>IM or IV</td></tr>
+                        <tr><td>10. Erythromycin</td><td>10mg</td><td>4</td><td>Oral</td></tr>
+                        <tr><td>11. Gentamicin</td><td>5-7.5 mg</td><td>1</td><td>IM or IV</td></tr>
+                        <tr><td>12. Metronidazole</td><td>15mg</td><td>3</td><td>Oral or Rectal</td></tr>
+                        <tr><td>13. Tinidazole</td><td>50mg</td><td>1</td><td>Oral</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h5>Anti TB</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Dose/kg</th>
+                            <th>No. of doses per day</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Ethambutol</td><td>20mg</td><td>1</td><td>Oral</td></tr>
+                        <tr><td>2. Isoniazid</td><td>10mg</td><td>1</td><td>Oral</td></tr>
+                        <tr><td>4. Pyrazinamide</td><td>35mg</td><td>1</td><td>Oral</td></tr>
+                        <tr><td>5. Rifampicin</td><td>15mg</td><td>1</td><td>Oral</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h5>Anticonvulsants</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Dose/kg</th>
+                            <th>No. of doses per day</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Carbamazepine</td><td>5-10mg</td><td>2</td><td>Oral</td></tr>
+                        <tr><td>2. Phenobarbitone</td><td>5mg</td><td>1</td><td>IM, IV or Oral</td></tr>
+                        <tr><td>3. Phenytoin</td><td>3mg</td><td>2</td><td>IV or Oral</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h5>Antimalarials</h5>
+            <p>See dosing tables starting on p. 74</p>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Dose/kg</th>
+                            <th>No. of doses per day</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Camoquin</td><td>10mg</td><td>1</td><td>Oral</td></tr>
+                        <tr><td>2. Chloroquine</td><td>10mg</td><td>1</td><td>Oral</td></tr>
+                        <tr><td>3. Quinine</td><td>10mg</td><td>3</td><td>Oral</td></tr>
+                        <tr><td></td><td>10mg</td><td>2</td><td>IM</td></tr>
+                        <tr><td>4. Artemether</td><td>3.2mg day 1, 1.6mg day 2+</td><td>1</td><td>IM</td></tr>
+                        <tr><td>5. Artesunate</td><td>4mg day 1, 2mg day 2+</td><td>1</td><td>Oral</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h5>Bronchodilators</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Dose/kg</th>
+                            <th>No. of doses per day</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Aminophylline</td><td>5mg</td><td>4</td><td>IV or Oral</td></tr>
+                        <tr><td>2. Salbutamol</td><td>0.15mg</td><td>4</td><td>Oral</td></tr>
+                        <tr><td>3. Salbutamol Respirator Solution (0.5%)</td><td>0.5-1ml (fixed dose, not per kg, diluted to 4ml with normal saline)</td><td>6</td><td>Nebuliser</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h5>Cardiac</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Dose/kg</th>
+                            <th>No. of doses per day</th>
+                            <th>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Digoxin</td><td>10micrograms</td><td>1</td><td>IM or Oral</td></tr>
+                        <tr><td>2. Furosemide</td><td>1mg</td><td>2</td><td>IV, IM or Oral</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>
+
+            <h4>TABLE OF DRUG DOSES BY WEIGHT</h4>
+            <p><strong>Weight (Kilograms)</strong></p>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Adrenalin Amp. 1/1000 in 1ml</strong> Subcutaneous</td><td></td><td></td><td></td><td>0.25</td><td>0.25</td><td>0.25</td><td>0.5</td><td>0.5</td></tr>
+                        <tr><td><strong>Albendazole Tab 200mg</strong> (must be crushed or chewed)</td><td>1</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Aminophylline</strong> Amp. 250mg/10 ml IV over 1 hour (put in burette) every 6 hours</td><td></td><td>1.5</td><td>2</td><td>3</td><td>4</td><td>6</td><td>8</td><td>10</td></tr>
+                        <tr><td>Elixer 25mg/5ml every 6 hours, oral</td><td></td><td>6</td><td>10</td><td>15</td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>Tab. 100mg, every 6 hours, oral</td><td></td><td>¼</td><td>½</td><td>¾</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td><strong>Amoxicillin</strong> Tabs 250 mg. 3 times daily. oral</td><td>½</td><td>½</td><td>1</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Amoxicillin suspension</strong> 125mg/5ml three times daily oral</td><td>5</td><td>7½</td><td>10</td><td>10</td><td>Use tabs</td><td></td><td></td><td></td></tr>
+                        <tr><td><strong>Ampicillin or Amoxicillin</strong> Vial 250mg (add 1ml sterile water) IM/IV every 6 hours</td><td>1</td><td>1.5</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Artemether 20mg/ Lumefantrine 120 mg tab</strong> (Coartem or Mala-1)</td><td colspan="8">See malaria section p. 79</td></tr>
+                        <tr><td><strong>Artesunate injection</strong></td><td colspan="8">See malaria section p. 76</td></tr>
+                        <tr><td><strong>Artesunate suppository</strong></td><td colspan="8">See malaria section p. 74</td></tr>
+                        <tr><td><strong>Aspirin tab</strong> 300mg, every 6 hours, oral*</td><td></td><td>¼</td><td>½</td><td>½</td><td>1</td><td>1½</td><td>2</td><td>2</td></tr>
+                        <tr><td colspan="9"><em>*Do not use aspirin to treat fever in children less than 10 years of age- use paracetamol*</em></td></tr>
+                        <tr><td><strong>Atropine Amp. 0.6mg/ml, IM</strong></td><td></td><td>¼</td><td>¼</td><td>¼</td><td>½</td><td>¾</td><td>¾</td><td>1</td></tr>
+                        <tr><td><strong>Benadryl, see diphenhydramine</strong></td><td colspan="8"></td></tr>
+                        <tr><td><strong>Ceftriaxone, twice daily IM dose</strong></td><td colspan="8">Calculate exactly 50mg per kg</td></tr>
+                        <tr><td><strong>Chloral hydrate 150mg/5ml, oral</strong></td><td>5</td><td>10</td><td>15</td><td>20</td><td>20</td><td>20</td><td>20</td><td>20</td></tr>
+                        <tr><td><strong>Chloramphenicol</strong> Vial 1 gram (add 4ml sterile water) IV or IM every 6 hours.</td><td>see p.119</td><td>1½</td><td>2</td><td>2½</td><td>3</td><td>3</td><td>4</td><td></td></tr>
+                        <tr><td>Susp. 125mg/5ml, every 6 hours, oral</td><td>see p.119</td><td>12</td><td>15</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>Cap. 250mg, every 6 hours, oral.</td><td></td><td></td><td>1</td><td>1</td><td>2</td><td>2</td><td>3</td><td>4</td></tr>
+                        <tr><td><strong>Chloroquine Tab 150mg base</strong> Treatment: daily for 3 days, oral</td><td>¼</td><td>½</td><td>1</td><td colspan="5">See page 83</td></tr>
+                        <tr><td>Prophylaxis: weekly dose, oral</td><td>¼</td><td>½</td><td>½</td><td>1</td><td>1</td><td>1½</td><td>1½</td><td>2</td></tr>
+                        <tr><td><strong>Clofazimine (Lamprene) Cap 100mg</strong> every second day, oral</td><td>1</td><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>daily, oral</td><td></td><td></td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td><strong>Cloxacillin (flucloxacillin)</strong> Vial 250mg (add 1½ml sterile water) IM or IV every 6 hours</td><td>¼</td><td>½</td><td>1</td><td>1</td><td>1½</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td>Cap. 250mg, every 6 hours, oral.</td><td></td><td></td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td></tr>
+                        <tr><td><strong>Cotrimoxazole (septrin)</strong> Susp. 40mg/5ml Trimethoprim, twice daily, oral</td><td>2½</td><td>5</td><td>7½</td><td>10</td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>Tabs 80mg Trimethoprim, twice daily</td><td></td><td>½</td><td>½</td><td>1</td><td>1½</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Dapsone (DDS) Tab 50mg</strong> Daily for 12 weeks</td><td>½</td><td>½</td><td>½</td><td>½</td><td>1</td><td>1½</td><td>1½</td><td>2</td></tr>
+                        <tr><td>THEN either twice a week at clinic</td><td>1½</td><td>1½</td><td>1½</td><td>1½</td><td>3</td><td>5</td><td>5</td><td>6</td></tr>
+                        <tr><td>Or daily at home</td><td>½</td><td>½</td><td>½</td><td>½</td><td>1</td><td>1½</td><td>1½</td><td>2</td></tr>
+                        <tr><td><strong>Diazepam (valium) 10mg/2ml</strong> slow IV (rectal: see p.22)</td><td>¼</td><td>½</td><td>½</td><td>¾</td><td>1</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Diethylcarbamazine Tab 50mg (hetrazan)</strong> 3 times a day for 3 weeks, oral.</td><td>¼</td><td>¼</td><td>½</td><td>½</td><td>1</td><td>1½</td><td>1½</td><td>2</td></tr>
+                        <tr><td><strong>Digoxin (lanoxin)</strong> every 6 hours Elixir 50microgram/ml, oral, 3 doses.</td><td>2</td><td>3</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>Tab 0.25mg, oral, 3 doses.</td><td></td><td></td><td></td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td>Then maintenance if needed: Elixir 50microgram/ml, oral, daily.</td><td>1</td><td>1½</td><td>2½</td><td>3</td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>Tab 0.25mg, oral, daily.</td><td></td><td></td><td></td><td></td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td><strong>Dihydroartemisinin 40mg / Piperaquine 320mg fixed-formulation Tab</strong> daily x 3 days</td><td>¼</td><td>½</td><td>1</td><td>1</td><td>1.5</td><td>2</td><td>2.5</td><td>3</td></tr>
+                        <tr><td><strong>Diphenhydramine (Benadryl)</strong> Elixir, 10mg/5ml, 3 times a day, oral.</td><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td><td colspan="3">use promethazine</td></tr>
+                        <tr><td><strong>Electrolyte mixture (Zinc, Potassium and Magnesium)</strong> Doses for malnutrition and diarrhoea</td><td>5</td><td>5</td><td>5</td><td>10</td><td>5</td><td>10</td><td>10</td><td>10</td></tr>
+                        <tr><td><strong>Erythromycin Susp. 125mg/5ml</strong> 4 times daily, oral.</td><td>2</td><td>3</td><td>5</td><td>7</td><td>10</td><td></td><td></td><td></td></tr>
+                        <tr><td><strong>Ethambutol Tab. 400mg, daily, oral</strong></td><td colspan="8">See Tuberculosis drug dosing section p. 146</td></tr>
+                        <tr><td><strong>Fefol 200 mg Ferrous Sulphate tab</strong></td><td></td><td>¼</td><td>½</td><td>½</td><td>1</td><td>1</td><td>1½</td><td>2</td></tr>
+                        <tr><td><strong>Ferrous fumarate (46 mg/5ml)</strong> Oral once daily</td><td>2½</td><td>5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td><strong>Flagyl — see metronidazole</strong></td><td colspan="8"></td></tr>
+                        <tr><td><strong>Furosemide (Lasix) Amp. 20mg/2ml</strong> IM or IV.</td><td>½</td><td>¾</td><td>1</td><td>1½</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Gentamicin Vial, 80mg/2ml</strong> IM, once daily (7.5mg/kg)</td><td>0.75</td><td>1.25</td><td>2</td><td>2.5</td><td>3.5</td><td>5</td><td>6</td><td>6</td></tr>
+                        <tr><td><strong>Ipecacuanha syrup</strong> give once, oral</td><td></td><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td></tr>
+                        <tr><td><strong>Isoniazid (INH) Tab. 100mg, oral</strong></td><td colspan="8">See Tuberculosis drug dosing section p. 146</td></tr>
+                        <tr><td><strong>Ketamine (Ketalar) 500mg/10ml</strong> IM — first dose.</td><td>¾</td><td>1½</td><td>2½</td><td>3½</td><td>5</td><td>7½</td><td>7½</td><td>10</td></tr>
+                        <tr><td>next dose (if needed)</td><td>½</td><td>¾</td><td>1½</td><td>2</td><td>2½</td><td>4</td><td>4</td><td>5</td></tr>
+                        <tr><td><strong>Lanoxin — see digoxin</strong></td><td colspan="8"></td></tr>
+                        <tr><td><strong>Lasix — see frusemide</strong></td><td colspan="8"></td></tr>
+                        <tr><td><strong>Magnesium hydroxide mixture (milk of magnesia), oral</strong></td><td></td><td>2</td><td>5</td><td>10</td><td>10</td><td>15</td><td>15</td><td>20</td></tr>
+                        <tr><td><strong>Mebendazole Tab. 100mg</strong></td><td>½</td><td>½</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td>Inpatient, twice daily for 3 days, oral.</td><td></td><td>2</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td></tr>
+                        <tr><td>Outpatient, Single dose, oral.</td><td>½</td><td>1</td><td>1½</td><td>2</td><td>2</td><td>3</td><td>3</td><td>4</td></tr>
+                        <tr><td><strong>Metronidazole (Flagyl) Tab. 200mg or 250mg, 3 times daily for 5 days, oral.</strong> For Bloody Diarrhoea</td><td>½</td><td>½</td><td>1</td><td>1</td><td>1½</td><td>1½</td><td>2</td><td>2</td></tr>
+                        <tr><td>For Big Skin sores</td><td></td><td></td><td>¼</td><td>¼</td><td>½</td><td>¾</td><td>1</td><td>1½</td></tr>
+                        <tr><td><strong>Morphine Amp. 10mg/ml</strong> (NOT 15mg/ml), IM every 6 hours.</td><td></td><td></td><td>¼</td><td>¼</td><td>½</td><td>¾</td><td>1</td><td>1½</td></tr>
+                        <tr><td><strong>Nitrofurantoin</strong></td><td></td><td>2½</td><td>5</td><td>5</td><td>7½</td><td>10</td><td></td><td></td></tr>
+                        <tr><td><strong>Paracetamol Suspension</strong> 4 times daily oral.</td><td>1</td><td>1½</td><td>2½</td><td>3</td><td>4</td><td>5</td><td>7½</td><td>10</td></tr>
+                        <tr><td><strong>Paracetamol suppository (125 mg tab)</strong> 4 times daily PR</td><td></td><td></td><td>1</td><td>1 or 2</td><td>2</td><td>2</td><td></td><td></td></tr>
+                        <tr><td><strong>Paracetamol suppository (250 mg tab)</strong> 4 times daily PR</td><td></td><td></td><td></td><td>1</td><td>1</td><td>1</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Paraldehyde Amp. 5ml, IM</strong> Use a glass syringe:</td><td>1</td><td>1 ½</td><td>2½</td><td>3</td><td>4</td><td>5</td><td>7½</td><td>10</td></tr>
+                        <tr><td><strong>Penicillin</strong> Benzyl (crystalline) Vial 1,000,000u (add 2ml sterile water) IM or IV every 6 hours</td><td>½</td><td>½</td><td>1</td><td>1</td><td>1½</td><td>2</td><td>2</td><td>2</td></tr>
+                        <tr><td>Benzathine Vial, 2,400,000 u, Yaws add 5ml sterile water, IM stat</td><td>1</td><td>1</td><td>2</td><td>2</td><td>3</td><td>4</td><td>5</td><td>5</td></tr>
+                        <tr><td><strong>Pethidine Amp.50mg/ml or100mg/2ml</strong> usual dose, IM</td><td></td><td></td><td>¼</td><td>½</td><td>½</td><td>¾</td><td>1</td><td>1</td></tr>
+                        <tr><td>for very severe pain, IM</td><td></td><td>¼</td><td>½</td><td>¾</td><td>1</td><td>1½</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Phenobarbitone Tab 30mg, oral. Amp. 200mg mg/ml</strong> Loading dose once, IM/IV</td><td>¼</td><td>½</td><td>¾</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1½</td></tr>
+                        <tr><td>Oral</td><td>2</td><td>3</td><td>5</td><td>6</td><td>7</td><td>7</td><td>7</td><td>8</td></tr>
+                        <tr><td>Maintenance Dose daily - Oral</td><td>½</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>5</td><td>6</td></tr>
+                        <tr><td><strong>Phenytoin Cap. or tab. 30mg NOT 100mg, Maintenance dose daily, oral</strong></td><td>1</td><td>2</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>8</td></tr>
+                        <tr><td><strong>Promethazine (Phenergan)</strong> Tab 25mg. 2 times a day, oral</td><td>use diphenhydramine</td><td>1</td><td>1</td><td>1</td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>Amp. 50mg/2ml, IM or IV once</td><td></td><td>¼</td><td>½</td><td>¾</td><td>1</td><td>1½</td><td>2</td><td>2</td></tr>
+                        <tr><td><strong>Pyrazinamide Tab 500mg</strong></td><td colspan="8">See Tuberculosis drug dosing section p. 146</td></tr>
+                        <tr><td><strong>Rifampicin</strong></td><td colspan="8"></td></tr>
+                        <tr><td><strong>Quinine</strong></td><td colspan="8">See malaria section p. 78</td></tr>
+                        <tr><td><strong>Salbutamol (ventolin)</strong> Tab 4mg. 4 times daily oral</td><td></td><td>¼</td><td>¼</td><td>½</td><td>½</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td>Respirator Solution dilute with 4ml of normal saline</td><td>½</td><td>½</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td><strong>Septrin: see cotrimoxazole</strong></td><td colspan="8"></td></tr>
+                        <tr><td><strong>Tinidazole Tab. 500mg (see p. 56)</strong></td><td>¼</td><td>½</td><td>1</td><td>1½</td><td>2</td><td>3</td><td>4</td><td>4</td></tr>
+                        <tr><td><strong>Valium: see diazepam</strong></td><td colspan="8"></td></tr>
+                        <tr><td><strong>Ventolin: see salbutamol</strong></td><td colspan="8"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    """,
+    "IV and oral fluid calculation (using either Paediatric or Adult burette)": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">IV AND ORAL FLUID CALCULATION WHEN USING THE PAEDIATRIC IV GIVING SET</h3>
+        </div>
+        <div class="card-body">
+            <h4>IV AND ORAL FLUIDS</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">Total maintenance fluid requirements – do not exceed this in a non-dehydrated child.</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">Hartmann's solution (Ringers Lactate) plus 5% dextrose</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">Or 0.45% NaCl and 5% dextrose</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">In sick children who can take oral or nasogastric fluids, give nutrition enterally, and reduce IV fluid rate so that the total fluid intake is according to the volumes in the table</td>
+                        </tr>
+                        <tr>
+                            <td>ml/hr</td>
+                            <td>18</td>
+                            <td>30</td>
+                            <td>45</td>
+                            <td>55</td>
+                            <td>65</td>
+                            <td>75</td>
+                            <td>90</td>
+                            <td>120</td>
+                        </tr>
+                        <tr>
+                            <td>drops/min</td>
+                            <td>18</td>
+                            <td>30</td>
+                            <td>45</td>
+                            <td>55</td>
+                            <td>65</td>
+                            <td>75</td>
+                            <td>90</td>
+                            <td>120</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Meningitis, Heart failure, Coma</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">Hartmann's solution (Ringers Lactate) plus 5% dextrose</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">If oral or nasogastric fluids are given, reduce IV rate</td>
+                        </tr>
+                        <tr>
+                            <td>ml/hr</td>
+                            <td>12</td>
+                            <td>20</td>
+                            <td>30</td>
+                            <td>36</td>
+                            <td>44</td>
+                            <td>50</td>
+                            <td>60</td>
+                            <td>80</td>
+                        </tr>
+                        <tr>
+                            <td>drops/min</td>
+                            <td>12</td>
+                            <td>20</td>
+                            <td>30</td>
+                            <td>36</td>
+                            <td>44</td>
+                            <td>50</td>
+                            <td>60</td>
+                            <td>80</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>
+
+            <h4>IV AND ORAL FLUIDS</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9"><strong>Diarrhoea (½ strength Darrow's)</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">quickly if dehydrated</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">then</td>
+                        </tr>
+                        <tr>
+                            <td>ml</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>250</td>
+                            <td>350</td>
+                            <td>500</td>
+                            <td>700</td>
+                            <td>900</td>
+                            <td>1000</td>
+                        </tr>
+                        <tr>
+                            <td>ml/hr</td>
+                            <td>25</td>
+                            <td>50</td>
+                            <td>75</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>150</td>
+                            <td>150</td>
+                        </tr>
+                        <tr>
+                            <td>drops/min</td>
+                            <td>25</td>
+                            <td>50</td>
+                            <td>75</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>150</td>
+                            <td>150</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Burns Hartmann's solution (Ringers Lactate) or 0.9% Sodium Chloride</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">quickly if more than 10% burn</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">then</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">Also give nasogastric or oral feeds</td>
+                        </tr>
+                        <tr>
+                            <td>ml</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>250</td>
+                            <td>350</td>
+                            <td>500</td>
+                            <td>700</td>
+                            <td>900</td>
+                            <td>1000</td>
+                        </tr>
+                        <tr>
+                            <td>ml/hr</td>
+                            <td>25</td>
+                            <td>50</td>
+                            <td>75</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>150</td>
+                            <td>150</td>
+                        </tr>
+                        <tr>
+                            <td>drops/min</td>
+                            <td>25</td>
+                            <td>50</td>
+                            <td>75</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>150</td>
+                            <td>150</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Oral fluid and nutrition maintenance requirements:</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">Give milk feeds every 3 hours (6 times a day) oral or by N/G tube</td>
+                        </tr>
+                        <tr>
+                            <td>ml</td>
+                            <td>120</td>
+                            <td>240</td>
+                            <td>300</td>
+                            <td>350</td>
+                            <td>400</td>
+                            <td>450</td>
+                            <td>450</td>
+                            <td>500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Diarrhoea with dehydration</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">ORS, oral or N/G tube</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">FAST</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">THEN every hour for 4 hours</td>
+                        </tr>
+                        <tr>
+                            <td>ml</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>250</td>
+                            <td>350</td>
+                            <td>500</td>
+                            <td>500</td>
+                            <td>500</td>
+                            <td>500</td>
+                        </tr>
+                        <tr>
+                            <td>ml</td>
+                            <td>50</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>200</td>
+                            <td>300</td>
+                            <td>400</td>
+                            <td>500</td>
+                            <td>600</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Meningitis, coma, or heart failure</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">If patient not drinking and unable to insert IV, give N/G fluid 4 times a day, oral</td>
+                        </tr>
+                        <tr>
+                            <td>ml</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>200</td>
+                            <td>250</td>
+                            <td>300</td>
+                            <td>350</td>
+                            <td>350</td>
+                            <td>350</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>
+
+            <h3>IV and Oral Fluid Calculation When Using the Adult IV Giving Set</h3>
+            <h4>IV AND ORAL FLUIDS</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">Total maintenance fluid requirements – do not exceed this in a non-dehydrated child.</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">Hartmann's solution (Ringers Lactate) plus 5% dextrose</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">Or 0.45% NaCl and 5% dextrose</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">In sick children who can take oral or nasogastric fluids, give nutrition enterally, and reduce IV fluid rate so that the total fluid intake is according to the volumes in the table</td>
+                        </tr>
+                        <tr>
+                            <td>ml/hr</td>
+                            <td>18</td>
+                            <td>30</td>
+                            <td>45</td>
+                            <td>55</td>
+                            <td>65</td>
+                            <td>75</td>
+                            <td>90</td>
+                            <td>120</td>
+                        </tr>
+                        <tr>
+                            <td>drops/min</td>
+                            <td>5</td>
+                            <td>8</td>
+                            <td>11</td>
+                            <td>14</td>
+                            <td>16</td>
+                            <td>19</td>
+                            <td>23</td>
+                            <td>30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Meningitis, coma, or heart failure</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>WEIGHT (Kilograms)</th>
+                            <th>3–5.9</th>
+                            <th>6–9.9</th>
+                            <th>10–14.9</th>
+                            <th>15–19.9</th>
+                            <th>20–29.9</th>
+                            <th>30–39.9</th>
+                            <th>40–49.9</th>
+                            <th>Adult</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9">Hartmann's solution (Ringers Lactate) plus 5% dextrose</td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">If oral or nasogastric fluids are given, reduce IV rate</td>
+                        </tr>
+                        <tr>
+                            <td>ml/hr</td>
+                            <td>12</td>
+                            <td>20</td>
+                            <td>30</td>
+                            <td>36</td>
+                            <td>44</td>
+                            <td>50</td>
+                            <td>60</td>
+                            <td>80</td>
+                        </tr>
+                        <tr>
+                            <td>drops/min</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>11</td>
+                            <td>13</td>
+                            <td>15</td>
+                            <td>20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>
+
+            <h4>How to Make Hartmann's Solution Plus 5% Dextrose (or Ringer's Lactate Plus 5% Dextrose), or 0.45% NaCl Plus 5% Dextrose</h4>
+            
+            <h5>How to Make Hartmann's Plus 5% Dextrose</h5>
+            <ul>
+                <li>Use a <strong>100 ml burette</strong></li>
+                <li>Add <strong>10 ml of 50% Dextrose</strong></li>
+                <li>Add <strong>90 ml of Ringer's lactate (or Hartmann's solution)</strong></li>
+            </ul>
+            <p><strong>Note:</strong> If you don't have <strong>50% Dextrose</strong>, you can substitute it with:</p>
+            <ul>
+                <li><strong>25 ml of 25% Dextrose + 75 ml Hartmann's solution</strong></li>
+            </ul>
+
+            <h5>How to Make 0.45% NaCl Plus 5% Dextrose</h5>
+            <ul>
+                <li>Use a <strong>100 ml burette</strong></li>
+                <li>Add <strong>50 ml of 10% Dextrose (D10)</strong></li>
+                <li>Add <strong>50 ml of 0.9% NaCl (normal saline)</strong></li>
+            </ul>
+        </div>
+    </div>
+    """,
+    "Pigbel": """
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">PIGBEL</h3>
+        </div>
+        <div class="card-body">
+            <div class="calculator-form mb-4">
+                <h4>Drug Dose Calculator</h4>
+                <form action="/calculate_pigbel" method="post">
+                    <div class="form-group">
+                        <label for="weight">Patient's Weight (kg):</label>
+                        <input type="number" step="0.1" class="form-control" id="weight" name="weight" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Calculate Doses</button>
+                </form>
+            </div>
+
+            <h4>1. Children with pigbel have:</h4>
+            <ul>
+                <li><strong>Always</strong> Severe abdominal pain starting up to 5 days after eating a protein meal (often pig meat). Experience abdominal pain especially epigastric pain after a meal.</li>
+                <li><strong>Often</strong> Abdominal swelling, black-flecked or coffee ground vomit. Mild diarrhoea with blood (but sometimes constipation).</li>
+            </ul>
+
+            <h4>2. Assess each case as mild or severe.</h4>
+            <ul>
+                <li>Mild cases can be treated at health centres.</li>
+                <li>Severe cases should be sent to hospital immediately.</li>
+            </ul>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sign</th>
+                            <th>Mild</th>
+                            <th>Severe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Abdominal swelling:</td>
+                            <td>Some</td>
+                            <td>A lot</td>
+                        </tr>
+                        <tr>
+                            <td>Epigastric pain</td>
+                            <td>Some</td>
+                            <td>A lot</td>
+                        </tr>
+                        <tr>
+                            <td>Toxic (looks sick, fast pulse):</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Black-flecked vomit:</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>TREATMENT OF MILD PIGBEL</h4>
+
+            <h5>1. Intravenous fluid</h5>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Weight (kg)</th>
+                            <th>No. of mls/hr</th>
+                            <th>No. of drops/min</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3 — 5.9 kg:</td>
+                            <td>25ml/hour</td>
+                            <td>7 drops/min</td>
+                        </tr>
+                        <tr>
+                            <td>6 — 9.9 kg:</td>
+                            <td>50ml/hour</td>
+                            <td>13 drops/min</td>
+                        </tr>
+                        <tr>
+                            <td>10 — 14.9 kg:</td>
+                            <td>75ml/hour</td>
+                            <td>20 drops/min</td>
+                        </tr>
+                        <tr>
+                            <td>15 kg or more:</td>
+                            <td>100ml/hour</td>
+                            <td>25 drops/min</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h5>2. Nasogastric Tube Management</h5>
+            <ul>
+                <li>Pass large nasogastric tube</li>
+                <li>Aspirate then leave on free drainage</li>
+                <li>Splint the arms</li>
+            </ul>
+
+            <h5>3. Initial Medication</h5>
+            <ul>
+                <li>Give Albendazole oral once, or Mebendazole oral once</li>
+                <li>Then nothing to eat or drink</li>
+            </ul>
+
+            <h5>4. Additional Medication</h5>
+            <ul>
+                <li>Give Tinidazole oral once if child is malnourished</li>
+                <li>Give Benzyl (crystalline) penicillin</li>
+            </ul>
+
+            <h5>5. Monitoring and Escalation</h5>
+            <ul>
+                <li>If the child gets sicker, or there is no improvement within 2 days:</li>
+                <ul>
+                    <li>Start treatment with IV chloramphenicol</li>
+                    <li>Send to hospital</li>
+                </ul>
+            </ul>
+
+            <h5>6. Improvement Protocol</h5>
+            <p>If the child improves (reduced abdominal swelling and pain, no vomiting, feels hungry and has bowel motions):</p>
+            <ul>
+                <li>After 24 hours of improvement:
+                    <ul>
+                        <li>Stop IV fluids</li>
+                        <li>Remove the nasogastric tube</li>
+                        <li>Give Oral Rehydration Solution</li>
+                    </ul>
+                </li>
+                <li>After another 24 hours of improvement:
+                    <ul>
+                        <li>Give full strength milk over the next 24 hours</li>
+                    </ul>
+                </li>
+                <li>Then:
+                    <ul>
+                        <li>Give soft food</li>
+                        <li>Gradually introduce solid food</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>TREATMENT OF SEVERE PIGBEL</h4>
+            <p>Patients with severe pigbel should be treated in hospital. If you cannot transfer them immediately:</p>
+            <ul>
+                <li>Start treatment as for mild pigbel with:
+                    <ul>
+                        <li>Intravenous fluid</li>
+                        <li>Nasogastric tube</li>
+                        <li>Nil by mouth</li>
+                        <li>Benzyl (crystalline) penicillin, and give:
+                            <ul>
+                                <li>Chloramphenicol IV every 6 hours.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Do not give albendazole or tinidazole to patients with severe pigbel.</li>
+            </ul>
+
+            <div class="alert alert-warning">
+                <strong>If you see a child with pigbel notify your Disease Control Officer.</strong>
+            </div>
+        </div>
+    </div>
+    """,
 }

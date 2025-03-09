@@ -134,20 +134,49 @@
                 </ul>
             </div>
         {% elif calc_type == "rsi_ett_drugs" %}
-            <h3>RSI and ETT Calculations</h3>
+            <h2>RSI and ETT Calculations</h2>
             
             <div class="drug-section">
-                <h3>Drug Doses</h3>
+                <h3>1. Premedication</h3>
                 <ul>
                     {% for drug, dose in doses.items() %}
-                    <li>{{ drug }}: {{ dose }}</li>
+                        {% if "Premedication" in drug %}
+                            <li>{{ drug.split(" - ")[1] }}: {{ dose }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <h3>2. Sedatives</h3>
+                <ul>
+                    {% for drug, dose in doses.items() %}
+                        {% if "Sedatives" in drug %}
+                            <li>{{ drug.split(" - ")[1] }}: {{ dose }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <h3>3. Depolarizing Paralytics</h3>
+                <ul>
+                    {% for drug, dose in doses.items() %}
+                        {% if "Depolarizing Paralytics" in drug %}
+                            <li>{{ drug.split(" - ")[1] }}: {{ dose }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <h3>4. Non-Depolarizing Paralytics</h3>
+                <ul>
+                    {% for drug, dose in doses.items() %}
+                        {% if "Non Depolarizing Paralytics" in drug %}
+                            <li>{{ drug.split(" - ")[1] }}: {{ dose }}</li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
 
             {% if ett_info %}
             <div class="drug-section">
-                <h3>Endotracheal Tube Information</h3>
+                <h3>5. Endotracheal Tube Information</h3>
                 <ul>
                     <li>Age Group: {{ ett_info["Age"] }}</li>
                     <li>Internal Diameter: {{ ett_info["Internal Diameter (mm)"] }} mm</li>
@@ -159,7 +188,7 @@
             </div>
             {% endif %}
 
-            <h2>Fluid Requirements</h2>
+            <h2>6. Fluid Requirements</h2>
             <div class="fluid-section">
                 <h3>Bolus Options</h3>
                 <ul>
